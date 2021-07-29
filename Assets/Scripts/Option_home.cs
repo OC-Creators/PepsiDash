@@ -5,14 +5,10 @@ using UnityEngine;
 public class Option_home : MonoBehaviour
 {
 	public GameObject Option;
-	//public GameObject Start;
-	public GameObject Option2;
-	//public GameObject credit;
-
-	public void OnClickStartButton(){
-			Option.SetActive(true);
-			//Start.SetActive(false);
-			//credit.SetActive(false);
-			Option2.SetActive(false);
-		}
+	public GameObject Home;
+	public void OnclickStartButton()
+	{
+			Option.SetActive(false);
+			Home.SetActive(true);
+	}
 }
