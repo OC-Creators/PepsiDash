@@ -10,6 +10,7 @@ public class Stagemove_left : MonoBehaviour
 	//private int click = 0;
 	private float move = -6f;
 	bool left = false;
+	public static bool stage1select = true;
 
 	public void OnClick(){
 			left = true;
@@ -17,7 +18,7 @@ public class Stagemove_left : MonoBehaviour
 
 	void Update(){
 		
-		if(left==true&& stage2.position.x > 459){
+		if(left==true && stage1select){
 			stage1.position += new Vector3(move,0,0);
 			stage2.position += new Vector3(move,0,0);
 			counter++;
@@ -26,6 +27,8 @@ public class Stagemove_left : MonoBehaviour
 				stage2.position += new Vector3(0,0,0);
 				counter = 0;
 				left = false;
+				stage1select = false;
+				Stagemove_right.stage2select = true;
 			}
 		}else{
 			left = false;

@@ -24,5 +24,8 @@ public class ScoreManager : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)){
 		score_num += 1; // とりあえず1加算し続けてみる
 		}
+		//PlayerPrefsにスコアを保存する
+		PlayerPrefs.SetInt("score", score_num);
+		PlayerPrefs.Save();
 	}
 }
