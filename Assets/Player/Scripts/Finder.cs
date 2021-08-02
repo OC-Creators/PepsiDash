@@ -19,7 +19,7 @@ public class Finder : MonoBehaviour
 
     private void Awake()
     {
-        m_renderer  = GetComponent<Renderer>();
+        //m_renderer  = GetComponent<Renderer>();
 
         var searching   = GetComponentInChildren<SearchingBehavior>();
         searching.onFound   += OnFound;
@@ -29,16 +29,18 @@ public class Finder : MonoBehaviour
     private void OnFound( GameObject i_foundObject )
     {
         m_targets.Add( i_foundObject );
-        m_renderer.material = m_foundMaterial;
+        //m_renderer.material = m_foundMaterial;
+        Debug.Log("Found");
     }
 
     private void OnLost( GameObject i_lostObject )
     {
         m_targets.Remove( i_lostObject );
-        
-        if( m_targets.Count == 0 )
+        Debug.Log("Lost");
+        if ( m_targets.Count == 0 )
         {
-            m_renderer.material = m_defaultMaterial;
+           // m_renderer.material = m_defaultMaterial;
+            Debug.Log("Lost");
         }
     }
 
