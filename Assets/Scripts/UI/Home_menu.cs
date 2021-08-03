@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Home_option : MonoBehaviour
+public class Home_menu : MonoBehaviour
 {
 	public GameObject Option;
 	//public GameObject Start;

@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Option_home : MonoBehaviour
+public class Menu_home : MonoBehaviour
 {
-	public GameObject Option;
-	public GameObject Home;
+	public GameObject NotActive;
+	public GameObject Active;
 	public Slider slider;
 	public static float onryou;
 
 	public void OnclickStartButton()
 	{
 			onryou = slider.value;
-			Option.SetActive(false);
-			Home.SetActive(true);
-		Debug.Log("音量変わった"+onryou);
+			NotActive.SetActive(false);
+			Active.SetActive(true);
+		//Debug.Log("音量変わった"+onryou);
 			
 	}
 }
