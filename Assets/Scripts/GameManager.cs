@@ -1,22 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
-{
-    private static ViewMode mode = ViewMode.Start;
-    private static bool modeChanged = false;
-    public static ViewMode Mode {
-        get { return mode; }
-        set {
-            mode = value;
-            modeChanged = true;
+{    
+    public GameObject[] views;
+    private static ViewMode vmode = ViewMode.Title;
+    public static ViewMode VMode 
+    {
+        get { return vmode; }
+        set 
+        {
+            vmode = value;
         }
     }
-    
 
-    // Start is called before the first frame update
+    private static SceneMode smode = SceneMode.Start;
+    public static SceneMode SMode 
+    {
+        get { return smode; }
+        set
+        {
+            smode = value;
+            vmode = smode.GetEntryViewMode();
+        }
+    }
+
     void Start()
     {
         
@@ -25,38 +35,28 @@ public class GameManager : MonoBehaviour
     // シーン切り替え処理
     void Update()
     {
-        if (!modeChanged) {
-            return;
-        }
 
-        switch (mode)
-        {
-            case ViewMode.Start:
-                SceneManager.LoadScene("StartScreen", LoadSceneMode.Single);
-                Debug.Log("changed to StartScreen");
-                break;
-            case ViewMode.StageSelect:
-                SceneManager.LoadScene("StageSelectScreen", LoadSceneMode.Single);
-                Debug.Log("changed to StageSelectScreen");
-                break;
-            case ViewMode.Game:
-                SceneManager.LoadScene("GameScreen", LoadSceneMode.Single);
-                Debug.Log("changed to GameScreen");
-                break;
-            case ViewMode.Result:
-                SceneManager.LoadScene("ResultScreen", LoadSceneMode.Single);
-                Debug.Log("changed to ResultScreen");
-                break;
-            case ViewMode.Pause:
-                SceneManager.LoadScene("PauseScreen", LoadSceneMode.Single);
-                Debug.Log("changed to PauseScreen");
-                break;
-            case ViewMode.Option:
-                SceneManager.LoadScene("OptionScreen", LoadSceneMode.Single);
-                Debug.Log("changed to OptionScreen");
-                break;
-        }
-
-        modeChanged = false;
     }
+
+    public bool IsActive(ViewMode vm)
+    {
+        var vms = vm.ToStringQuickly();
+        var obj = Array.Find(views, o => o.name == vms);
+        return obj.activeSelf;
+    }
+
+    public void SetActive(ViewMode vm, bool active)
+    {
+        var vms = vm.ToStringQuickly();
+        var obj = Array.Find(views, o => o.name == vms);
+        obj.SetActive(active);
+    }
+
+    public void SwitchScene(SceneMode sm)
+    {
+        SceneManager.LoadScene(sm.ToStringQuickly(), LoadSceneMode.Single);
+        Debug.Log($"changed to {sm}");
+        smode = sm;
+    }
+
 }
