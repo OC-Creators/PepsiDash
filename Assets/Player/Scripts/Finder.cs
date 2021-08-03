@@ -30,6 +30,7 @@ public class Finder : MonoBehaviour
     {
         m_targets.Add( i_foundObject );
         //m_renderer.material = m_foundMaterial;
+        Debug.Log(i_foundObject);
         Debug.Log("Found");
     }
 

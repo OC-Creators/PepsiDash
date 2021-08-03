@@ -18,7 +18,7 @@ public class SearchingBehavior : MonoBehaviour
     private SphereCollider  m_sphereCollider    = null;
     private List<FoundData> m_foundList = new List<FoundData>();
 
-
+    string str; // デバグ用
 
     public float SearchAngle
     {
@@ -68,13 +68,16 @@ public class SearchingBehavior : MonoBehaviour
 
     private void UpdateFoundObject()
     {
+        str = "";
         foreach( var foundData in m_foundList )
         {
             GameObject  targetObject = foundData.Obj;
             if( targetObject == null )
             {
+                //str += "null,  ";
                 continue;
             }
+            //str += (targetObject.name + ",  ");
 
             bool isFound    = CheckFoundObject( targetObject );
             foundData.Update( isFound );
@@ -88,6 +91,7 @@ public class SearchingBehavior : MonoBehaviour
                 onLost( targetObject );
             }
         }
+        //Debug.Log(str);
     }
 
     private bool CheckFoundObject( GameObject i_target )
@@ -220,6 +224,6 @@ public class SearchingBehavior : MonoBehaviour
         {
             return m_isCurrentFound;
         }
-}
+    }
 
 } // class SearchingBehavior

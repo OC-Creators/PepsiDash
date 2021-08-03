@@ -303,6 +303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Rin
       objectReference: {fileID: 0}
+    - target: {fileID: 1750625887683472, guid: 196405dd91626fd4c8aa9160f83204a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4453038053005094, guid: 196405dd91626fd4c8aa9160f83204a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -351,7 +355,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 176d27f6fbb16a64cb7af9c911755b14, type: 2}
+      objectReference: {fileID: 9100000, guid: 47d7f0b6acfdb1d42b5ff4921cb6632b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 196405dd91626fd4c8aa9160f83204a2, type: 3}
 --- !u!1 &248390781 stripped
@@ -377,7 +381,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Center: {x: 0, y: 0.89, z: 0}
 --- !u!4 &248390784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4453038053005094, guid: 196405dd91626fd4c8aa9160f83204a2,
@@ -397,7 +401,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 1
-  waitTime: 5
+  runSpeed: 2
+  arrived: 0
+  patrolWaitTime: 5
+  cautionWaitTime: 60
+  chaseWaitTime: 60
+  warningWaitTime: 60
+  rotateSpeed: 5
 --- !u!114 &248390786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,7 +779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4fd202251a2824ca515e14cd0911cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_searchAngle: 120
+  m_searchAngle: 140
 --- !u!1 &1421998692
 GameObject:
   m_ObjectHideFlags: 0

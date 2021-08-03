@@ -9,7 +9,7 @@ public class SetPosition : MonoBehaviour
     //目的地
     private Vector3 destination;
 
-    
+
     //周回
     /*[SerializeField]
     private Vector3 dest1 = new Vector3(3f, 0f, 0f);
@@ -23,7 +23,7 @@ public class SetPosition : MonoBehaviour
 
     public GameObject Root;
 
-    private Transform [] points;
+    private Transform[] points;
 
 
     // Start is called before the first frame update
@@ -40,7 +40,7 @@ public class SetPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log(points.Length);
     }
     //　ランダムな位置の作成
     public void CreateRandomPosition()
@@ -67,5 +67,10 @@ public class SetPosition : MonoBehaviour
     public Vector3 GetDestination()
     {
         return destination;
+    }
+
+    public int PointsNum()
+    {
+        return points.Length;
     }
 }
