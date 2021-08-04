@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SeManager : MonoBehaviour
-{
-	public Slider slider;
-	AudioSource audioSource;
-	//public static volume; 
-
-	void Start()
+namespace UserInterface{
+	public class SeManager : MonoBehaviour
 	{
-		audioSource = GetComponent<AudioSource>();
-		slider.onValueChanged.AddListener(value => this.audioSource.volume = value);//ゲーム上の音量と紐づけする
+		public Slider slider;
+		AudioSource audioSource;
+		//public static volume; 
 
-		//Debug.Log("音量が変更されました");
+		void Start()
+		{
+			audioSource = GetComponent<AudioSource>();
+			slider.onValueChanged.AddListener(value => this.audioSource.volume = value);//ゲーム上の音量と紐づけする
 
-	}
-	// Update is called once per frame
-	void Update () {
-		//Debug.Log("音量が変更されました");
+			//Debug.Log("音量が変更されました");
+
+		}
+		// Update is called once per frame
+		void Update () {
+			//Debug.Log("音量が変更されました");
+		}
 	}
 }
