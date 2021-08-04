@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using General;
 
 namespace UserInterface{
 	
@@ -13,25 +14,27 @@ namespace UserInterface{
 			switch(mode){
 			case ViewMode.Title:
 				switch(button.name) {
-				case "StartButton":
-					General.StartScreenManager.UpdateScreen(ScreenMode.StageSelect);
-					break;
-				case "OptionButton":
-					General.StartScreenManager.UpdateView(ViewMode.Option);
-					break;
-				case "CreditButton":
-					General.StartScreenManager.UpdateView(ViewMode.Credit);
-					break;
+					case "StartButton":
+						General.ParamBridge.UpdateScreen(ScreenMode.StageSelect);
+						break;
+					case "OptionButton":
+						General.ParamBridge.UpdateView(ViewMode.Option);
+						break;
+					case "CreditButton":
+						General.ParamBridge.UpdateView(ViewMode.Credit);
+						break;
 				}
+				break;
 			case ViewMode.StageList:
 				switch(button.name) {
-				case "Stage1Button":
-					General.StageSelectScreenManager.UpdateScreen(ScreenMode.Game);
-					break;
-				case "Stage2Button":
-					General.StageSelectScreenManager.UpdateScreen(ScreenMode.Game);
-					break;
+					case "Stage1Button":
+						General.ParamBridge.UpdateScreen(ScreenMode.Game);
+						break;
+					case "Stage2Button":
+						General.ParamBridge.UpdateScreen(ScreenMode.Game);
+						break;
 				}
+				break;
 		}
 	}
 }

@@ -1173,7 +1173,7 @@ GameObject:
   - component: {fileID: 964781100}
   - component: {fileID: 964781099}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: StageSelectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1201,10 +1201,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 964781098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddeb353a8d69e4d4d889894fba57e82e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7489a548134edd54cbbd251022b31e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  views: []
 --- !u!4 &964781101
 Transform:
   m_ObjectHideFlags: 0
