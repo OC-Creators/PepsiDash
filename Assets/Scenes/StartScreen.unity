@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 313264477}
   - component: {fileID: 313264480}
   m_Layer: 5
-  m_Name: goHome
+  m_Name: Option_home
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -844,7 +844,7 @@ GameObject:
   - component: {fileID: 657540214}
   - component: {fileID: 657540217}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -986,6 +986,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btn: {fileID: 657540212}
+  clearText: {fileID: 0}
+  Active: {fileID: 0}
+  NotActive: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,9 +1504,9 @@ GameObject:
   - component: {fileID: 1015358126}
   - component: {fileID: 1015358125}
   - component: {fileID: 1015358124}
-  - component: {fileID: 1015358127}
+  - component: {fileID: 1015358128}
   m_Layer: 5
-  m_Name: Button
+  m_Name: OptionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1584,7 +1587,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1015358127}
+      - m_Target: {fileID: 1015358128}
         m_MethodName: OnClickStartButton
         m_Mode: 1
         m_Arguments:
@@ -1632,7 +1635,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015358122}
   m_CullTransparentMesh: 0
---- !u!114 &1015358127
+--- !u!114 &1015358128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1641,11 +1644,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015358122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e9b658493fce2f4bae171d36287a40e, type: 3}
+  m_Script: {fileID: 11500000, guid: f89c36e644d83b640b20e192dbba72c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Option: {fileID: 437997641}
-  Option2: {fileID: 1188103096}
+  btn: {fileID: 1015358122}
+  clearText: {fileID: 0}
+  Active: {fileID: 437997641}
+  NotActive: {fileID: 1188103096}
 --- !u!1 &1055779513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,9 +1753,8 @@ GameObject:
   - component: {fileID: 1094767647}
   - component: {fileID: 1094767646}
   - component: {fileID: 1094767645}
-  - component: {fileID: 1094767649}
   m_Layer: 5
-  m_Name: goHome
+  m_Name: Credit_home
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1894,20 +1898,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094767643}
   m_CullTransparentMesh: 0
---- !u!114 &1094767649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094767643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6583d6ad185f4024eb1627c7202d71d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Clearpanel: {fileID: 0}
-  clearText: {fileID: 0}
 --- !u!1 &1102358703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2898,9 +2888,9 @@ GameObject:
   - component: {fileID: 1681553977}
   - component: {fileID: 1681553976}
   - component: {fileID: 1681553975}
-  - component: {fileID: 1681553978}
+  - component: {fileID: 1681553979}
   m_Layer: 5
-  m_Name: Button
+  m_Name: CreditButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2981,7 +2971,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681553978}
+      - m_Target: {fileID: 1681553979}
         m_MethodName: OnClickStartButton
         m_Mode: 1
         m_Arguments:
@@ -3029,7 +3019,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681553973}
   m_CullTransparentMesh: 0
---- !u!114 &1681553978
+--- !u!114 &1681553979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3038,11 +3028,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1681553973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e9b658493fce2f4bae171d36287a40e, type: 3}
+  m_Script: {fileID: 11500000, guid: f89c36e644d83b640b20e192dbba72c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Option: {fileID: 1113679427}
-  Option2: {fileID: 1188103096}
+  btn: {fileID: 1681553973}
+  clearText: {fileID: 0}
+  Active: {fileID: 1113679427}
+  NotActive: {fileID: 1188103096}
 --- !u!1001 &1715241283
 PrefabInstance:
   m_ObjectHideFlags: 0
