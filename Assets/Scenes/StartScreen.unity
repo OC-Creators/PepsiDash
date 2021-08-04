@@ -2073,7 +2073,7 @@ GameObject:
   - component: {fileID: 1236691754}
   - component: {fileID: 1236691755}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: StartScreenManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2102,9 +2102,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1236691752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f55fd8cf0235e384397c2dd18cde4f65, type: 3}
+  m_Script: {fileID: 11500000, guid: ddeb353a8d69e4d4d889894fba57e82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  views:
+  - {fileID: 1102358703}
+  - {fileID: 437997641}
+  - {fileID: 1113679427}
+  sESlider: {fileID: 205572187}
+  bGMSlider: {fileID: 1055779515}
+  sE: {fileID: 1914386645}
+  bGM: {fileID: 1473007431}
+  DontDestroyEnabled: 1
 --- !u!114 &1236691755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2637,28 +2646,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1473007434}
   - component: {fileID: 1473007433}
-  - component: {fileID: 1473007432}
   m_Layer: 0
-  m_Name: BgmManager
+  m_Name: BGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1473007432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473007431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3466a995cdc1175439f49dbd4ab8387b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 1055779515}
-  DontDestroyEnabled: 1
 --- !u!82 &1473007433
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3444,9 +3438,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1914386646}
   - component: {fileID: 1914386648}
-  - component: {fileID: 1914386647}
   m_Layer: 0
-  m_Name: SEManager
+  m_Name: SE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3466,19 +3459,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1914386647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914386645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 194ff75a9197e024c88bad8d432ec4cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 205572187}
 --- !u!82 &1914386648
 AudioSource:
   m_ObjectHideFlags: 0
