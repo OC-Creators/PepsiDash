@@ -11,7 +11,7 @@ public class SeManager_continue : MonoBehaviour
     void Start()
     {
 		//VALUE = Option_home.onryou;
-		Audio.volume = Menu_home.onryou;
+		Audio.volume = Menu_home.volume;
     }
 
     // Update is called once per frame
