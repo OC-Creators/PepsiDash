@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace General
 {
     public class ParamBridge : MonoBehaviour
     {
-        public static ViewMode prevVMode = ViewMode.Dummy;
+        public Param param;
+        public JsonManager<Param> jm;
+        private static ViewMode prevVMode = ViewMode.Dummy;
         private static ViewMode vmode = ViewMode.Dummy;
         public static ViewMode VMode
         {
@@ -17,7 +17,7 @@ namespace General
                 {
                     prevVMode = vmode;
                     vmode = value;
-                    updateSignal = Signal.UpdateView;
+                    _updateSignal = Signal.UpdateView;
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace General
                 {
                     smode = value;
                     vmode = smode.GetEntryViewMode();
-                    updateSignal = Signal.UpdateScreen;
+                    _updateSignal = Signal.UpdateScreen;
                 }
             }
         }
@@ -49,8 +49,12 @@ namespace General
             UpdateScreen
         }
 
-        public static Signal updateSignal = Signal.Stay;
-        public static ViewMode nextVMode = ViewMode.Dummy;
+        private static Signal _updateSignal = Signal.Stay;
+        public static Signal UpdateSignal
+        {
+            get { return _updateSignal; }
+            set { _updateSignal = value; }
+        }
 
         public static void UpdateView(ViewMode vmode)
         {
@@ -62,16 +66,19 @@ namespace General
             SMode = smode;
         }
 
-        // Start is called before the first frame update
         void Start()
         {
+            var param_json = $"{Application.dataPath}/Resources/Data/param.json";
+            jm = new JsonManager<Param>(param_json);
+            Debug.Log($"Import {param_json}");
+            param = jm.Load();
 
+            DontDestroyOnLoad(this);
         }
 
-        // Update is called once per frame
-        void Update()
+        void OnDestroy()
         {
-
+            jm.Dump(param);
         }
     }
 }
