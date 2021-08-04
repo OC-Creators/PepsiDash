@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI{
+namespace UserInterface{
 	
 	public class Clear : MonoBehaviour
 	{
