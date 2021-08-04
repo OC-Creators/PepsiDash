@@ -13,8 +13,8 @@ public class StageSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		stage1_button = GameObject.Find ("Canvas/Stage1Button").GetComponent<Button> ();
-		stage2_button = GameObject.Find ("Canvas/Stage2Button").GetComponent<Button> ();
+		stage1_button = GameObject.Find ("Stage/Stage1Button").GetComponent<Button> ();
+		stage2_button = GameObject.Find ("Stage/Stage2Button").GetComponent<Button> ();
         
     }
 
