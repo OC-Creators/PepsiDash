@@ -6,6 +6,8 @@ namespace General {
     
     public class GameManager : ScreenManager
     {
+        public Camera cam;
+
         void Start()
         {
             if (ParamBridge.SMode == ScreenMode.Dummy)
@@ -17,6 +19,10 @@ namespace General {
                 ParamBridge.VMode = ViewMode.InGame;
             }
             ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+
+            // var cam = Camera.main;
+
+            cam.ScreenToWorldPoint()
         }
     }
 }
