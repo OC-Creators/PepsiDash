@@ -7,7 +7,6 @@ namespace UserInterface
 {
 	public class Button : MonoBehaviour
 	{
-		public AudioManager audioManager;
 		public GameObject button;
 		public void OnClickButton()
 		{
@@ -71,10 +70,13 @@ namespace UserInterface
 					}
 					break;
 			}
+
+			PlayClick();
 		}
+
 		public void PlayClick()
 		{
-			audioManager.PlayClick();
+			AudioManager.Instance.PlayClick();
 		}
 	}
 }
