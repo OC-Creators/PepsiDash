@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 313264477}
   - component: {fileID: 313264480}
   m_Layer: 5
-  m_Name: HomeButton
+  m_Name: HomeButton1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 903244923}
+      - m_Target: {fileID: 313264480}
         m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
@@ -481,7 +481,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 313264480}
-        m_MethodName: OnclickStartButton
+        m_MethodName: OnClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -537,12 +537,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 313264475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6134662f87db0af42b5b0ec665009e5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c70a1faf323cc14da63a5f6812134fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NotActive: {fileID: 437997641}
-  Active: {fileID: 1188103096}
-  slider: {fileID: 205572187}
+  audioManager: {fileID: 903244923}
+  button: {fileID: 313264475}
 --- !u!1 &410855522
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +961,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 903244923}
+      - m_Target: {fileID: 657540217}
         m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
@@ -974,7 +973,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 657540217}
-        m_MethodName: OnClickStartButton
+        m_MethodName: OnClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1030,13 +1029,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 657540212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89c36e644d83b640b20e192dbba72c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c70a1faf323cc14da63a5f6812134fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 657540212}
-  clearText: {fileID: 0}
-  Active: {fileID: 0}
-  NotActive: {fileID: 0}
+  audioManager: {fileID: 903244923}
+  button: {fileID: 657540212}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,7 +1788,7 @@ GameObject:
   - component: {fileID: 1015358126}
   - component: {fileID: 1015358125}
   - component: {fileID: 1015358124}
-  - component: {fileID: 1015358128}
+  - component: {fileID: 1015358127}
   m_Layer: 5
   m_Name: OptionButton
   m_TagString: Untagged
@@ -1862,7 +1859,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 903244923}
+      - m_Target: {fileID: 1015358127}
         m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
@@ -1873,8 +1870,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1015358128}
-        m_MethodName: OnClickStartButton
+      - m_Target: {fileID: 1015358127}
+        m_MethodName: OnClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1921,7 +1918,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015358122}
   m_CullTransparentMesh: 0
---- !u!114 &1015358128
+--- !u!114 &1015358127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1930,13 +1927,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015358122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89c36e644d83b640b20e192dbba72c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c70a1faf323cc14da63a5f6812134fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 1015358122}
-  clearText: {fileID: 0}
-  Active: {fileID: 437997641}
-  NotActive: {fileID: 1188103096}
+  audioManager: {fileID: 903244923}
+  button: {fileID: 1015358122}
 --- !u!1 &1055779513
 GameObject:
   m_ObjectHideFlags: 0
@@ -2040,7 +2035,7 @@ GameObject:
   - component: {fileID: 1094767646}
   - component: {fileID: 1094767645}
   m_Layer: 5
-  m_Name: HomeButton
+  m_Name: HomeButton2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2075,12 +2070,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1094767643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6134662f87db0af42b5b0ec665009e5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c70a1faf323cc14da63a5f6812134fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NotActive: {fileID: 1113679427}
-  Active: {fileID: 1188103096}
-  slider: {fileID: 205572187}
+  audioManager: {fileID: 903244923}
+  button: {fileID: 1094767643}
 --- !u!114 &1094767646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2124,7 +2118,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 903244923}
+      - m_Target: {fileID: 1094767645}
         m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
@@ -2136,7 +2130,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1094767645}
-        m_MethodName: OnclickStartButton
+        m_MethodName: OnClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3094,7 +3088,7 @@ GameObject:
   - component: {fileID: 1681553977}
   - component: {fileID: 1681553976}
   - component: {fileID: 1681553975}
-  - component: {fileID: 1681553979}
+  - component: {fileID: 1681553978}
   m_Layer: 5
   m_Name: CreditButton
   m_TagString: Untagged
@@ -3165,7 +3159,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 903244923}
+      - m_Target: {fileID: 1681553978}
         m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
@@ -3176,8 +3170,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1681553979}
-        m_MethodName: OnClickStartButton
+      - m_Target: {fileID: 1681553978}
+        m_MethodName: OnClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3224,7 +3218,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681553973}
   m_CullTransparentMesh: 0
---- !u!114 &1681553979
+--- !u!114 &1681553978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3233,13 +3227,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1681553973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89c36e644d83b640b20e192dbba72c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c70a1faf323cc14da63a5f6812134fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 1681553973}
-  clearText: {fileID: 0}
-  Active: {fileID: 1113679427}
-  NotActive: {fileID: 1188103096}
+  audioManager: {fileID: 903244923}
+  button: {fileID: 1681553973}
 --- !u!1 &1757800851
 GameObject:
   m_ObjectHideFlags: 0

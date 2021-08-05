@@ -18,6 +18,7 @@ namespace General
                     prevVMode = vmode;
                     vmode = value;
                     _updateSignal = Signal.UpdateView;
+                    // Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {_updateSignal}");
                 }
             }
         }
@@ -36,8 +37,10 @@ namespace General
                 if (smode != value)
                 {
                     smode = value;
+                    prevVMode = vmode;
                     vmode = smode.GetEntryViewMode();
                     _updateSignal = Signal.UpdateScreen;
+                    // Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {_updateSignal}");
                 }
             }
         }
