@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------
 //
 // (C) Copyright 2017 Urahimono Project Inc.
 //
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Player
 {
-    public class SearchingBehavior : MonoBehaviour
+    public class SearchingBehavior_Caution : MonoBehaviour
     {
         public event System.Action<GameObject> onFound = (obj) => { };
         public event System.Action<GameObject> onLost = (obj) => { };
@@ -22,12 +22,19 @@ namespace Player
 
         string str; // デバグ用
 
-        public Finder finder;
+        public Finder_Caution finder;
 
+        public MoveEnemy moveEnemy;
+
+        private GameObject player;
+
+        [Range(0f, 100f)]
+        public float escapeDistance = 10f;
 
         void Start()
         {
-            if (finder == null) transform.GetComponentInParent<Finder>();
+            if (finder == null) transform.GetComponentInParent<Finder_Caution>();
+            if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
         }
 
         public float SearchAngle
@@ -74,12 +81,12 @@ namespace Player
         private void Update()
         {
             UpdateFoundObject();
-
+            Searching();
         }
 
         private void UpdateFoundObject()
         {
-            str = "";
+            //str = "";
             foreach (var foundData in m_foundList)
             {
                 GameObject targetObject = foundData.Obj;
@@ -88,7 +95,7 @@ namespace Player
                     //str += "null,  ";
                     continue;
                 }
-                //str += (targetObject.name + ",  ");
+                str += (targetObject.name + ",  ");
 
                 bool isFound = CheckFoundObject(targetObject);
                 foundData.Update(isFound);
@@ -164,6 +171,28 @@ namespace Player
             return true;
         }
 
+        private bool IsHitRayEscapeEnemy(Vector3 i_fromPosition, Vector3 i_toTargetDir, GameObject i_target)
+        {
+            // 方向ベクトルが無い場合は、同位置にあるものだと判断する。
+            if (i_toTargetDir.sqrMagnitude <= Mathf.Epsilon)
+            {
+                return true;
+            }
+
+            RaycastHit onHitRay;
+            if (!Physics.Raycast(i_fromPosition, i_toTargetDir, out onHitRay, escapeDistance))
+            {
+                return false;
+            }
+
+            if (onHitRay.transform.gameObject != i_target)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void OnTriggerEnter(Collider i_other)
         {
             if (!i_other.gameObject.CompareTag("Player")) return;
@@ -195,6 +224,64 @@ namespace Player
             m_foundList.Remove(foundData);
         }
 
+        private void Searching()
+        {
+            //player = SearchInList();
+            switch (moveEnemy.getState())
+            {
+                case "patrol":
+                    player = SearchInList();
+                    if (player != null) moveEnemy.changeState("caution");
+                    break;
+                case "caution":
+                    player = SearchInList();
+                    moveEnemy.changeElapsedTime(player != null);
+                    moveEnemy.setPlayerPos(player);
+                    if (moveEnemy.getElapsedTime() < 0)
+                    {
+                        moveEnemy.changeState("patrol");
+                    }
+                    else if (moveEnemy.getElapsedTime() > 20)
+                    {
+                        moveEnemy.changeState("chase");
+                    }
+                    break;
+                case "chase":
+                    moveEnemy.setPlayerPos(player);
+                    /*
+                    if (player == null)
+                    {
+                        moveEnemy.changeState("warning");
+                    } else
+                    {
+                        Vector3 toPlayerDir = (player.transform.position - transform.parent.position).normalized;
+                        if (!IsHitRayEscapeEnemy(transform.parent.position, toPlayerDir, player)) moveEnemy.changeState("warning");
+                        //if (player == null) moveEnemy.changeState("warning");
+                    }
+                    */
+                    Vector3 toPlayerDir = (player.transform.position - transform.parent.position).normalized;
+                    if (!IsHitRayEscapeEnemy(transform.parent.position, toPlayerDir, player)) moveEnemy.changeState("warning");
+                    break;
+                case "warning":
+                    player = SearchInList();
+                    if (player != null) moveEnemy.changeState("chase");
+                    break;
+            }
+        }
+
+        private GameObject SearchInList()
+        {
+            foreach (GameObject player in finder.getM_targets())
+            {
+                if (player.CompareTag("Player")) return player;
+            }
+            return null;
+        }
+
+        public void setPlayer(GameObject obj)
+        {
+            player = obj;
+        }
 
         private class FoundData
         {
