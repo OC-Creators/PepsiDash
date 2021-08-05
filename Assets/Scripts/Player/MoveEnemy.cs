@@ -266,6 +266,8 @@ namespace Player
                     state = newState;
                     num = 0;
                     resetEnemyPosition(); // 初期位置、方向に飛ばす関数
+                    setPosition.NextPosition(num);
+                    destination = setPosition.GetDestination();
                     break;
                 case "caution":
                     state = newState;
@@ -315,8 +317,12 @@ namespace Player
 
         void resetEnemyPosition()
         {
-            this.transform.position = firstPlayerPos;
-            this.transform.rotation = firstPlayerRotate;
+            enemyController.enabled = false;
+
+            transform.position = firstPlayerPos;
+            transform.rotation = firstPlayerRotate;
+
+            enemyController.enabled = true;
         }
     }
 }
