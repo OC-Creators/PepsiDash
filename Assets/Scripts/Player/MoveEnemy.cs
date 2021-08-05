@@ -125,19 +125,19 @@ namespace Player
                                 num++;
                                 setPosition.NextPosition(num);
                                 destination = setPosition.GetDestination();
-                                Debug.Log("Point : " + num);
+                                //Debug.Log("Point : " + num);
                                 arrived = false;
                                 elapsedTime = 0f;
                             }
                             else if (num == setPosition.PointsNum() - 1)
                             {
                                 num = 0;
-                                Debug.Log("Point : owari");
+                                //Debug.Log("Point : owari");
                                 setPosition.NextPosition(num);
                                 destination = setPosition.GetDestination();
                                 arrived = false;
                                 elapsedTime = 0f;
-                                Debug.Log("syokika");
+                                //Debug.Log("syokika");
                             }
                         }
                         /*
