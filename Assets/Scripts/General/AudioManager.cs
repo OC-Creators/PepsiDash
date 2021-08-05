@@ -7,8 +7,8 @@ namespace General {
 
     public class AudioManager : SingletonMonoBehaviour<AudioManager>
     {
-        public Slider bGMSlider = null;
-        public Slider sESlider = null;
+        public Slider bGMSlider;
+        public Slider sESlider;
         private AudioSource bgm;
         private AudioSource se;
 

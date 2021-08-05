@@ -71,12 +71,8 @@ namespace UserInterface
 					break;
 			}
 
-			PlayClick();
-		}
-
-		public void PlayClick()
-		{
 			AudioManager.Instance.PlayClick();
 		}
+
 	}
 }

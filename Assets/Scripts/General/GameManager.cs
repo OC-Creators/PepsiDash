@@ -4,18 +4,19 @@ using UnityEngine;
 
 namespace General {
     
-    public class GameManager : MonoBehaviour
+    public class GameManager : ScreenManager
     {
-        // Start is called before the first frame update
         void Start()
         {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
+            if (ParamBridge.SMode == ScreenMode.Dummy)
+            {
+                ParamBridge.SMode = ScreenMode.Game;
+            }
+            if (ParamBridge.VMode == ViewMode.Dummy)
+            {
+                ParamBridge.VMode = ViewMode.InGame;
+            }
+            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
         }
     }
 }
