@@ -20,7 +20,7 @@ namespace UserInterface
 							ParamBridge.UpdateScreen(ScreenMode.StageSelect);
 							break;
 						case "OptionButton":
-							ParamBridge.UpdateView(ViewMode.Option);
+							ParamBridge.UpdateView(ViewMode.StartOption);
 							break;
 						case "CreditButton":
 							ParamBridge.UpdateView(ViewMode.Credit);
@@ -31,7 +31,7 @@ namespace UserInterface
 					}
 					break;
 
-				case ViewMode.Option:
+				case ViewMode.StartOption:
 					switch (button.name)
 					{
 						case "HomeButton1":
@@ -68,6 +68,13 @@ namespace UserInterface
 							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
 							break;
 					}
+					break;
+				case ViewMode.InGame:
+				case ViewMode.GameEnd:
+				case ViewMode.Pause:
+				case ViewMode.Result:
+				case ViewMode.GameOption:
+					
 					break;
 			}
 

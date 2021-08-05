@@ -6,15 +6,17 @@ namespace General {
 		Dummy = -1,
 		Title,
 		Credit,
-		Option,
+		StartOption,
 		StageList,
 		Difficulty,
 		HighScore,
 		GameBegin,
 		InGame,
+		GameEnd,
 		Result,
 		Share,
 		Pause,
+		GameOption
 	}
 
 	public enum ScreenMode
@@ -47,14 +49,18 @@ namespace General {
 					return "GameBeginView";
 				case ViewMode.InGame:
 					return "InGameView";
+				case ViewMode.GameEnd:
+					return "GameEndView";
 				case ViewMode.Result:
 					return "ResultView";
 				case ViewMode.Share:
 					return "ShareView";
 				case ViewMode.Pause:
 					return "PauseView";
-				case ViewMode.Option:
-					return "OptionView";
+				case ViewMode.StartOption:
+					return "StartOptionView";
+				case ViewMode.GameOption:
+					return "GameOptionView";
 				default:
 					Debug.LogWarning($"Configure a case '{m}' of ModeHelper.ToStringQuickly");
 					return m.ToString();
@@ -71,7 +77,7 @@ namespace General {
 				case ScreenMode.StageSelect:
 					return "StageSelectScreen";
 				case ScreenMode.Game:
-					return "GameScreen";
+					return "IntegratedGameScreen";
 				default:
 					Debug.LogWarning($"Configure a case '{m}' of ModeHelper.ToStringQuickly");
 					return m.ToString();
