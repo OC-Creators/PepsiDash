@@ -6,7 +6,6 @@ namespace General
     public class StartManager : MonoBehaviour
     {
         public GameObject[] views;
-        public ParamBridge bridge;
 
         void Start()
         {

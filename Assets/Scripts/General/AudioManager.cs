@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 namespace General {
 
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : SingletonMonoBehaviour<AudioManager>
     {
-        public Slider bGMSlider;
-        public Slider sESlider;
+        public Slider bGMSlider = null;
+        public Slider sESlider = null;
         private AudioSource bgm;
         private AudioSource se;
+
+        protected override bool dontDestroyOnLoad { get { return true; } }
 
         // Start is called before the first frame update
         void Start()
@@ -21,9 +23,6 @@ namespace General {
             se = audio[1];
             bGMSlider.onValueChanged.AddListener(value => bgm.volume = value);//ゲーム上のBGM音量と紐づけする
             sESlider.onValueChanged.AddListener(value => se.volume = value);//ゲーム上のSE音量と紐づけする
-
-            // Sceneを遷移してもオブジェクトが消えないようにする
-            DontDestroyOnLoad(this);
         }
 
         // Update is called once per frame
