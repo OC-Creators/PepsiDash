@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------
 //
 // (C) Copyright 2017 Urahimono Project Inc.
 //
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Player
 {
-    public class Finder : MonoBehaviour
+    public class Finder_Caution : MonoBehaviour
     {
         [SerializeField]
         private Material m_defaultMaterial = null;
@@ -24,11 +24,9 @@ namespace Player
             //m_renderer  = GetComponent<Renderer>();
 
             SearchingBehavior_Caution searching_c = GetComponentInChildren<SearchingBehavior_Caution>();
-            //var searching_f   = GetComponentInChildren<SearchingBehavior_Find>();
+            
             searching_c.onFound += OnFound;
             searching_c.onLost += OnLost;
-            //searching_f.onFound   += OnFound;
-            //searching_f.onLost    += OnLost;
         }
 
         private void OnFound(GameObject i_foundObject)

@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------
 //
 // (C) Copyright 2017 Urahimono Project Inc.
 //
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Player
 {
-    public class SearchingBehavior : MonoBehaviour
+    public class SearchingBehavior_Find : MonoBehaviour
     {
         public event System.Action<GameObject> onFound = (obj) => { };
         public event System.Action<GameObject> onLost = (obj) => { };
@@ -22,12 +22,18 @@ namespace Player
 
         string str; // デバグ用
 
-        public Finder finder;
+        public Finder_Find finder;
 
+        public MoveEnemy moveEnemy;
+
+        private GameObject player;
+
+        public SearchingBehavior_Caution search_caution;
 
         void Start()
         {
-            if (finder == null) transform.GetComponentInParent<Finder>();
+            if (finder == null) transform.GetComponentInParent<Finder_Find>();
+            if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
         }
 
         public float SearchAngle
@@ -74,7 +80,7 @@ namespace Player
         private void Update()
         {
             UpdateFoundObject();
-
+            Searching();
         }
 
         private void UpdateFoundObject()
@@ -193,6 +199,43 @@ namespace Player
             }
 
             m_foundList.Remove(foundData);
+        }
+
+        private void Searching()
+        {
+            player = SearchInList();
+            switch (moveEnemy.getState())
+            {
+                case "patrol":
+                    if (player != null)
+                    {
+                        moveEnemy.changeState("chase");
+                        search_caution.setPlayer(player);
+                    }
+                    break;
+                case "caution":
+                    if (player != null)
+                    {
+                        moveEnemy.changeState("chase");
+                        search_caution.setPlayer(player);
+                    }
+                    break;
+                    /*
+                case "chase":
+                    break;
+                case "warning":
+                    break;
+                    */
+            }
+        }
+
+        private GameObject SearchInList()
+        {
+            foreach (GameObject player in finder.getM_targets())
+            {
+                if (player.CompareTag("Player")) return player;
+            }
+            return null;
         }
 
 
