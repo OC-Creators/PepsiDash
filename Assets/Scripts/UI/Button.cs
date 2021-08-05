@@ -1,38 +1,80 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using General;
 
-namespace UserInterface{
-	
+namespace UserInterface
+{
 	public class Button : MonoBehaviour
 	{
-		public ViewMode mode;
-		public Button button;
+		public AudioManager audioManager;
+		public GameObject button;
 		public void OnClickButton()
 		{
-			switch(mode){
-			case ViewMode.Title:
-				switch(button.name) {
-				case "StartButton":
-					General.StartScreenManager.UpdateScreen(ScreenMode.StageSelect);
+			var mode = ParamBridge.VMode;
+			switch (mode)
+			{
+				case ViewMode.Title:
+					switch (button.name)
+					{
+						case "StartButton":
+							ParamBridge.UpdateScreen(ScreenMode.StageSelect);
+							break;
+						case "OptionButton":
+							ParamBridge.UpdateView(ViewMode.Option);
+							break;
+						case "CreditButton":
+							ParamBridge.UpdateView(ViewMode.Credit);
+							break;
+						default:
+							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							break;
+					}
 					break;
-				case "OptionButton":
-					General.StartScreenManager.UpdateView(ViewMode.Option);
+
+				case ViewMode.Option:
+					switch (button.name)
+					{
+						case "HomeButton1":
+							ParamBridge.UpdateView(ViewMode.Title);
+							break;
+						default:
+							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							break;
+					}
 					break;
-				case "CreditButton":
-					General.StartScreenManager.UpdateView(ViewMode.Credit);
+
+				case ViewMode.Credit:
+					switch (button.name)
+					{
+						case "HomeButton2":
+							ParamBridge.UpdateView(ViewMode.Title);
+							break;
+						default:
+							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							break;
+					}
 					break;
-				}
-			case ViewMode.StageList:
-				switch(button.name) {
-				case "Stage1Button":
-					General.StageSelectScreenManager.UpdateScreen(ScreenMode.Game);
+				
+				case ViewMode.StageList:
+					switch (button.name)
+					{
+						case "Stage1Button":
+							ParamBridge.UpdateScreen(ScreenMode.Game);
+							break;
+						case "Stage2Button":
+							ParamBridge.UpdateScreen(ScreenMode.Game);
+							break;
+						default:
+							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							break;
+					}
 					break;
-				case "Stage2Button":
-					General.StageSelectScreenManager.UpdateScreen(ScreenMode.Game);
-					break;
-				}
+			}
+		}
+		public void PlayClick()
+		{
+			audioManager.PlayClick();
 		}
 	}
-}
 }

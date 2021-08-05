@@ -205,7 +205,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 25925173}
-        m_MethodName: OnClickStartButton
+        m_MethodName: OnClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -261,13 +261,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 25925168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89c36e644d83b640b20e192dbba72c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c70a1faf323cc14da63a5f6812134fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 25925168}
-  clearText: {fileID: 0}
-  Active: {fileID: 0}
-  NotActive: {fileID: 0}
+  audioManager: {fileID: 0}
+  button: {fileID: 25925168}
 --- !u!1 &99345497
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +617,7 @@ GameObject:
   - component: {fileID: 222621225}
   - component: {fileID: 222621224}
   - component: {fileID: 222621223}
+  - component: {fileID: 222621226}
   m_Layer: 5
   m_Name: Stage2Button
   m_TagString: Untagged
@@ -688,7 +687,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 222621224}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 222621226}
+        m_MethodName: OnClickButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &222621224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,6 +736,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222621221}
   m_CullTransparentMesh: 0
+--- !u!114 &222621226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222621221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c70a1faf323cc14da63a5f6812134fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
+  button: {fileID: 222621221}
 --- !u!1 &266820333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1197,7 @@ GameObject:
   - component: {fileID: 964781100}
   - component: {fileID: 964781099}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: StageSelectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1201,10 +1225,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 964781098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddeb353a8d69e4d4d889894fba57e82e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7489a548134edd54cbbd251022b31e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  views: []
+  views:
+  - {fileID: 0}
+  - {fileID: 0}
+  bridge: {fileID: 0}
 --- !u!4 &964781101
 Transform:
   m_ObjectHideFlags: 0

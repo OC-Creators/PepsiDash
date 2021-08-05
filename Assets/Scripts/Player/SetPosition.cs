@@ -61,6 +61,7 @@ public class SetPosition : MonoBehaviour
     public void SetDestination(Vector3 position)
     {
         destination = position;
+        //Debug.Log("sepo :" + destination);
     }
 
     //　目的地を取得する
