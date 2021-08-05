@@ -915,9 +915,9 @@ GameObject:
   - component: {fileID: 938467013}
   - component: {fileID: 938467012}
   - component: {fileID: 938467011}
-  - component: {fileID: 938467014}
+  - component: {fileID: 938467015}
   m_Layer: 5
-  m_Name: Twitter
+  m_Name: TwitterButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -986,8 +986,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 938467014}
-        m_MethodName: OnClickTweetButton
+      - m_Target: {fileID: 938467015}
+        m_MethodName: OnClickStartButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1034,7 +1034,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938467009}
   m_CullTransparentMesh: 0
---- !u!114 &938467014
+--- !u!114 &938467015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1043,10 +1043,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 938467009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668894a30e14504499642b361e4476ff, type: 3}
+  m_Script: {fileID: 11500000, guid: f89c36e644d83b640b20e192dbba72c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score_object: {fileID: 938467009}
+  btn: {fileID: 938467009}
   clearText: {fileID: 1873293371}
 --- !u!1 &1059240972
 GameObject:
