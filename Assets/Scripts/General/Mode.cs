@@ -31,6 +31,8 @@ namespace General {
 		{
 			switch (m)
 			{
+				case ViewMode.Dummy:
+					return "Dummy";
 				case ViewMode.Title:
 					return "TitleView";
 				case ViewMode.Credit:
@@ -62,12 +64,14 @@ namespace General {
 		{
 			switch (m)
 			{
+				case ScreenMode.Dummy:
+					return "Dummy";
 				case ScreenMode.Start:
-					return "StartScene";
+					return "StartScreen";
 				case ScreenMode.StageSelect:
-					return "StageSelectScene";
+					return "StageSelectScreen";
 				case ScreenMode.Game:
-					return "GameScene";
+					return "GameScreen";
 				default:
 					Debug.LogWarning($"Configure a case '{m}' of ModeHelper.ToStringQuickly");
 					return m.ToString();
