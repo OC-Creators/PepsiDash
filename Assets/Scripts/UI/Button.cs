@@ -20,7 +20,7 @@ namespace UserInterface
 							ParamBridge.UpdateScreen(ScreenMode.StageSelect);
 							break;
 						case "OptionButton":
-							ParamBridge.UpdateView(ViewMode.Option);
+							ParamBridge.UpdateView(ViewMode.StartOption);
 							break;
 						case "CreditButton":
 							ParamBridge.UpdateView(ViewMode.Credit);
@@ -31,7 +31,7 @@ namespace UserInterface
 					}
 					break;
 
-				case ViewMode.Option:
+				case ViewMode.StartOption:
 					switch (button.name)
 					{
 						case "HomeButton1":
@@ -69,14 +69,25 @@ namespace UserInterface
 							break;
 					}
 					break;
+				case ViewMode.InGame:
+				switch (button.name)
+				{
+					case "PauseButton":
+					ParamBridge.UpdateView(ViewMode.GameOption);
+					break;
+				}
+				break;
+
+				case ViewMode.GameEnd:
+				case ViewMode.Pause:
+				case ViewMode.Result:
+				case ViewMode.GameOption:
+					
+					break;
 			}
 
-			PlayClick();
-		}
-
-		public void PlayClick()
-		{
 			AudioManager.Instance.PlayClick();
 		}
+
 	}
 }

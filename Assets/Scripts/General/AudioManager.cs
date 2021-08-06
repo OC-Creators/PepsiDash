@@ -7,8 +7,8 @@ namespace General {
 
     public class AudioManager : SingletonMonoBehaviour<AudioManager>
     {
-        public Slider bGMSlider = null;
-        public Slider sESlider = null;
+        public Slider bGMSlider;
+        public Slider sESlider;
         private AudioSource bgm;
         private AudioSource se;
 
@@ -19,20 +19,20 @@ namespace General {
         {
             // オーディオ管理
             var audio = this.GetComponents<AudioSource>();
-            bgm = audio[0];
-            se = audio[1];
-            bGMSlider.onValueChanged.AddListener(value => bgm.volume = value);//ゲーム上のBGM音量と紐づけする
-            sESlider.onValueChanged.AddListener(value => se.volume = value);//ゲーム上のSE音量と紐づけする
+            this.bgm = audio[0];
+            this.se = audio[1];
+            bGMSlider.onValueChanged.AddListener(value => this.bgm.volume = value);//ゲーム上のBGM音量と紐づけする
+            sESlider.onValueChanged.AddListener(value => this.se.volume = value);//ゲーム上のSE音量と紐づけする
         }
 
-        // Update is called once per frame
-        void Update()
+        public void PlayClick()
         {
-            
+            this.se.PlayOneShot(this.se.clip);
         }
 
-        public void PlayClick() {
-            se.PlayOneShot(se.clip);
+        public void changeBGM(AudioSource audio)
+        {
+            this.bgm = audio;
         }
     }
 }
