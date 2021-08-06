@@ -12,17 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/StageSelectScreen.unity
     guid: ec44e317b16bc104193e4ec71e8f5cf5
   - enabled: 1
+    path: Assets/Scenes/IntegratedGameScreen.unity
+    guid: f85c687c72ba1314bbb72ce4fdcbff27
+  - enabled: 0
     path: Assets/Scenes/GameScreen.unity
     guid: f0f77aecfceffbc41aa7ef42102ec748
-  - enabled: 0
-    path: Assets/Scenes/ResultScreen.unity
-    guid: 147d36578f9d4504fad8fab30749efbe
-  - enabled: 0
-    path: Assets/Scenes/PauseScreen.unity
-    guid: fe5a7e16304b04e4e90cd2086c219286
-  - enabled: 0
-    path: Assets/Scenes/OptionScreen1.unity
-    guid: cdef49e5b60939b48ab1aed0782c973b
   - enabled: 1
     path: Assets/Scenes/GameScreen_NETA.unity
     guid: 0f6e274ed82542c4d978a7912672d765
