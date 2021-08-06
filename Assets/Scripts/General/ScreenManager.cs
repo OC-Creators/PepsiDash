@@ -8,7 +8,7 @@ namespace General
         [SerializeField]
         protected GameObject[] views;
         // Update is called once per frame
-        protected void Update()
+        protected virtual void Update()
         {
             switch (ParamBridge.UpdateSignal)
             {
@@ -24,7 +24,7 @@ namespace General
             // Debug.Log($"prev: {ParamBridge.PrevVMode.ToStringQuickly()}, curr: {ParamBridge.VMode.ToStringQuickly()}, signal: {ParamBridge.UpdateSignal}");
         }
 
-        protected void SwitchView()
+        protected virtual void SwitchView()
         {
             var curr = ParamBridge.PrevVMode;
             var next = ParamBridge.VMode;
@@ -33,7 +33,7 @@ namespace General
             ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
         }
 
-        protected void SwitchScreen()
+        protected virtual void SwitchScreen()
         {
             var sm = ParamBridge.SMode;
             FadeManager.Instance.LoadScene(sm.ToStringQuickly(), 1.0f);

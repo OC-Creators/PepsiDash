@@ -3,13 +3,17 @@
 namespace General {
 	public enum ViewMode
 	{
+		// ダミー
 		Dummy = -1,
+		// Start画面
 		Title,
 		Credit,
 		StartOption,
+		// ステージ選択画面
 		StageList,
 		Difficulty,
 		HighScore,
+		// ゲーム画面
 		GameBegin,
 		InGame,
 		GameEnd,

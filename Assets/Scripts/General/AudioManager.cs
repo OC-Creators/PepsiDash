@@ -25,12 +25,6 @@ namespace General {
             sESlider.onValueChanged.AddListener(value => this.se.volume = value);//ゲーム上のSE音量と紐づけする
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
-
         public void PlayClick()
         {
             this.se.PlayOneShot(this.se.clip);
