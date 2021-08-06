@@ -31,6 +31,7 @@ namespace General
             Array.Find(views, v => v.name == next.ToStringQuickly()).SetActive(true);
             Array.Find(views, v => v.name == curr.ToStringQuickly()).SetActive(false);
             ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+            Debug.Log($"switch {curr.ToStringQuickly()} to {next.ToStringQuickly()}");
         }
 
         protected virtual void SwitchScreen()

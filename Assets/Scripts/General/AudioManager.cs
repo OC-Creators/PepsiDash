@@ -14,13 +14,28 @@ namespace General {
 
         protected override bool dontDestroyOnLoad { get { return true; } }
 
-        // Start is called before the first frame update
-        void Start()
+        public float BGMVolume
         {
+            get { return bgm.volume; }
+            set { bgm.volume = value; }
+        }
+        
+        public float SEVolume
+        {
+            get { return se.volume; }
+            set { se.volume = value; }
+        }
+
+        // Start is called before the first frame update
+        void Awake()
+        {
+            base.Awake();
             // オーディオ管理
             var audio = this.GetComponents<AudioSource>();
             this.bgm = audio[0];
+            this.bgm.volume = ParamBridge.bgmVolume;
             this.se = audio[1];
+            this.se.volume = ParamBridge.seVolume;
             bGMSlider.onValueChanged.AddListener(value => this.bgm.volume = value);//ゲーム上のBGM音量と紐づけする
             sESlider.onValueChanged.AddListener(value => this.se.volume = value);//ゲーム上のSE音量と紐づけする
         }
