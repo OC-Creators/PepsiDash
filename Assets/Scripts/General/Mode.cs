@@ -58,9 +58,9 @@ namespace General {
 				case ViewMode.Pause:
 					return "PauseView";
 				case ViewMode.StartOption:
-					return "StartOptionView";
+					return "OptionView";
 				case ViewMode.GameOption:
-					return "GameOptionView";
+					return "OptionView";
 				default:
 					Debug.LogWarning($"Configure a case '{m}' of ModeHelper.ToStringQuickly");
 					return m.ToString();

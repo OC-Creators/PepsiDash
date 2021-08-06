@@ -23,11 +23,9 @@ namespace UserInterface{
 			timeleft -= Time.deltaTime;
 			if (timeleft <= 0.0) {
 				timeleft = 1.0f;
-				image.fillAmount -= 0.1f;
-				//ここに処理
+				image.fillAmount -= 0.05f;
 			}
 			else if(image.fillAmount==0){
-				//Debug.Log("あ");
 				Clear.SendMessage("OnEnter");
 		}
 	}
