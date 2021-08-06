@@ -3,13 +3,17 @@
 namespace General {
 	public enum ViewMode
 	{
+		// ダミー
 		Dummy = -1,
+		// Start画面
 		Title,
 		Credit,
 		StartOption,
+		// ステージ選択画面
 		StageList,
 		Difficulty,
 		HighScore,
+		// ゲーム画面
 		GameBegin,
 		InGame,
 		GameEnd,
@@ -58,9 +62,9 @@ namespace General {
 				case ViewMode.Pause:
 					return "PauseView";
 				case ViewMode.StartOption:
-					return "StartOptionView";
+					return "OptionView";
 				case ViewMode.GameOption:
-					return "GameOptionView";
+					return "OptionView";
 				default:
 					Debug.LogWarning($"Configure a case '{m}' of ModeHelper.ToStringQuickly");
 					return m.ToString();
