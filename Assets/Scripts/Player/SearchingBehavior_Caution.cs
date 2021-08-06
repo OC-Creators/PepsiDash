@@ -231,7 +231,11 @@ namespace Player
             {
                 case "patrol":
                     player = SearchInList();
-                    if (player != null) moveEnemy.changeState("caution");
+                    if (player != null)
+                    {
+                        moveEnemy.changeState("caution");
+                        moveEnemy.setPlayerPos(player);
+                    }
                     break;
                 case "caution":
                     player = SearchInList();
