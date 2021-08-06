@@ -7,7 +7,6 @@ namespace UserInterface
 {
 	public class Button : MonoBehaviour
 	{
-		public AudioManager audioManager;
 		public GameObject button;
 		public void OnClickButton()
 		{
@@ -21,7 +20,7 @@ namespace UserInterface
 							ParamBridge.UpdateScreen(ScreenMode.StageSelect);
 							break;
 						case "OptionButton":
-							ParamBridge.UpdateView(ViewMode.Option);
+							ParamBridge.UpdateView(ViewMode.StartOption);
 							break;
 						case "CreditButton":
 							ParamBridge.UpdateView(ViewMode.Credit);
@@ -32,7 +31,7 @@ namespace UserInterface
 					}
 					break;
 
-				case ViewMode.Option:
+				case ViewMode.StartOption:
 					switch (button.name)
 					{
 						case "HomeButton1":
@@ -70,11 +69,17 @@ namespace UserInterface
 							break;
 					}
 					break;
+				case ViewMode.InGame:
+				case ViewMode.GameEnd:
+				case ViewMode.Pause:
+				case ViewMode.Result:
+				case ViewMode.GameOption:
+					
+					break;
 			}
+
+			AudioManager.Instance.PlayClick();
 		}
-		public void PlayClick()
-		{
-			audioManager.PlayClick();
-		}
+
 	}
 }

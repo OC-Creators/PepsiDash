@@ -2,10 +2,13 @@
 
 namespace General
 {
-    public class ParamBridge : MonoBehaviour
+    public class ParamBridge : SingletonMonoBehaviour<ParamBridge>
     {
         public Param param;
         public JsonManager<Param> jm;
+
+        protected override bool dontDestroyOnLoad { get { return true; } }
+
         private static ViewMode prevVMode = ViewMode.Dummy;
         private static ViewMode vmode = ViewMode.Dummy;
         public static ViewMode VMode
@@ -75,8 +78,6 @@ namespace General
             jm = new JsonManager<Param>(param_json);
             Debug.Log($"Import {param_json}");
             param = jm.Load();
-
-            DontDestroyOnLoad(this);
         }
 
         void OnDestroy()
