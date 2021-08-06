@@ -26,7 +26,7 @@ namespace UserInterface{
 				image.fillAmount -= 0.05f;
 			}
 			else if(image.fillAmount==0){
-				Clear.SendMessage("OnEnter");
+				//Clear.SendMessage("OnEnter");
 		}
 	}
 	}

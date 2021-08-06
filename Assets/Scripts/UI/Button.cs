@@ -8,6 +8,7 @@ namespace UserInterface
 	public class Button : MonoBehaviour
 	{
 		public GameObject button;
+
 		public void OnClickButton()
 		{
 			var mode = ParamBridge.VMode;
@@ -79,13 +80,47 @@ namespace UserInterface
 				break;
 
 				case ViewMode.GameEnd:
+				
 				case ViewMode.Pause:
+				switch (button.name)
+				{
+				case "ResumeButton":
+					ParamBridge.UpdateView(ViewMode.InGame);
+					break;
+
+				case "OptionButton":
+					ParamBridge.UpdateView(ViewMode.GameOption);
+					break;
+				}
+				break;
+
 				case ViewMode.Result:
+				switch (button.name)
+				{
+				case "RetlyButton":
+					ParamBridge.UpdateView(ViewMode.GameBegin);
+					break;
+
+				case "TitleButton":
+					ParamBridge.UpdateScreen(ScreenMode.Start);
+					break;
+
+				case "TwitterButton":
+					var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{35}』点";
+					Application.OpenURL(url);
+					break;
+				}
+				break;
+
 				case ViewMode.GameOption:
-					
+					switch (button.name)
+					{
+					case "BackButton":
+						ParamBridge.UpdateView(ViewMode.Pause);
+						break;
+					}
 					break;
 			}
-
 			AudioManager.Instance.PlayClick();
 		}
 
