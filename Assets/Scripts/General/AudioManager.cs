@@ -87,6 +87,12 @@ namespace General {
             }
         }
 
+        public void Replay()
+        {
+            source.Stop();
+            source.Play();
+        }
+
         public void PlayClick(AudioClip clip)
         {
             Debug.Assert(clip != null, $"{clip} is null");

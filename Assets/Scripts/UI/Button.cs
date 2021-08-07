@@ -69,53 +69,54 @@ namespace UserInterface
 					}
 					break;
 				case ViewMode.InGame:
-				switch (gameObject.name)
-				{
-					case "PauseButton":
-					ParamBridge.UpdateView(ViewMode.GameOption);
+					switch (gameObject.name)
+					{
+						case "PauseButton":
+						ParamBridge.UpdateView(ViewMode.Pause);
+						break;
+					}
 					break;
-				}
-				break;
 
 				case ViewMode.GameEnd:
+					break;
 				
 				case ViewMode.Pause:
-				switch (gameObject.name)
-				{
-				case "ResumeButton":
-					ParamBridge.UpdateView(ViewMode.InGame);
-					break;
+					switch (gameObject.name)
+					{
+						case "ResumeButton":
+							ParamBridge.UpdateView(ViewMode.InGame);
+							break;
 
-				case "OptionButton":
-					ParamBridge.UpdateView(ViewMode.GameOption);
+						case "OptionButton":
+							ParamBridge.UpdateView(ViewMode.GameOption);
+							break;
+					}
 					break;
-				}
-				break;
 
 				case ViewMode.Result:
-				switch (gameObject.name)
-				{
-				case "RetlyButton":
-					ParamBridge.UpdateView(ViewMode.GameBegin);
-					break;
+					switch (gameObject.name)
+					{
+						case "RetryButton":
+							ParamBridge.UpdateScreen(ScreenMode.Game);
+							break;
 
-				case "TitleButton":
-					ParamBridge.UpdateScreen(ScreenMode.Start);
-					break;
+						case "TitleButton":
+							ParamBridge.UpdateScreen(ScreenMode.Start);
+							break;
 
-				case "TwitterButton":
-					var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{35}』点";
-					Application.OpenURL(url);
+						case "TwitterButton":
+							var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{35}』点";
+							Application.OpenURL(url);
+							break;
+					}
 					break;
-				}
-				break;
 
 				case ViewMode.GameOption:
 					switch (gameObject.name)
 					{
-					case "BackButton":
-						ParamBridge.UpdateView(ViewMode.Pause);
-						break;
+						case "BackButton":
+							ParamBridge.UpdateView(ViewMode.Pause);
+							break;
 					}
 					break;
 			}

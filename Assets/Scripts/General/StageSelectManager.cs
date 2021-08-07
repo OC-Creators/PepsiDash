@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace General
 {
-    public class StageSelectManager : ScreenManager
+    public class StageSelectManager : ScreenManager<StageSelectManager>
     {
         protected override void Start()
         {
@@ -11,10 +11,7 @@ namespace General
             {
                 ParamBridge.SMode = ScreenMode.StageSelect;
             }
-            if (ParamBridge.VMode == ViewMode.Dummy)
-            {
-                ParamBridge.VMode = ViewMode.StageList;
-            }
+            
             ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
 
             AudioManager.Instance.UpdateClip("penguin");

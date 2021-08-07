@@ -3,9 +3,20 @@ using UnityEngine;
 
 namespace General {
     
-    public class GameManager : ScreenManager
+    public class GameManager : ScreenManager<GameManager>
     {
         private bool stopTheWorld = false;
+        private float elapsed = 0f;
+        public float Elapsed
+        {
+            get { return elapsed; }
+        }
+        private bool isOver = false;
+        public bool IsOver
+        {
+            get { return isOver; }
+            set { isOver = value; }
+        }
 
         protected override void Start()
         {
@@ -13,11 +24,8 @@ namespace General {
             {
                 ParamBridge.SMode = ScreenMode.Game;
             }
-            if (ParamBridge.VMode == ViewMode.Dummy)
-            {
-                ParamBridge.VMode = ViewMode.GameBegin;
-            }
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+
+            ParamBridge.UpdateView(ViewMode.InGame);
         }
 
         protected override void Update()
@@ -25,6 +33,11 @@ namespace General {
             if (stopTheWorld)
             {
                 Time.timeScale = 0f;
+            }
+
+            if (!isOver)
+            {
+                elapsed += Time.deltaTime;
             }
 
             base.Update();
@@ -40,39 +53,54 @@ namespace General {
                 case ViewMode.GameBegin:
                     if (curr == ViewMode.Result)
                     {
-                        Array.Find(views, v => v.name == curr.ToStringQuickly()).SetActive(false);
+                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
+                        AudioManager.Instance.Replay();
                     }
-                    ParamBridge.VMode = ViewMode.InGame;
                     break;
 
                 case ViewMode.InGame:
                     // Pauseビューを非表示
                     if (curr == ViewMode.Pause)
                     {
-                        Array.Find(views, v => v.name == curr.ToStringQuickly()).SetActive(false);
+                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
                         stopTheWorld = false;
+                        Time.timeScale = 1f;
                     }
                     break;
 
                 case ViewMode.GameEnd:
-                    ParamBridge.VMode = ViewMode.Result;
                     break;
 
                 case ViewMode.Pause:
                     // Pauseビューを表示
-                    Array.Find(views, v => v.name == next.ToStringQuickly()).SetActive(true);
-                    stopTheWorld = true;
+                    if (curr == ViewMode.GameOption)
+                    {
+                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
+                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
+                    }
+                    else if (curr == ViewMode.InGame)
+                    {
+                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
+                        stopTheWorld = true;
+                    }
                     break;
 
                 case ViewMode.GameOption:
                     // Pauseビューを非表示にし、GameOptionビューを表示
-                    Array.Find(views, v => v.name == curr.ToStringQuickly()).SetActive(false);
-                    Array.Find(views, v => v.name == next.ToStringQuickly()).SetActive(true);
+                    if (curr == ViewMode.Pause)
+                    {
+                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
+                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
+                    }
                     break;
 
                 case ViewMode.Result:
                     // Resultビューを表示
-                    Array.Find(views, v => v.name == next.ToStringQuickly()).SetActive(true);
+                    // GameEndを経由する場合はInGame -> GameEnd
+                    if (curr == ViewMode.InGame)
+                    {
+                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
+                    }
                     break;
             }
 

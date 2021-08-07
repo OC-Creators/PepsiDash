@@ -17,13 +17,10 @@ namespace General
             get { return vmode; }
             set
             {
-                if (vmode != value)
-                {
-                    prevVMode = vmode;
-                    vmode = value;
-                    _updateSignal = Signal.UpdateView;
-                    // Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {_updateSignal}");
-                }
+                prevVMode = vmode;
+                vmode = value;
+                updateSignal = Signal.UpdateView;
+                Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {updateSignal}");
             }
         }
 
@@ -39,14 +36,11 @@ namespace General
             get { return smode; }
             set
             {
-                if (smode != value)
-                {
-                    smode = value;
-                    prevVMode = vmode;
-                    vmode = smode.GetEntryViewMode();
-                    _updateSignal = Signal.UpdateScreen;
-                    // Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {_updateSignal}");
-                }
+                smode = value;
+                prevVMode = vmode;
+                vmode = smode.GetEntryViewMode();
+                updateSignal = Signal.UpdateScreen;
+                Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {updateSignal}");
             }
         }
 
@@ -82,11 +76,11 @@ namespace General
             set { seVolume = value; }
         }
 
-        private static Signal _updateSignal = Signal.Stay;
+        private static Signal updateSignal = Signal.Stay;
         public static Signal UpdateSignal
         {
-            get { return _updateSignal; }
-            set { _updateSignal = value; }
+            get { return updateSignal; }
+            set { updateSignal = value; }
         }
 
         public static void UpdateView(ViewMode vmode)

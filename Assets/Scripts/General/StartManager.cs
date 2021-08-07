@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace General
 {
-    public class StartManager : ScreenManager
+    public class StartManager : ScreenManager<StartManager>
     {
         protected override void Start()
         {
@@ -11,10 +11,7 @@ namespace General
             {
                 ParamBridge.SMode = ScreenMode.Start;
             }
-            if (ParamBridge.VMode == ViewMode.Dummy)
-            {
-                ParamBridge.VMode = ViewMode.Title;
-            }
+            
             ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
         }
     }
