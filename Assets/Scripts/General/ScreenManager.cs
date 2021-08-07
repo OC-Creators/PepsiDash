@@ -7,7 +7,11 @@ namespace General
     {
         [SerializeField]
         protected GameObject[] views;
-        // Update is called once per frame
+
+        protected virtual void Start()
+        {
+            
+        }
         protected virtual void Update()
         {
             switch (ParamBridge.UpdateSignal)

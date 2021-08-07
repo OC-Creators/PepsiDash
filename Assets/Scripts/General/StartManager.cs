@@ -5,7 +5,7 @@ namespace General
 {
     public class StartManager : ScreenManager
     {
-        void Start()
+        protected override void Start()
         {
             if (ParamBridge.SMode == ScreenMode.Dummy)
             {

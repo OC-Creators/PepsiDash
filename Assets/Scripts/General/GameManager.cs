@@ -7,7 +7,7 @@ namespace General {
     {
         private bool stopTheWorld = false;
 
-        void Start()
+        protected override void Start()
         {
             if (ParamBridge.SMode == ScreenMode.Dummy)
             {

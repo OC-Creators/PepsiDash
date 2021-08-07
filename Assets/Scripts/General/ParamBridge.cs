@@ -67,7 +67,7 @@ namespace General
         }
 
         // BGM音量
-        public static float bgmVolume = 0;
+        public static float bgmVolume = 1f;
         public static float BGMVolume
         {
             get { return bgmVolume; }
@@ -75,7 +75,7 @@ namespace General
         }
 
         // SE音量
-        public static float seVolume = 0;
+        public static float seVolume = 1f;
         public static float SEVolume
         {
             get { return seVolume; }
@@ -99,7 +99,7 @@ namespace General
             SMode = smode;
         }
 
-        void Awake()
+        protected override void Awake()
         {
             base.Awake();
             //var param_json = $"{Application.dataPath}/Resources/Data/param.json";
@@ -111,9 +111,6 @@ namespace General
             //bgmVolume = param.bgm_volume;
             //seVolume = param.se_volume;
             //jm.Dump(ref param);
-            score = 0;
-            bgmVolume = 1.0f;
-            seVolume = 1.0f;
         }
 
         void OnDestroy()

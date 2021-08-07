@@ -5,7 +5,7 @@ namespace General
 {
     public class StageSelectManager : ScreenManager
     {
-        void Start()
+        protected override void Start()
         {
             if (ParamBridge.SMode == ScreenMode.Dummy)
             {
@@ -16,6 +16,8 @@ namespace General
                 ParamBridge.VMode = ViewMode.StageList;
             }
             ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+
+            AudioManager.Instance.UpdateClip("penguin");
         }
     }
 }

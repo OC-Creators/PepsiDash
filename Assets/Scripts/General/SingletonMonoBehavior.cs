@@ -6,13 +6,15 @@ namespace General
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
         protected abstract bool dontDestroyOnLoad { get; }
-        private static T instance;
+        protected static T instance;
         public static T Instance
         {
             get
             {
+                // nullチェック
                 if (instance == null)
                 {
+                    // Tがアタッチされているゲームオブジェクトを探す
                     Type t = typeof(T);
 
                     instance = FindObjectOfType(t) as T;
@@ -26,14 +28,14 @@ namespace General
             }
         }
 
-        virtual protected void Awake()
+        protected virtual void Awake()
         {
             // 他のゲームオブジェクトにアタッチされているか調べる
             // アタッチされている場合は破棄する。
             CheckInstance();
         }
 
-        protected bool CheckInstance()
+        protected virtual bool CheckInstance()
         {
             if (instance == null)
             {
@@ -48,7 +50,7 @@ namespace General
             {
                 return true;
             }
-            Destroy(this);
+            Destroy(this.gameObject);
             return false;
         }
     }
