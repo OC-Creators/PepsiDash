@@ -25,21 +25,23 @@ namespace General {
         }
 
         public void Export(string json_str, string path) {
-            using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             {
                 using (var sw = new StreamWriter(fs, Encoding.UTF8))
                 {
-                    sw.WriteLineAsync(json_str);
+                    sw.WriteLine(json_str);
                 } 
             }
         }
 
-        public T Load() {
-            return JsonUtility.FromJson<T>(json);
+        public void Load(ref T obj) {
+            Debug.Log(json);
+            JsonUtility.FromJsonOverwrite(json, obj);
         }
 
-        public void Dump(T obj) {
-            var json_str = JsonUtility.ToJson(obj, prettyPrint:true);
+        public void Dump(ref T obj) {
+            var json_str = JsonUtility.ToJson(obj);
+            Debug.Log($"param: {json_str}");
             Export(json_str, this.path);
         }
     }
