@@ -33,18 +33,18 @@ namespace Player
         {
             m_targets.Add(i_foundObject);
             //m_renderer.material = m_foundMaterial;
-            Debug.Log(i_foundObject);
-            Debug.Log("Found");
+            //Debug.Log(i_foundObject);
+            //Debug.Log("Found");
         }
 
         private void OnLost(GameObject i_lostObject)
         {
             m_targets.Remove(i_lostObject);
-            Debug.Log("Lost");
+            //Debug.Log("Lost");
             if (m_targets.Count == 0)
             {
                 // m_renderer.material = m_defaultMaterial;
-                Debug.Log("Lost");
+                //Debug.Log("Lost");
             }
         }
 

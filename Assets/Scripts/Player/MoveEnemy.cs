@@ -213,6 +213,7 @@ namespace Player
 
                         if (elapsedTime > patrolWaitTime)
                         {
+                            resetEnemyPosition();
                             changeState("patrol");
                         }
                     }
@@ -264,8 +265,8 @@ namespace Player
                     arrived = false;
                     elapsedTime = 0f;
                     state = newState;
-                    num = 0;
-                    resetEnemyPosition(); // 初期位置、方向に飛ばす関数
+                    //num = 0;
+                    //resetEnemyPosition(); // 初期位置、方向に飛ばす関数
                     setPosition.NextPosition(num);
                     destination = setPosition.GetDestination();
                     break;
@@ -311,12 +312,19 @@ namespace Player
 
         public void setPlayerPos(GameObject player)
         {
-            if (player != null) playerPos = player.transform.position;
+            if (player != null)
+            {
+                playerPos = player.transform.position;
+                //Debug.Log("SetPlayerPos!!");
+            }
+
 
         }
 
         void resetEnemyPosition()
         {
+            num = 0;
+
             enemyController.enabled = false;
 
             transform.position = firstPlayerPos;

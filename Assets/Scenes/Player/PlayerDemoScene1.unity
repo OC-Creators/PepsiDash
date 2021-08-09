@@ -434,8 +434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ed3a8a3bd1f9e4db1ee1f5b3841339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovingTurnSpeed: 360
-  m_StationaryTurnSpeed: 180
+  m_MovingTurnSpeed: 120
+  m_StationaryTurnSpeed: 60
   m_JumpPower: 12
   m_GravityMultiplier: 2
   speed: 10
@@ -518,6 +518,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -1067,6 +1082,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -1439,6 +1469,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -2731,6 +2776,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -3740,6 +3800,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
