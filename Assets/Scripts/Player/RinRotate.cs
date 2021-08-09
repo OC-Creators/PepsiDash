@@ -12,7 +12,7 @@ public class RinRotate : MonoBehaviour
     public Transform head = null;
     public GameObject Search_Caution;
     public GameObject Search_Find;
-    //public float hosei = 1.0f;
+    public float hosei = 1.0f;
  
 
 
@@ -30,8 +30,8 @@ public class RinRotate : MonoBehaviour
         //Search_Caution.transform.LookAt(new Vector3(head.transform.forward.x * hosei, 0, head.transform.forward.z * hosei));
         //Search_Find.transform.LookAt(new Vector3(head.transform.forward.x * hosei, 0, head.transform.forward.z * hosei));
 
-        Search_Caution.transform.rotation = Quaternion.LookRotation(new Vector3(head.transform.forward.x, 0, head.transform.forward.z), Vector3.up);
-        Search_Find.transform.rotation = Quaternion.LookRotation(new Vector3(head.transform.forward.x, 0, head.transform.forward.z), Vector3.up);
+        Search_Caution.transform.rotation = Quaternion.LookRotation(new Vector3(head.transform.forward.x * hosei, 0, head.transform.forward.z * hosei), Vector3.up);
+        Search_Find.transform.rotation = Quaternion.LookRotation(new Vector3(head.transform.forward.x * hosei, 0, head.transform.forward.z * hosei), Vector3.up);
 
     }
 }
