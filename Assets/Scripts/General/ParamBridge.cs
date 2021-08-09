@@ -9,6 +9,7 @@ namespace General
 
         protected override bool dontDestroyOnLoad { get { return true; } }
 
+        // 画面モード
         private static ViewMode prevVMode = ViewMode.Dummy;
         private static ViewMode vmode = ViewMode.Dummy;
         public static ViewMode VMode
@@ -16,13 +17,10 @@ namespace General
             get { return vmode; }
             set
             {
-                if (vmode != value)
-                {
-                    prevVMode = vmode;
-                    vmode = value;
-                    _updateSignal = Signal.UpdateView;
-                    // Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {_updateSignal}");
-                }
+                prevVMode = vmode;
+                vmode = value;
+                updateSignal = Signal.UpdateView;
+                Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {updateSignal}");
             }
         }
 
@@ -31,23 +29,22 @@ namespace General
             get { return prevVMode; }
         }
 
+        // シーンモード
         private static ScreenMode smode = ScreenMode.Dummy;
         public static ScreenMode SMode
         {
             get { return smode; }
             set
             {
-                if (smode != value)
-                {
-                    smode = value;
-                    prevVMode = vmode;
-                    vmode = smode.GetEntryViewMode();
-                    _updateSignal = Signal.UpdateScreen;
-                    // Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {_updateSignal}");
-                }
+                smode = value;
+                prevVMode = vmode;
+                vmode = smode.GetEntryViewMode();
+                updateSignal = Signal.UpdateScreen;
+                Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {updateSignal}");
             }
         }
 
+        // 遷移シグナル
         public enum Signal
         {
             Stay,
@@ -55,11 +52,35 @@ namespace General
             UpdateScreen
         }
 
-        private static Signal _updateSignal = Signal.Stay;
+        // スコア
+        public static int score = 0;
+        public static int Score
+        {
+            get { return score; }
+            set { score = value; }
+        }
+
+        // BGM音量
+        public static float bgmVolume = 1f;
+        public static float BGMVolume
+        {
+            get { return bgmVolume; }
+            set { bgmVolume = value; }
+        }
+
+        // SE音量
+        public static float seVolume = 1f;
+        public static float SEVolume
+        {
+            get { return seVolume; }
+            set { seVolume = value; }
+        }
+
+        private static Signal updateSignal = Signal.Stay;
         public static Signal UpdateSignal
         {
-            get { return _updateSignal; }
-            set { _updateSignal = value; }
+            get { return updateSignal; }
+            set { updateSignal = value; }
         }
 
         public static void UpdateView(ViewMode vmode)
@@ -72,17 +93,31 @@ namespace General
             SMode = smode;
         }
 
-        void Start()
+        protected override void Awake()
         {
-            var param_json = $"{Application.dataPath}/Resources/Data/param.json";
-            jm = new JsonManager<Param>(param_json);
-            Debug.Log($"Import {param_json}");
-            param = jm.Load();
+            base.Awake();
+            //var param_json = $"{Application.dataPath}/Resources/Data/param.json";
+            //jm = new JsonManager<Param>(param_json);
+            //Debug.Log($"Import {param_json}");
+            //param = new Param();
+            //jm.Load(ref param);
+            //score = param.score;
+            //bgmVolume = param.bgm_volume;
+            //seVolume = param.se_volume;
+            //jm.Dump(ref param);
         }
 
         void OnDestroy()
         {
-            jm.Dump(param);
+            //param = new Param
+            //{
+            //    bgm_volume = AudioManager.Instance.BGMVolume,
+            //    se_volume = AudioManager.Instance.SEVolume,
+            //    score = Score,
+            //    unlock = 0
+            //};
+
+            //jm.Dump(ref param);
         }
     }
 }
