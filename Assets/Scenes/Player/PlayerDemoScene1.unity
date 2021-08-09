@@ -434,8 +434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ed3a8a3bd1f9e4db1ee1f5b3841339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovingTurnSpeed: 360
-  m_StationaryTurnSpeed: 180
+  m_MovingTurnSpeed: 120
+  m_StationaryTurnSpeed: 60
   m_JumpPower: 12
   m_GravityMultiplier: 2
   speed: 10
@@ -518,6 +518,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -1067,6 +1082,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -1439,6 +1469,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -1783,6 +1828,38 @@ MonoBehaviour:
   - {fileID: 278193956}
   - {fileID: 652497219}
   - {fileID: 1710287002}
+--- !u!1 &767189050 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3645038169798010632, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3644536660566783355}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &767189054
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767189050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &767189058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767189050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12f9979c9fcec1408b234a1292dbc3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &844088784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2731,6 +2808,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed
@@ -2750,6 +2842,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Rin2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3645038169798010632, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3646839052326761406, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
@@ -3740,6 +3837,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1137288203}
     m_Modifications:
+    - target: {fileID: 3644536659450595056, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659450595057, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: escapeDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3644536659800005667, guid: 4334f6c4352f4084d9b978bd6c3f707b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3644536660259464338, guid: 4334f6c4352f4084d9b978bd6c3f707b,
         type: 3}
       propertyPath: walkSpeed

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Player
 {
-    public class SearchingBehavior_Caution : MonoBehaviour
+    public class SBC2 : MonoBehaviour
     {
         public event System.Action<GameObject> onFound = (obj) => { };
         public event System.Action<GameObject> onLost = (obj) => { };
@@ -33,8 +33,8 @@ namespace Player
 
         void Start()
         {
-            if (finder == null) transform.GetComponentInParent<Finder_Caution>();
-            if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
+            //if (finder == null) transform.GetComponentInParent<Finder_Caution>();
+            //if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
         }
 
         public float SearchAngle
@@ -80,8 +80,8 @@ namespace Player
 
         private void Update()
         {
-            UpdateFoundObject();
-            Searching();
+            //UpdateFoundObject();
+            //Searching();
         }
 
         private void UpdateFoundObject()
@@ -231,11 +231,7 @@ namespace Player
             {
                 case "patrol":
                     player = SearchInList();
-                    if (player != null)
-                    {
-                        moveEnemy.changeState("caution");
-                        moveEnemy.setPlayerPos(player);
-                    }
+                    if (player != null) moveEnemy.changeState("caution");
                     break;
                 case "caution":
                     player = SearchInList();

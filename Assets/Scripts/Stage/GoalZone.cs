@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using General;
 
-namespace Player
+namespace Stage
 {
     public class GoalZone : MonoBehaviour
     {
@@ -20,7 +21,11 @@ namespace Player
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player")) Debug.Log("Goal!!");
+            if (other.gameObject.CompareTag("Player")) 
+            {
+                GameManager.Instance.Reached = true;
+                Debug.Log("Goal!!");
+            }
         }
 
     }
