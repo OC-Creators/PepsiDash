@@ -3,19 +3,18 @@ using UnityEngine;
 
 namespace General
 {
-    public class StageSelectManager : ScreenManager
+    public class StageSelectManager : ScreenManager<StageSelectManager>
     {
-        void Start()
+        protected override void Start()
         {
             if (ParamBridge.SMode == ScreenMode.Dummy)
             {
                 ParamBridge.SMode = ScreenMode.StageSelect;
             }
-            if (ParamBridge.VMode == ViewMode.Dummy)
-            {
-                ParamBridge.VMode = ViewMode.StageList;
-            }
+            
             ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+
+            AudioManager.Instance.UpdateClip("penguin");
         }
     }
 }

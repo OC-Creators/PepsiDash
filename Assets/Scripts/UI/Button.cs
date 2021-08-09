@@ -7,15 +7,13 @@ namespace UserInterface
 {
 	public class Button : MonoBehaviour
 	{
-		public GameObject button;
-
-		public void OnClickButton()
+		public void OnClickButton(AudioClip clip)
 		{
 			var mode = ParamBridge.VMode;
 			switch (mode)
 			{
 				case ViewMode.Title:
-					switch (button.name)
+					switch (gameObject.name)
 					{
 						case "StartButton":
 							ParamBridge.UpdateScreen(ScreenMode.StageSelect);
@@ -27,37 +25,37 @@ namespace UserInterface
 							ParamBridge.UpdateView(ViewMode.Credit);
 							break;
 						default:
-							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
 							break;
 					}
 					break;
 
 				case ViewMode.StartOption:
-					switch (button.name)
+					switch (gameObject.name)
 					{
 						case "HomeButton1":
 							ParamBridge.UpdateView(ViewMode.Title);
 							break;
 						default:
-							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
 							break;
 					}
 					break;
 
 				case ViewMode.Credit:
-					switch (button.name)
+					switch (gameObject.name)
 					{
 						case "HomeButton2":
 							ParamBridge.UpdateView(ViewMode.Title);
 							break;
 						default:
-							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
 							break;
 					}
 					break;
 				
 				case ViewMode.StageList:
-					switch (button.name)
+					switch (gameObject.name)
 					{
 						case "Stage1Button":
 							ParamBridge.UpdateScreen(ScreenMode.Game);
@@ -74,62 +72,63 @@ namespace UserInterface
 							break;
 							*/
 						default:
-							Debug.Log($"Unknown Button Name: {button.name} in {mode.ToStringQuickly()}");
+							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
 							break;
 					}
 					break;
 				case ViewMode.InGame:
-				switch (button.name)
-				{
-					case "PauseButton":
-					ParamBridge.UpdateView(ViewMode.GameOption);
-					break;
-				}
-				break;
-
-				case ViewMode.GameEnd:
-				
-				case ViewMode.Pause:
-				switch (button.name)
-				{
-				case "ResumeButton":
-					ParamBridge.UpdateView(ViewMode.InGame);
-					break;
-
-				case "OptionButton":
-					ParamBridge.UpdateView(ViewMode.GameOption);
-					break;
-				}
-				break;
-
-				case ViewMode.Result:
-				switch (button.name)
-				{
-				case "RetlyButton":
-					ParamBridge.UpdateView(ViewMode.GameBegin);
-					break;
-
-				case "TitleButton":
-					ParamBridge.UpdateScreen(ScreenMode.Start);
-					break;
-
-				case "TwitterButton":
-					var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{35}』点";
-					Application.OpenURL(url);
-					break;
-				}
-				break;
-
-				case ViewMode.GameOption:
-					switch (button.name)
+					switch (gameObject.name)
 					{
-					case "BackButton":
+						case "PauseButton":
 						ParamBridge.UpdateView(ViewMode.Pause);
 						break;
 					}
 					break;
+
+				case ViewMode.GameEnd:
+					break;
+				
+				case ViewMode.Pause:
+					switch (gameObject.name)
+					{
+						case "ResumeButton":
+							ParamBridge.UpdateView(ViewMode.InGame);
+							break;
+
+						case "OptionButton":
+							ParamBridge.UpdateView(ViewMode.GameOption);
+							break;
+					}
+					break;
+
+				case ViewMode.Result:
+					switch (gameObject.name)
+					{
+						case "RetryButton":
+							ParamBridge.UpdateScreen(ScreenMode.Game);
+							break;
+
+						case "TitleButton":
+							ParamBridge.UpdateScreen(ScreenMode.Start);
+							break;
+
+						case "TwitterButton":
+							var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{35}』点";
+							Application.OpenURL(url);
+							break;
+					}
+					break;
+
+				case ViewMode.GameOption:
+					switch (gameObject.name)
+					{
+						case "BackButton":
+							ParamBridge.UpdateView(ViewMode.Pause);
+							break;
+					}
+					break;
 			}
-			AudioManager.Instance.PlayClick();
+			AudioManager.Instance.PlayClick(clip);
 		}
 
 	}

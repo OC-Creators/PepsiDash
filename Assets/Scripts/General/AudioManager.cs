@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,30 +9,94 @@ namespace General {
     {
         public Slider bGMSlider;
         public Slider sESlider;
-        private AudioSource bgm;
-        private AudioSource se;
+        public List<AudioClip> bGMClip;
+        private AudioSource source;
+        private float seVolume = 1f;
 
         protected override bool dontDestroyOnLoad { get { return true; } }
 
+        public AudioSource Source
+        {
+            get { return source; }
+            set { source = value; }
+        }
+
         // Start is called before the first frame update
-        void Start()
+        protected override void Awake()
+        {
+            if (CheckInstance())
+            {
+                initSource();
+                source.Play();
+            }
+        }
+
+        protected override bool CheckInstance()
+        {
+            if (instance == null)
+            {
+                instance = this as AudioManager;
+                if (dontDestroyOnLoad)
+                {
+                    DontDestroyOnLoad(this);
+                }
+                return true;
+            }
+            else if (Instance == this)
+            {
+                return true;
+            }
+
+            bGMClip.ForEach(clip =>
+            {
+                if (!AudioManager.Instance.bGMClip.Contains(clip))
+                {
+                    AudioManager.Instance.bGMClip.Add(clip);
+                }
+            });
+            Destroy(gameObject);
+            return false;
+        }
+
+        public void initSource()
         {
             // オーディオ管理
-            var audio = this.GetComponents<AudioSource>();
-            this.bgm = audio[0];
-            this.se = audio[1];
-            bGMSlider.onValueChanged.AddListener(value => this.bgm.volume = value);//ゲーム上のBGM音量と紐づけする
-            sESlider.onValueChanged.AddListener(value => this.se.volume = value);//ゲーム上のSE音量と紐づけする
+            Debug.Assert(bGMClip[0] != null, $"BGMClip is null");
+            source = gameObject.AddComponent<AudioSource>();
+            source.clip = bGMClip[0];
+            source.volume = ParamBridge.bgmVolume;
+            source.loop = true;
+
+            bGMSlider?.onValueChanged.AddListener(value => source.volume = value);//ゲーム上のBGM音量と紐づけする
+            sESlider?.onValueChanged.AddListener(value => seVolume = value);//ゲーム上のSE音量と紐づけする
+
+            Debug.Log("AudioManager: Initialized");
         }
 
-        public void PlayClick()
+        public void UpdateClip(string clipName)
         {
-            this.se.PlayOneShot(this.se.clip);
+            var newClip = bGMClip.Find(clip => clip.name == clipName);
+            if (newClip != null)
+            {
+                source.clip = newClip;
+                source.Play();
+            }
+            else
+            {
+                Debug.Log($"No such BGM clip `{clipName}'");
+            }
         }
 
-        public void changeBGM(AudioSource audio)
+        public void Replay()
         {
-            this.bgm = audio;
+            source.Stop();
+            source.Play();
+        }
+
+        public void PlayClick(AudioClip clip)
+        {
+            Debug.Assert(clip != null, $"{clip} is null");
+            source.PlayOneShot(clip, seVolume);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace General {
 				case ViewMode.GameBegin:
 					return "GameBeginView";
 				case ViewMode.InGame:
-					return "InGameView";
+					return "GameView";
 				case ViewMode.GameEnd:
 					return "GameEndView";
 				case ViewMode.Result:
