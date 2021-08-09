@@ -70,14 +70,15 @@ namespace UserInterface
 							break;
 					}
 					break;
+
 				case ViewMode.InGame:
-				switch (button.name)
-				{
-					case "PauseButton":
-					ParamBridge.UpdateView(ViewMode.GameOption);
+					switch (button.name)
+					{
+						case "PauseButton":
+						ParamBridge.UpdateView(ViewMode.GameOption);
+						break;
+					}	
 					break;
-				}
-				break;
 
 				case ViewMode.GameEnd:
 				
