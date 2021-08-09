@@ -23,7 +23,7 @@ namespace Stage
         {
             if (other.gameObject.CompareTag("Player")) 
             {
-                ParamBridge.UpdateView(ViewMode.Result);
+                GameManager.Instance.Reached = true;
                 Debug.Log("Goal!!");
             }
         }

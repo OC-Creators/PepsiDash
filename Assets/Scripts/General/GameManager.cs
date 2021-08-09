@@ -25,6 +25,13 @@ namespace General {
             set { catched = value; }
         }
 
+        private bool reached = false;
+        public bool Reached
+        {
+            get { return reached; }
+            set { reached = value; }
+        }
+
         protected override void Start()
         {
             if (ParamBridge.SMode == ScreenMode.Dummy)
