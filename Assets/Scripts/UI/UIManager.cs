@@ -32,7 +32,6 @@ namespace UserInterface {
 			{
 				image.fillAmount = 0f;
 				resultText.text = $"Score: {score}";
-				GameManager.Instance.IsOver = true;
 				// GameEndを経由する場合はResult -> GameEnd
 				ParamBridge.UpdateView(ViewMode.Result);
 				Debug.Log("Game is over");
