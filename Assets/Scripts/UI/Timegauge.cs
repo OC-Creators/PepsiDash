@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using General;
 
 namespace UserInterface{
 	
@@ -9,8 +10,7 @@ namespace UserInterface{
 	{
 
 		public Image image;
-		private float timeleft;
-		public GameObject Clear;
+		private bool isOver = false;
 		// Start is called before the first frame update
 		void Start()
 		{
@@ -20,16 +20,23 @@ namespace UserInterface{
 		// Update is called once per frame
 		void Update()
 		{
-			timeleft -= Time.deltaTime;
-			if (timeleft <= 0.0) {
-				timeleft = 1.0f;
-				image.fillAmount -= 0.1f;
-				//ここに処理
+			if (isOver)
+			{
+				return;
 			}
-			else if(image.fillAmount==0){
-				//Debug.Log("あ");
-				Clear.SendMessage("OnEnter");
+
+			if (GameManager.Instance.Elapsed < 30f)
+			{
+				image.fillAmount = 1f - GameManager.Instance.Elapsed / 30f;
+			}
+			else
+			{
+				image.fillAmount = 0f;
+				isOver = true;
+				// GameEndを経由する場合はResult -> GameEnd
+				ParamBridge.UpdateView(ViewMode.Result);
+				Debug.Log("Game is over");
+			}
 		}
-	}
 	}
 }
