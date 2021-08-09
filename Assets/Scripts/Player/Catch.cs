@@ -23,7 +23,7 @@ namespace Player
 
         void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.CompareTag("Player")) gm.instance.Catched = true;
+            if(collision.gameObject.CompareTag("Player")) gm.Instance.Catched = true;
         }
     }
 }
