@@ -65,6 +65,14 @@ namespace UserInterface
 						case "Stage2Button":
 							ParamBridge.UpdateScreen(ScreenMode.Game);
 							break;
+						/*
+						case "RightButton":
+
+							break;
+						case "LeftButton":
+
+							break;
+							*/
 						default:
 							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
 							break;
