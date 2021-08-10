@@ -21,15 +21,17 @@
 # /[Aa]ssets/AssetStoreTools*
 
 # Foreign Library
-
+# UI
 /[Aa]ssets/SkySerie Freebie*
 /[Aa]ssets/TextMesh Pro*
-/{Aa]ssets/naichilab*
-
+/[Aa]ssets/naichilab*
+# Player
 /[Aa]ssets/Standard Assets*
 /[Aa]ssets/unity-chan!*
 /[Aa]ssets/SampleScenes*
+# Stage
 /[Aa]ssets/POLYGON city pack*
+/[Aa]ssets/Stylized Vehicles Pack Free*
 
 # Data Files
 /[Aa]ssets/Resources/Data/param.json*

@@ -17,7 +17,6 @@ namespace UserInterface {
 		{
 			stage1_button = GameObject.Find ("Canvas/Stage1Button").GetComponent<Button> ();
 			stage2_button = GameObject.Find ("Canvas/Stage2Button").GetComponent<Button> ();
-
 		}
 
 		void Update(){

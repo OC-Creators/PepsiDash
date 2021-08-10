@@ -21,6 +21,12 @@ namespace General {
             set { source = value; }
         }
 
+        public float SEVolume
+        {
+            get { return seVolume; }
+            set { seVolume = value; }
+        }
+
         // Start is called before the first frame update
         protected override void Awake()
         {
@@ -66,9 +72,18 @@ namespace General {
             source.clip = bGMClip[0];
             source.volume = ParamBridge.bgmVolume;
             source.loop = true;
-
-            bGMSlider?.onValueChanged.AddListener(value => source.volume = value);//ゲーム上のBGM音量と紐づけする
-            sESlider?.onValueChanged.AddListener(value => seVolume = value);//ゲーム上のSE音量と紐づけする
+            seVolume = ParamBridge.SEVolume;
+            //ゲーム上の音量と紐づけする
+            if (bGMSlider != null) 
+            {
+                bGMSlider.value = source.volume;
+                bGMSlider.onValueChanged.AddListener(value => source.volume = value);
+            }
+            if (sESlider != null) 
+            {
+                sESlider.value = source.volume;
+                sESlider.onValueChanged.AddListener(value => seVolume = value);
+            }
 
             Debug.Log("AudioManager: Initialized");
         }
