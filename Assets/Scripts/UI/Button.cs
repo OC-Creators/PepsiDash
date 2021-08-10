@@ -35,6 +35,8 @@ namespace UserInterface
 					{
 						case "HomeButton1":
 							ParamBridge.UpdateView(ViewMode.Title);
+							ParamBridge.BGMVolume = AudioManager.Instance.Source.volume;
+							ParamBridge.SEVolume = AudioManager.Instance.SEVolume;
 							break;
 						default:
 							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
@@ -116,6 +118,8 @@ namespace UserInterface
 					{
 						case "BackButton":
 							ParamBridge.UpdateView(ViewMode.Pause);
+							ParamBridge.BGMVolume = AudioManager.Instance.Source.volume;
+							ParamBridge.SEVolume = AudioManager.Instance.SEVolume;
 							break;
 					}
 					break;

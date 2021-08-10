@@ -26,8 +26,8 @@ namespace UserInterface {
 				return;
 			}
 
-			var rest = 30f - Math.Floor(gm.Elapsed);
-			var bonus = 0f;
+			var rest = 30 - (int)Math.Floor(gm.Elapsed);
+			var bonus = 0;
 			var score = rest + bonus;
 			// (@miki) 将来的にアイテムボーナス（コインとか）を導入して加算する予定
 			scoreText.text = "Score: -";
@@ -38,7 +38,9 @@ namespace UserInterface {
 				image.fillAmount = 0f;
 				resultText.text = gm.Reached ? "Stage1 Clear!!" : "Stage1 Failed";
 				// (@miki) ペプシの残り残量(最大30点) + ゲームクリアでボーナス20点
-				resultScoreText.text = gm.Reached ? $"Score: {rest += 20}" : $"Score: {score}";
+				resultScoreText.text = gm.Reached ? $"Score: {score += 20}" : $"Score: {score}";
+				// ハイスコア更新
+				ParamBridge.HighScore = score;
 				// GameEndを経由する場合はResult -> GameEnd
 				ParamBridge.UpdateView(ViewMode.Result);
 				Debug.Log("Game is over");
