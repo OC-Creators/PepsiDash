@@ -18,6 +18,20 @@ namespace General {
             set { isOver = value; }
         }
 
+        private bool catched = false;
+        public bool Catched
+        {
+            get { return catched; }
+            set { catched = value; }
+        }
+
+        private bool reached = false;
+        public bool Reached
+        {
+            get { return reached; }
+            set { reached = value; }
+        }
+
         protected override void Start()
         {
             if (ParamBridge.SMode == ScreenMode.Dummy)
@@ -99,6 +113,7 @@ namespace General {
                     // GameEndを経由する場合はInGame -> GameEnd
                     if (curr == ViewMode.InGame)
                     {
+                        isOver = true;
                         Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
                     }
                     break;

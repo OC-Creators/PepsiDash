@@ -35,13 +35,11 @@ namespace General {
         }
 
         public void Load(ref T obj) {
-            Debug.Log(json);
             JsonUtility.FromJsonOverwrite(json, obj);
         }
 
         public void Dump(ref T obj) {
-            var json_str = JsonUtility.ToJson(obj);
-            Debug.Log($"param: {json_str}");
+            var json_str = JsonUtility.ToJson(obj, true);
             Export(json_str, this.path);
         }
     }

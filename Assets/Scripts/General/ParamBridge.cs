@@ -53,12 +53,17 @@ namespace General
         }
 
         // スコア
-        public static int score = 0;
-        public static int Score
+        public static int highScore = 0;
+        public static int HighScore
         {
-            get { return score; }
-            set { score = value; }
-        }
+            get { return highScore; }
+            set 
+            { 
+                if (value > highScore)
+                {
+                    highScore = value; }
+                } 
+            }
 
         // BGM音量
         public static float bgmVolume = 1f;
@@ -96,28 +101,27 @@ namespace General
         protected override void Awake()
         {
             base.Awake();
-            //var param_json = $"{Application.dataPath}/Resources/Data/param.json";
-            //jm = new JsonManager<Param>(param_json);
-            //Debug.Log($"Import {param_json}");
-            //param = new Param();
-            //jm.Load(ref param);
-            //score = param.score;
-            //bgmVolume = param.bgm_volume;
-            //seVolume = param.se_volume;
-            //jm.Dump(ref param);
+            var param_json = $"{Application.dataPath}/Resources/Data/param.json";
+            jm = new JsonManager<Param>(param_json);
+            Debug.Log($"Import {param_json}");
+            // param = new Param();
+            jm.Load(ref param);
+            highScore = param.high_score;
+            bgmVolume = param.bgm_volume;
+            seVolume = param.se_volume;
         }
 
         void OnDestroy()
         {
-            //param = new Param
-            //{
-            //    bgm_volume = AudioManager.Instance.BGMVolume,
-            //    se_volume = AudioManager.Instance.SEVolume,
-            //    score = Score,
-            //    unlock = 0
-            //};
+            param = new Param
+            {
+               bgm_volume = bgmVolume,
+               se_volume = seVolume,
+               high_score = highScore,
+               unlock = 0
+            };
 
-            //jm.Dump(ref param);
+            jm.Dump(ref param);
         }
     }
 }
