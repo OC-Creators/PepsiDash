@@ -27,6 +27,8 @@ namespace General {
             set { seVolume = value; }
         }
 
+        private ParamBridge pb;
+
         // Start is called before the first frame update
         protected override void Awake()
         {
@@ -66,13 +68,14 @@ namespace General {
 
         public void initSource()
         {
+            pb = ParamBridge.Instance;
             // オーディオ管理
             Debug.Assert(bGMClip[0] != null, $"BGMClip is null");
             source = gameObject.AddComponent<AudioSource>();
             source.clip = bGMClip[0];
-            source.volume = ParamBridge.bgmVolume;
+            source.volume = pb.BGMVolume;
             source.loop = true;
-            seVolume = ParamBridge.SEVolume;
+            seVolume = pb.SEVolume;
             //ゲーム上の音量と紐づけする
             if (bGMSlider != null) 
             {

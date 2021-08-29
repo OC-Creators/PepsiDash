@@ -7,22 +7,27 @@ namespace UserInterface
 {
 	public class Button : MonoBehaviour
 	{
+		private ParamBridge pb;
+		void Start()
+		{
+			pb = ParamBridge.Instance;
+		}
 		public void OnClickButton(AudioClip clip)
 		{
-			var mode = ParamBridge.VMode;
+			var mode = pb.VMode;
 			switch (mode)
 			{
 				case ViewMode.Title:
 					switch (gameObject.name)
 					{
 						case "StartButton":
-							ParamBridge.UpdateScreen(ScreenMode.StageSelect);
+							pb.UpdateScreen(ScreenMode.StageSelect);
 							break;
 						case "OptionButton":
-							ParamBridge.UpdateView(ViewMode.StartOption);
+							pb.UpdateView(ViewMode.StartOption);
 							break;
 						case "CreditButton":
-							ParamBridge.UpdateView(ViewMode.Credit);
+							pb.UpdateView(ViewMode.Credit);
 							break;
 						default:
 							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
@@ -34,9 +39,9 @@ namespace UserInterface
 					switch (gameObject.name)
 					{
 						case "HomeButton1":
-							ParamBridge.UpdateView(ViewMode.Title);
-							ParamBridge.BGMVolume = AudioManager.Instance.Source.volume;
-							ParamBridge.SEVolume = AudioManager.Instance.SEVolume;
+							pb.UpdateView(ViewMode.Title);
+							pb.BGMVolume = AudioManager.Instance.Source.volume;
+							pb.SEVolume = AudioManager.Instance.SEVolume;
 							break;
 						default:
 							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
@@ -48,7 +53,7 @@ namespace UserInterface
 					switch (gameObject.name)
 					{
 						case "HomeButton2":
-							ParamBridge.UpdateView(ViewMode.Title);
+							pb.UpdateView(ViewMode.Title);
 							break;
 						default:
 							Debug.Log($"Unknown Button Name: {gameObject.name} in {mode.ToStringQuickly()}");
@@ -60,10 +65,10 @@ namespace UserInterface
 					switch (gameObject.name)
 					{
 						case "Stage1Button":
-							ParamBridge.UpdateScreen(ScreenMode.Game);
+							pb.UpdateScreen(ScreenMode.Game);
 							break;
 						case "Stage2Button":
-							ParamBridge.UpdateScreen(ScreenMode.Game);
+							pb.UpdateScreen(ScreenMode.Game);
 							break;
 						/*
 						case "RightButton":
@@ -82,7 +87,7 @@ namespace UserInterface
 					switch (gameObject.name)
 					{
 						case "PauseButton":
-						ParamBridge.UpdateView(ViewMode.Pause);
+						pb.UpdateView(ViewMode.Pause);
 						break;
 					}
 					break;
@@ -94,11 +99,11 @@ namespace UserInterface
 					switch (gameObject.name)
 					{
 						case "ResumeButton":
-							ParamBridge.UpdateView(ViewMode.InGame);
+							pb.UpdateView(ViewMode.InGame);
 							break;
 
 						case "OptionButton":
-							ParamBridge.UpdateView(ViewMode.GameOption);
+							pb.UpdateView(ViewMode.GameOption);
 							break;
 					}
 					break;
@@ -107,15 +112,15 @@ namespace UserInterface
 					switch (gameObject.name)
 					{
 						case "RetryButton":
-							ParamBridge.UpdateScreen(ScreenMode.Game);
+							pb.UpdateScreen(ScreenMode.Game);
 							break;
 
 						case "TitleButton":
-							ParamBridge.UpdateScreen(ScreenMode.Start);
+							pb.UpdateScreen(ScreenMode.Start);
 							break;
 
 						case "TwitterButton":
-							var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{35}』点";
+							var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{pb.HighScore}』点";
 							Application.OpenURL(url);
 							break;
 					}
@@ -125,9 +130,9 @@ namespace UserInterface
 					switch (gameObject.name)
 					{
 						case "BackButton":
-							ParamBridge.UpdateView(ViewMode.Pause);
-							ParamBridge.BGMVolume = AudioManager.Instance.Source.volume;
-							ParamBridge.SEVolume = AudioManager.Instance.SEVolume;
+							pb.UpdateView(ViewMode.Pause);
+							pb.BGMVolume = AudioManager.Instance.Source.volume;
+							pb.SEVolume = AudioManager.Instance.SEVolume;
 							break;
 					}
 					break;

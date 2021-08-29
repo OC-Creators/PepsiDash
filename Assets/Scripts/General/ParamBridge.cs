@@ -4,15 +4,15 @@ namespace General
 {
     public class ParamBridge : SingletonMonoBehaviour<ParamBridge>
     {
-        public Param param;
+        private Param param;
         public JsonManager<Param> jm;
 
         protected override bool dontDestroyOnLoad { get { return true; } }
 
         // 画面モード
-        private static ViewMode prevVMode = ViewMode.Dummy;
-        private static ViewMode vmode = ViewMode.Dummy;
-        public static ViewMode VMode
+        [SerializeField] private ViewMode prevVMode = ViewMode.Dummy;
+        [SerializeField] private ViewMode vmode = ViewMode.Dummy;
+        public ViewMode VMode
         {
             get { return vmode; }
             set
@@ -20,18 +20,18 @@ namespace General
                 prevVMode = vmode;
                 vmode = value;
                 updateSignal = Signal.UpdateView;
-                Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {updateSignal}");
+                // Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {updateSignal}");
             }
         }
 
-        public static ViewMode PrevVMode
+        public ViewMode PrevVMode
         {
             get { return prevVMode; }
         }
 
         // シーンモード
-        private static ScreenMode smode = ScreenMode.Dummy;
-        public static ScreenMode SMode
+        [SerializeField] private ScreenMode smode = ScreenMode.Dummy;
+        public ScreenMode SMode
         {
             get { return smode; }
             set
@@ -40,7 +40,7 @@ namespace General
                 prevVMode = vmode;
                 vmode = smode.GetEntryViewMode();
                 updateSignal = Signal.UpdateScreen;
-                Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {updateSignal}");
+                // Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {updateSignal}");
             }
         }
 
@@ -53,47 +53,48 @@ namespace General
         }
 
         // スコア
-        public static int highScore = 0;
-        public static int HighScore
+        [SerializeField] private int highScore = 0;
+        public int HighScore
         {
             get { return highScore; }
             set 
             { 
                 if (value > highScore)
                 {
-                    highScore = value; }
-                } 
-            }
+                    highScore = value;
+                }
+            } 
+        }
 
         // BGM音量
-        public static float bgmVolume = 1f;
-        public static float BGMVolume
+        [SerializeField] private float bgmVolume = 1f;
+        public float BGMVolume
         {
             get { return bgmVolume; }
             set { bgmVolume = value; }
         }
 
         // SE音量
-        public static float seVolume = 1f;
-        public static float SEVolume
+        [SerializeField] private float seVolume = 1f;
+        public float SEVolume
         {
             get { return seVolume; }
             set { seVolume = value; }
         }
 
-        private static Signal updateSignal = Signal.Stay;
-        public static Signal UpdateSignal
+        [SerializeField] private Signal updateSignal = Signal.Stay;
+        public Signal UpdateSignal
         {
             get { return updateSignal; }
             set { updateSignal = value; }
         }
 
-        public static void UpdateView(ViewMode vmode)
+        public void UpdateView(ViewMode vmode)
         {
             VMode = vmode;
         }
 
-        public static void UpdateScreen(ScreenMode smode)
+        public void UpdateScreen(ScreenMode smode)
         {
             SMode = smode;
         }
@@ -104,7 +105,7 @@ namespace General
             var param_json = $"{Application.dataPath}/Resources/Data/param.json";
             jm = new JsonManager<Param>(param_json);
             Debug.Log($"Import {param_json}");
-            // param = new Param();
+            param = new Param();
             jm.Load(ref param);
             highScore = param.high_score;
             bgmVolume = param.bgm_volume;
@@ -113,13 +114,10 @@ namespace General
 
         void OnDestroy()
         {
-            param = new Param
-            {
-               bgm_volume = bgmVolume,
-               se_volume = seVolume,
-               high_score = highScore,
-               unlock = 0
-            };
+            param.high_score = highScore;
+            param.bgm_volume = bgmVolume;
+            param.se_volume = seVolume;
+            param.unlock = 0;
 
             jm.Dump(ref param);
         }

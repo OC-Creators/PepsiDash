@@ -34,12 +34,13 @@ namespace General {
 
         protected override void Start()
         {
-            if (ParamBridge.SMode == ScreenMode.Dummy)
+            base.Start();
+            if (pb.SMode == ScreenMode.Dummy)
             {
-                ParamBridge.SMode = ScreenMode.Game;
+                pb.SMode = ScreenMode.Game;
             }
 
-            ParamBridge.UpdateView(ViewMode.InGame);
+            pb.UpdateView(ViewMode.InGame);
         }
 
         protected override void Update()
@@ -59,8 +60,8 @@ namespace General {
 
         protected override void SwitchView()
         {
-            var curr = ParamBridge.PrevVMode;
-            var next = ParamBridge.VMode;
+            var curr = pb.PrevVMode;
+            var next = pb.VMode;
 
             switch (next)
             {
@@ -119,7 +120,7 @@ namespace General {
                     break;
             }
 
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+            pb.UpdateSignal = ParamBridge.Signal.Stay;
         }
     }
 }

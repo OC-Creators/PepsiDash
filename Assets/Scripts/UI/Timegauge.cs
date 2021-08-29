@@ -11,10 +11,11 @@ namespace UserInterface{
 
 		public Image image;
 		private bool isOver = false;
+		private ParamBridge pb;
 		// Start is called before the first frame update
 		void Start()
 		{
-
+			pb = ParamBridge.Instance;
 		}
 
 		// Update is called once per frame
@@ -34,7 +35,7 @@ namespace UserInterface{
 				image.fillAmount = 0f;
 				isOver = true;
 				// GameEndを経由する場合はResult -> GameEnd
-				ParamBridge.UpdateView(ViewMode.Result);
+				pb.UpdateView(ViewMode.Result);
 				Debug.Log("Game is over");
 			}
 		}
