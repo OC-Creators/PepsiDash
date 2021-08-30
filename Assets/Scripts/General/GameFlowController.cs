@@ -49,9 +49,9 @@ namespace General
             am = AudioManager.Instance;
         }
 
-        protected virtual void SwitchView(ViewMode next, bool nextActive = true, bool currActive = true)
+        protected virtual void SwitchView(ViewMode next, bool nextActive = true, bool currActive = false)
         {
-            if (currActive)
+            if (!currActive)
             {
                 Array.Find(views, v => v.name == vmode.ToStringQuickly())?.SetActive(false);
             }
@@ -166,11 +166,11 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            SwitchView(ViewMode.Result, nextActive: true);
+                            SwitchView(ViewMode.Result, currActive: true);
                             pb.IsOver = true;
                             break;
                         case Signal.Pause:
-                            SwitchView(ViewMode.Pause, nextActive: true);
+                            SwitchView(ViewMode.Pause, currActive: true);
                             pb.StopTheWorld = true;
                             break;
                         default:
@@ -183,7 +183,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Restart:
-                            SwitchView(ViewMode.GameEntry, currActive: false);
+                            SwitchView(ViewMode.GameEntry, nextActive: false);
                             pb.IsOver = false;
                             pb.Elapsed = 0f;
                             AudioManager.Instance.ReplayBGM();
@@ -207,7 +207,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Backward:
-                            SwitchView(ViewMode.InGame, currActive: false);
+                            SwitchView(ViewMode.InGame, nextActive: false);
                             pb.StopTheWorld = false;
                             Time.timeScale = 1f;
                             break;
@@ -215,7 +215,7 @@ namespace General
                             SwitchView(ViewMode.GameOption);
                             break;
                         case Signal.Restart:
-                            SwitchView(ViewMode.GameEntry, currActive: false);
+                            SwitchView(ViewMode.GameEntry, nextActive: false);
                             pb.Elapsed = 0f;
                             break;
                         case Signal.ToTitle:

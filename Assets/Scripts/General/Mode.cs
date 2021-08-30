@@ -36,8 +36,6 @@ namespace General {
 		{
 			switch (m)
 			{
-				case ViewMode.Dummy:
-					return "Dummy";
 				case ViewMode.Title:
 					return "TitleView";
 				case ViewMode.Credit:
@@ -46,10 +44,6 @@ namespace General {
 					return "StageListView";
 				case ViewMode.LevelList:
 					return "LevelListView";
-				case ViewMode.HighScore:
-					return "HighScoreView";
-				case ViewMode.GameEntry:
-					return "GameEntryView";
 				case ViewMode.InGame:
 					return "GameView";
 				case ViewMode.Result:
