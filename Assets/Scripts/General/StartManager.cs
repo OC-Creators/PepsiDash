@@ -5,15 +5,21 @@ namespace General
 {
     public class StartManager : ScreenManager<StartManager>
     {
-        protected override void Start()
+        protected override void init()
         {
-            base.Start();
-            if (pb.SMode == ScreenMode.Dummy)
+            base.init();
+
+            if (gfc.VMode != ViewMode.Title)
             {
-                pb.SMode = ScreenMode.Start;
+                gfc.VMode = ViewMode.Title;
             }
-            
-            pb.UpdateSignal = ParamBridge.Signal.Stay;
+            if (gfc.SMode != ScreenMode.Start)
+            {
+                gfc.SMode = ScreenMode.Start;
+            }
+
+            gfc.Views = views;
         }
+
     }
 }

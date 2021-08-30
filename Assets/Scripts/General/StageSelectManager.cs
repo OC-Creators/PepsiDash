@@ -5,17 +5,24 @@ namespace General
 {
     public class StageSelectManager : ScreenManager<StageSelectManager>
     {
-        protected override void Start()
+        protected override void init()
         {
-            base.Start();
-            if (pb.SMode == ScreenMode.Dummy)
+            base.init();
+
+            if (gfc.VMode != ViewMode.StageList)
             {
-                pb.SMode = ScreenMode.StageSelect;
+                gfc.VMode = ViewMode.StageList;
             }
-            
-            pb.UpdateSignal = ParamBridge.Signal.Stay;
+            if (gfc.SMode != ScreenMode.StageSelect)
+            {
+                gfc.SMode = ScreenMode.StageSelect;
+            }
+
+            gfc.Views = views;
 
             AudioManager.Instance.PlayBGM("penguin");
         }
+
+
     }
 }

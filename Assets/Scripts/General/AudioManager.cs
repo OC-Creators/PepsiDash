@@ -105,7 +105,7 @@ namespace General {
             }
         }
 
-        public void Replay()
+        public void ReplayBGM()
         {
             source.Stop();
             source.Play();
@@ -113,8 +113,10 @@ namespace General {
 
         public void PlaySE(AudioClip clip)
         {
-            Debug.Assert(clip != null, $"{clip} is null");
-            source.PlayOneShot(clip, seVolume);
+            if (clip != null)
+            {
+                source.PlayOneShot(clip, seVolume);
+            }
         }
     }
 }
