@@ -16,14 +16,13 @@ namespace UserInterface {
 		// 初期化
 		void Start ()
 		{
-		
+			gm = GameManager.Instance;
+			pb = ParamBridge.Instance;
 		}
 
 		// 更新
 		void Update ()
 		{
-			gm = GameManager.Instance;
-			pb = ParamBridge.Instance;
 			if (gm.IsOver)
 			{
 				return;

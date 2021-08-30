@@ -15,7 +15,7 @@ namespace General
             
             pb.UpdateSignal = ParamBridge.Signal.Stay;
 
-            AudioManager.Instance.UpdateClip("penguin");
+            AudioManager.Instance.PlayBGM("penguin");
         }
     }
 }

@@ -137,7 +137,7 @@ namespace UserInterface
 					}
 					break;
 			}
-			AudioManager.Instance.PlayClick(clip);
+			AudioManager.Instance.PlaySE(clip);
 		}
 
 	}
