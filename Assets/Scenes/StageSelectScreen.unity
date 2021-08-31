@@ -1811,9 +1811,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u30B9\u30C6\u30FC\u30B8\u9078\u629E"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ad72cfe02bb782046bea2511221165db, type: 2}
-  m_sharedMaterial: {fileID: -1496414168825574353, guid: ad72cfe02bb782046bea2511221165db,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2223,7 +2222,7 @@ Animator:
   m_GameObject: {fileID: 2041416926}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: da6144b1f9b813f48b3208fee629b12b, type: 2}
+  m_Controller: {fileID: 9100000, guid: fedb2adf4b64494468ed5a1fc8588ca1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
