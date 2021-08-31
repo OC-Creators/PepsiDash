@@ -8,12 +8,18 @@ namespace General
         protected override void Start()
         {
             base.Start();
-            if (pb.SMode == ScreenMode.Dummy)
+
+            if (gfc.VMode != ViewMode.Title)
             {
-                pb.SMode = ScreenMode.Start;
+                gfc.VMode = ViewMode.Title;
             }
-            
-            pb.UpdateSignal = ParamBridge.Signal.Stay;
+            if (gfc.SMode != ScreenMode.Start)
+            {
+                gfc.SMode = ScreenMode.Start;
+            }
+
+            gfc.Views = views;
         }
+
     }
 }

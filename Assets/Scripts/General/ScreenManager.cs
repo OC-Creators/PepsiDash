@@ -7,45 +7,29 @@ namespace General
     {
         [SerializeField] protected GameObject[] views;
         protected ParamBridge pb;
-
+        protected AudioManager am;
+        protected GameFlowController gfc;
         protected override bool dontDestroyOnLoad { get { return false; } }
 
-        protected virtual void Start()
+        protected override void Start()
         {
             pb = ParamBridge.Instance;
+            am = AudioManager.Instance;
+            gfc = GameFlowController.Instance;
         }
-        protected virtual void Update()
+        protected override void Update()
         {
-            switch (pb.UpdateSignal)
-            {
-                case ParamBridge.Signal.Stay:
-                    break;
-                case ParamBridge.Signal.UpdateView:
-                    SwitchView();
-                    break;
-                case ParamBridge.Signal.UpdateScreen:
-                    SwitchScreen();
-                    break;
-            }
-            // Debug.Log($"prev: {pb.PrevVMode.ToStringQuickly()}, curr: {pb.VMode.ToStringQuickly()}, signal: {pb.UpdateSignal}");
-        }
 
-        protected virtual void SwitchView()
-        {
-            var curr = pb.PrevVMode;
-            var next = pb.VMode;
-            Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
-            Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
-            pb.UpdateSignal = ParamBridge.Signal.Stay;
-            // Debug.Log($"switched {curr.ToStringQuickly()} to {next.ToStringQuickly()}");
         }
-
-        protected virtual void SwitchScreen()
+        // AudioManager.PlaySE()のラッパー関数
+        public void PlaySE(AudioClip clip)
         {
-            var sm = pb.SMode;
-            FadeManager.Instance.LoadScene(sm.ToStringQuickly(), 1.0f);
-            pb.UpdateSignal = ParamBridge.Signal.Stay;
-            // Debug.Log($"changed to {sm}");
+            am.PlaySE(clip);
+        }
+        // GameFlowController.dispatch()のラッパー関数
+        public void dispatch(string signal)
+        {
+            gfc.dispatch(signal);
         }
     }
 }
