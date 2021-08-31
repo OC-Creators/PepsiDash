@@ -7,14 +7,15 @@ namespace General
     {
         protected override void Start()
         {
-            if (ParamBridge.SMode == ScreenMode.Dummy)
+            base.Start();
+            if (pb.SMode == ScreenMode.Dummy)
             {
-                ParamBridge.SMode = ScreenMode.StageSelect;
+                pb.SMode = ScreenMode.StageSelect;
             }
             
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+            pb.UpdateSignal = ParamBridge.Signal.Stay;
 
-            AudioManager.Instance.UpdateClip("penguin");
+            AudioManager.Instance.PlayBGM("penguin");
         }
     }
 }

@@ -27,6 +27,8 @@ namespace General {
             set { seVolume = value; }
         }
 
+        private ParamBridge pb;
+
         // Start is called before the first frame update
         protected override void Awake()
         {
@@ -66,13 +68,14 @@ namespace General {
 
         public void initSource()
         {
+            pb = ParamBridge.Instance;
             // オーディオ管理
             Debug.Assert(bGMClip[0] != null, $"BGMClip is null");
             source = gameObject.AddComponent<AudioSource>();
             source.clip = bGMClip[0];
-            source.volume = ParamBridge.bgmVolume;
+            source.volume = pb.BGMVolume;
             source.loop = true;
-            seVolume = ParamBridge.SEVolume;
+            seVolume = pb.SEVolume;
             //ゲーム上の音量と紐づけする
             if (bGMSlider != null) 
             {
@@ -88,7 +91,7 @@ namespace General {
             Debug.Log("AudioManager: Initialized");
         }
 
-        public void UpdateClip(string clipName)
+        public void PlayBGM(string clipName)
         {
             var newClip = bGMClip.Find(clip => clip.name == clipName);
             if (newClip != null)
@@ -98,7 +101,7 @@ namespace General {
             }
             else
             {
-                Debug.Log($"No such BGM clip `{clipName}'");
+                Debug.LogError($"No such BGM clip `{clipName}'");
             }
         }
 
@@ -108,7 +111,7 @@ namespace General {
             source.Play();
         }
 
-        public void PlayClick(AudioClip clip)
+        public void PlaySE(AudioClip clip)
         {
             Debug.Assert(clip != null, $"{clip} is null");
             source.PlayOneShot(clip, seVolume);

@@ -7,12 +7,13 @@ namespace General
     {
         protected override void Start()
         {
-            if (ParamBridge.SMode == ScreenMode.Dummy)
+            base.Start();
+            if (pb.SMode == ScreenMode.Dummy)
             {
-                ParamBridge.SMode = ScreenMode.Start;
+                pb.SMode = ScreenMode.Start;
             }
             
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+            pb.UpdateSignal = ParamBridge.Signal.Stay;
         }
     }
 }

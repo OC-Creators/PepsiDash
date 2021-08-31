@@ -11,16 +11,18 @@ namespace UserInterface {
 		public Text resultText;
 		public Text resultScoreText;
 		public Image image;
+		private GameManager gm;
+		private ParamBridge pb;
 		// 初期化
 		void Start ()
 		{
-		
+			gm = GameManager.Instance;
+			pb = ParamBridge.Instance;
 		}
 
 		// 更新
 		void Update ()
 		{
-			var gm = GameManager.Instance;
 			if (gm.IsOver)
 			{
 				return;
@@ -40,9 +42,9 @@ namespace UserInterface {
 				// (@miki) ペプシの残り残量(最大30点) + ゲームクリアでボーナス20点
 				resultScoreText.text = gm.Reached ? $"Score: {score += 20}" : $"Score: {score}";
 				// ハイスコア更新
-				ParamBridge.HighScore = score;
+				pb.HighScore = score;
 				// GameEndを経由する場合はResult -> GameEnd
-				ParamBridge.UpdateView(ViewMode.Result);
+				pb.UpdateView(ViewMode.Result);
 				Debug.Log("Game is over");
 			}
 		}

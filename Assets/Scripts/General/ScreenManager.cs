@@ -5,18 +5,18 @@ namespace General
 {
     public abstract class ScreenManager<T> : SingletonMonoBehaviour<T> where T : MonoBehaviour
     {
-        [SerializeField]
-        protected GameObject[] views;
+        [SerializeField] protected GameObject[] views;
+        protected ParamBridge pb;
 
         protected override bool dontDestroyOnLoad { get { return false; } }
 
         protected virtual void Start()
         {
-
+            pb = ParamBridge.Instance;
         }
         protected virtual void Update()
         {
-            switch (ParamBridge.UpdateSignal)
+            switch (pb.UpdateSignal)
             {
                 case ParamBridge.Signal.Stay:
                     break;
@@ -27,25 +27,25 @@ namespace General
                     SwitchScreen();
                     break;
             }
-            Debug.Log($"prev: {ParamBridge.PrevVMode.ToStringQuickly()}, curr: {ParamBridge.VMode.ToStringQuickly()}, signal: {ParamBridge.UpdateSignal}");
+            // Debug.Log($"prev: {pb.PrevVMode.ToStringQuickly()}, curr: {pb.VMode.ToStringQuickly()}, signal: {pb.UpdateSignal}");
         }
 
         protected virtual void SwitchView()
         {
-            var curr = ParamBridge.PrevVMode;
-            var next = ParamBridge.VMode;
+            var curr = pb.PrevVMode;
+            var next = pb.VMode;
             Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
             Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
-            Debug.Log($"switched {curr.ToStringQuickly()} to {next.ToStringQuickly()}");
+            pb.UpdateSignal = ParamBridge.Signal.Stay;
+            // Debug.Log($"switched {curr.ToStringQuickly()} to {next.ToStringQuickly()}");
         }
 
         protected virtual void SwitchScreen()
         {
-            var sm = ParamBridge.SMode;
+            var sm = pb.SMode;
             FadeManager.Instance.LoadScene(sm.ToStringQuickly(), 1.0f);
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
-            Debug.Log($"changed to {sm}");
+            pb.UpdateSignal = ParamBridge.Signal.Stay;
+            // Debug.Log($"changed to {sm}");
         }
     }
 }
