@@ -29,7 +29,6 @@ namespace General {
 
         private ParamBridge pb;
 
-        // Start is called before the first frame update
         protected override void Awake()
         {
             if (CheckInstance())

@@ -5,9 +5,9 @@ namespace General {
     
     public class GameManager : ScreenManager<GameManager>
     {
-        protected override void init()
+        protected override void Start()
         {
-            base.init();
+            base.Start();
 
             if (gfc.VMode != ViewMode.GameEntry)
             {

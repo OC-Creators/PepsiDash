@@ -5,9 +5,9 @@ namespace General
 {
     public class StageSelectManager : ScreenManager<StageSelectManager>
     {
-        protected override void init()
+        protected override void Start()
         {
-            base.init();
+            base.Start();
 
             if (gfc.VMode != ViewMode.StageList)
             {
@@ -20,7 +20,7 @@ namespace General
 
             gfc.Views = views;
 
-            AudioManager.Instance.PlayBGM("penguin");
+            am?.PlayBGM("penguin");
         }
 
 
