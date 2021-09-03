@@ -34,6 +34,15 @@ namespace Player
 
 		public Transform center;
 
+		private bool isVoid = false;
+
+		[SerializeField] [Range(0, 5)] private int countIntoVoid = 2;
+
+		[SerializeField] [Range(0f, 15f)] private float voidTime = 5f;
+
+		private float elapsedVoidTime = 0f;
+
+
 		void Start()
 		{
 			m_Animator = GetComponent<Animator>();
@@ -51,19 +60,20 @@ namespace Player
 		}
 
 
-		public void Move(Vector3 move, Vector3 camForward, Vector3 input, bool crouch, bool jump)
+		public void Move(Vector3 move, Vector3 camForward, Vector3 input, bool crouch, bool modeVoid, bool jump)
 		{
 			
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
-			if (move.magnitude > 1f) move.Normalize(); 
-			move = transform.InverseTransformDirection(move);
+			//if (move.magnitude > 1f) move.Normalize(); 仕様変更
+			//move = transform.InverseTransformDirection(move);
 			CheckGroundStatus();
 
 			//if (input.z > 0) m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);
-			m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);
-
+			//m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);　仕様変更
+			m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed);
+			if(move.magnitude > 0.1f) transform.forward = Vector3.Slerp(transform.forward, move, Time.deltaTime * speed);
 
 			if (m_IsGrounded && jump)
             {
@@ -71,15 +81,20 @@ namespace Player
 				m_IsGrounded = false;
 			}
 
-			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-			m_TurnAmount = Mathf.Atan2(move.x, move.z);
-			m_ForwardAmount = move.z;
+			// 仕様変更につき
+			//move = Vector3.ProjectOnPlane(move, m_GroundNormal);
+			//m_TurnAmount = Mathf.Atan2(move.x, move.z);
+			//m_ForwardAmount = move.z;
 
-			ApplyExtraTurnRotation(input);
+			//ApplyExtraTurnRotation(input);
+
+			//虚空システム
+			IntoVoid(modeVoid);
+
 
 			ScaleCapsuleForJumping(jump);
 
-			UpdateAnimator(input, crouch, jump);
+			UpdateAnimator(move, crouch, jump);
 
 		}
 
@@ -103,7 +118,7 @@ namespace Player
 		}
 
 
-		void UpdateAnimator(Vector3 input, bool crouch, bool jump)
+		void UpdateAnimator(Vector3 move, bool crouch, bool jump)
 		{
 			if (m_IsGrounded)
             {
@@ -111,7 +126,7 @@ namespace Player
                 {
 					m_Animator.SetBool("Jump", true);
 					m_Animator.SetBool("Run", false);
-				} else if (Mathf.Abs(input.z) > 0)
+				} else if (move.magnitude > 0f)
                 {
 					m_Animator.SetBool("Jump", false);
 					m_Animator.SetBool("Run", true);
@@ -160,5 +175,38 @@ namespace Player
 				//m_Animator.applyRootMotion = false;
 			}
 		}
+
+		void IntoVoid(bool isButton)
+        {
+			// 入力受付
+			if (!isVoid && isButton && countIntoVoid > 0)
+            {
+				isVoid = true;
+				// プレイヤーのテクスチャーを半透明にする
+				// エフェクトをオンにするかも
+            }
+
+			// 虚空中の動作
+			if (isVoid)
+            {
+				elapsedVoidTime += Time.deltaTime;
+				Debug.Log("Player in the void.");
+
+				if (elapsedVoidTime > voidTime)
+                {
+					isVoid = false;
+					countIntoVoid--;
+					elapsedVoidTime = 0f;
+					Debug.Log("Leave from void.");
+					// プレイヤーのテクスチャーを戻す
+					// エフェクトをオフにする
+                }
+            }
+        }
+
+		public bool getIsVoid()
+        {
+			return isVoid;
+        }
 	}
 }
