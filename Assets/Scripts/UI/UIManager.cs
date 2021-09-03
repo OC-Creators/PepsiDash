@@ -11,36 +11,40 @@ namespace UserInterface {
 		public Text resultText;
 		public Text resultScoreText;
 		public Image image;
+		private GameFlowController gfc;
+		private ParamBridge pb;
 		// 初期化
 		void Start ()
 		{
-		
+			gfc = GameFlowController.Instance;
+			pb = ParamBridge.Instance;
 		}
 
 		// 更新
-		void Update ()
+		protected override void Update ()
 		{
-			var gm = GameManager.Instance;
-			if (gm.IsOver)
+			if (pb.IsOver)
 			{
 				return;
 			}
 
-			var rest = 30f - Math.Floor(gm.Elapsed);
-			var bonus = 0f;
+			var rest = 30 - (int)Math.Floor(pb.Elapsed);
+			var bonus = 0;
 			var score = rest + bonus;
 			// (@miki) 将来的にアイテムボーナス（コインとか）を導入して加算する予定
 			scoreText.text = "Score: -";
-			image.fillAmount =  Math.Max(0f, 1f - gm.Elapsed / 30f);
+			image.fillAmount =  Math.Max(0f, 1f - pb.Elapsed / 30f);
 			
-			if (gm.Catched || gm.Reached || gm.Elapsed > 30f)
+			if (pb.Catched || pb.Reached || pb.Elapsed > 30f)
 			{
 				image.fillAmount = 0f;
-				resultText.text = gm.Reached ? "Stage1 Clear!!" : "Stage1 Failed";
+				resultText.text = pb.Reached ? "Stage1 Clear!!" : "Stage1 Failed";
 				// (@miki) ペプシの残り残量(最大30点) + ゲームクリアでボーナス20点
-				resultScoreText.text = gm.Reached ? $"Score: {rest += 20}" : $"Score: {score}";
+				resultScoreText.text = pb.Reached ? $"Score: {score += 20}" : $"Score: {score}";
+				// ハイスコア更新
+				pb.HighScore = score;
 				// GameEndを経由する場合はResult -> GameEnd
-				ParamBridge.UpdateView(ViewMode.Result);
+				gfc.dispatch(Signal.Forward);
 				Debug.Log("Game is over");
 			}
 		}

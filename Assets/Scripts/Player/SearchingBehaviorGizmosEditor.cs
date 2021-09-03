@@ -33,6 +33,7 @@ namespace Player
 
                 Gizmos.DrawMesh(fanMesh, pos, rot, scale);
 
+                Object.Destroy(fanMesh);
             }
         }
 
@@ -58,6 +59,7 @@ namespace Player
 
                 Gizmos.DrawMesh(fanMesh, pos, rot, scale);
 
+                Object.Destroy(fanMesh);
             }
         }
 

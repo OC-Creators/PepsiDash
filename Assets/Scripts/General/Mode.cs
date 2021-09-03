@@ -11,12 +11,11 @@ namespace General {
 		StartOption,
 		// ステージ選択画面
 		StageList,
-		Difficulty,
+		LevelList,
 		HighScore,
 		// ゲーム画面
-		GameBegin,
+		GameEntry,
 		InGame,
-		GameEnd,
 		Result,
 		Share,
 		Pause,
@@ -37,24 +36,16 @@ namespace General {
 		{
 			switch (m)
 			{
-				case ViewMode.Dummy:
-					return "Dummy";
 				case ViewMode.Title:
 					return "TitleView";
 				case ViewMode.Credit:
 					return "CreditView";
 				case ViewMode.StageList:
 					return "StageListView";
-				case ViewMode.Difficulty:
-					return "DifficultyView";
-				case ViewMode.HighScore:
-					return "HighScoreView";
-				case ViewMode.GameBegin:
-					return "GameBeginView";
+				case ViewMode.LevelList:
+					return "LevelListView";
 				case ViewMode.InGame:
 					return "GameView";
-				case ViewMode.GameEnd:
-					return "GameEndView";
 				case ViewMode.Result:
 					return "ResultView";
 				case ViewMode.Share:
@@ -97,7 +88,7 @@ namespace General {
 				case ScreenMode.StageSelect:
 					return ViewMode.StageList;
 				case ScreenMode.Game:
-					return ViewMode.GameBegin;
+					return ViewMode.GameEntry;
 				default:
 					return ViewMode.Dummy;
 			}
