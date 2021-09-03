@@ -9,14 +9,14 @@ namespace UserInterface {
 	{
 		GameObject stage1;
 		GameObject stage2;
-		Button stage1_button;
-		Button stage2_button;
+		UnityEngine.UI.Button stage1_button;
+		UnityEngine.UI.Button stage2_button;
 
 		// Start is called before the first frame update
 		void Start()
 		{
-			stage1_button = GameObject.Find ("Canvas/Stage1Button").GetComponent<Button> ();
-			stage2_button = GameObject.Find ("Canvas/Stage2Button").GetComponent<Button> ();
+			stage1_button = GameObject.Find ("Canvas/Stage1Button").GetComponent<UnityEngine.UI.Button> ();
+			stage2_button = GameObject.Find ("Canvas/Stage2Button").GetComponent<UnityEngine.UI.Button> ();
 		}
 
 		void Update(){
