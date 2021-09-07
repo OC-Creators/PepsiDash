@@ -7,12 +7,19 @@ namespace General
     {
         protected override void Start()
         {
-            if (ParamBridge.SMode == ScreenMode.Dummy)
+            base.Start();
+
+            if (gfc.VMode != ViewMode.Title)
             {
-                ParamBridge.SMode = ScreenMode.Start;
+                gfc.VMode = ViewMode.Title;
             }
-            
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+            if (gfc.SMode != ScreenMode.Start)
+            {
+                gfc.SMode = ScreenMode.Start;
+            }
+
+            gfc.Views = views;
         }
+
     }
 }

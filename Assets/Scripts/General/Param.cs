@@ -6,12 +6,12 @@ namespace General {
     public class Param
     {
         [SerializeField]
-        public float bgm_volume { get; set; } = 1f;
+        public float bgm_volume = 1f;
         [SerializeField]
-        public float se_volume { get; set; } = 1f;
+        public float se_volume = 1f;
         [SerializeField]
-        public int score { get; set; } = 0;
+        public int high_score = 0;
         [SerializeField]
-        public int unlock { get; set; } = 0;
+        public int unlock = 0;
     }
 }
