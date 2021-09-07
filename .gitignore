@@ -30,6 +30,8 @@
 /[Aa]ssets/unity-chan!*
 /[Aa]ssets/SampleScenes*
 /[Aa]ssets/POLYGON city pack*
+/[Aa]ssets/Sketchfab For Unity*
+/[Aa]ssets/Animation Assets*
 
 # Data Files
 /[Aa]ssets/Resources/Data/param.json*
