@@ -33,6 +33,7 @@ namespace Player
 
                 Gizmos.DrawMesh(fanMesh, pos, rot, scale);
 
+                Object.Destroy(fanMesh);
             }
         }
 
@@ -45,6 +46,32 @@ namespace Player
             }
 
             Gizmos.color = MESH_COLOR2;
+
+            Transform transform = i_object.transform;
+            Vector3 pos = transform.position + Vector3.up * 0.01f; // 0.01fは地面と高さだと見づらいので調整用。
+            Quaternion rot = transform.rotation;
+            Vector3 scale = Vector3.one * i_object.SearchRadius;
+
+
+            if (i_object.SearchAngle > 0.0f)
+            {
+                Mesh fanMesh = CreateFanMesh(i_object.SearchAngle, TRIANGLE_COUNT);
+
+                Gizmos.DrawMesh(fanMesh, pos, rot, scale);
+
+                Object.Destroy(fanMesh);
+            }
+        }
+
+        [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
+        private static void DrawPointGizmos(SBC2 i_object, GizmoType i_gizmoType)
+        {
+            if (i_object.SearchRadius <= 0.0f)
+            {
+                return;
+            }
+
+            Gizmos.color = MESH_COLOR1;
 
             Transform transform = i_object.transform;
             Vector3 pos = transform.position + Vector3.up * 0.01f; // 0.01fは地面と高さだと見づらいので調整用。
