@@ -28,14 +28,23 @@
 # Player
 /[Aa]ssets/Standard Assets*
 /[Aa]ssets/UnityChan*
+/[Aa]ssets/unity-chan!*
 /[Aa]ssets/SampleScenes*
 /[Aa]ssets/Animator*
+/[Aa]ssets/Sketchfab For Unity*
+/[Aa]ssets/Animation Assets*
 # Stage
 /[Aa]ssets/POLYGON city pack*
+/[Aa]ssets/Animation Assets*
 /[Aa]ssets/Stylized Vehicles Pack Free*
 /[Aa]ssets/PolygonCity*
 /[Aa]ssets/PolygonPrototype*
 /[Aa]ssets/PolygonIcons*
+#Shimizu
+/[Aa]ssets/Import*
+/[Aa]ssets/Plugins*
+/[Aa]ssets/Tree_Texture*
+
 
 # Data Files
 /[Aa]ssets/Resources/Data*
