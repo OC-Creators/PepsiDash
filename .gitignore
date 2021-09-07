@@ -40,6 +40,10 @@
 /[Aa]ssets/PolygonCity*
 /[Aa]ssets/PolygonPrototype*
 /[Aa]ssets/PolygonIcons*
+#Shimizu
+/[Aa]ssets/Import*
+/[Aa]ssets/Plugins*
+/[Aa]ssets/Tree_Texture*
 
 
 # Data Files
