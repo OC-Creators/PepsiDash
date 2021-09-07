@@ -33,8 +33,8 @@ namespace Player
 
         void Start()
         {
-            if (finder == null) transform.GetComponentInParent<Finder_Caution>();
-            if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
+            if (finder == null) finder = transform.GetComponentInParent<Finder_Caution>();
+            if (moveEnemy == null) moveEnemy = transform.GetComponentInParent<MoveEnemy>();
         }
 
         public float SearchAngle
@@ -95,7 +95,7 @@ namespace Player
                     //str += "null,  ";
                     continue;
                 }
-                str += (targetObject.name + ",  ");
+                //str += (targetObject.name + ",  ");
 
                 bool isFound = CheckFoundObject(targetObject);
                 foundData.Update(isFound);
@@ -233,8 +233,11 @@ namespace Player
                     player = SearchInList();
                     if (player != null)
                     {
-                        moveEnemy.changeState("caution");
-                        moveEnemy.setPlayerPos(player);
+                        if (!player.GetComponent<RinCharacter>().getIsVoid())// 改善するかも
+                        {
+                            moveEnemy.changeState("caution");
+                            moveEnemy.setPlayerPos(player);
+                        }
                     }
                     break;
                 case "caution":
@@ -275,9 +278,9 @@ namespace Player
 
         private GameObject SearchInList()
         {
-            foreach (GameObject player in finder.getM_targets())
+            foreach (GameObject target in finder.getM_targets())
             {
-                if (player.CompareTag("Player")) return player;
+                if (target.CompareTag("Player")) return target;
             }
             return null;
         }

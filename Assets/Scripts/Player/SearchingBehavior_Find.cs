@@ -32,8 +32,8 @@ namespace Player
 
         void Start()
         {
-            if (finder == null) transform.GetComponentInParent<Finder_Find>();
-            if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
+            if (finder == null) finder = transform.GetComponentInParent<Finder_Find>();
+            if (moveEnemy == null) moveEnemy = transform.GetComponentInParent<MoveEnemy>();
         }
 
         public float SearchAngle
@@ -209,8 +209,11 @@ namespace Player
                 case "patrol":
                     if (player != null)
                     {
-                        moveEnemy.changeState("chase");
-                        search_caution.setPlayer(player);
+                        if (!player.GetComponent<RinCharacter>().getIsVoid())// 改善するかも
+                        {
+                            moveEnemy.changeState("chase");
+                            search_caution.setPlayer(player);
+                        }
                     }
                     break;
                 case "caution":
