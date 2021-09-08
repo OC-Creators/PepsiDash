@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace General {
 
@@ -83,7 +84,7 @@ namespace General {
             }
             if (sESlider != null) 
             {
-                sESlider.value = source.volume;
+                sESlider.value = seVolume;
                 sESlider.onValueChanged.AddListener(value => seVolume = value);
             }
 
