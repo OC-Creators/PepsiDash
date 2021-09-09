@@ -10,23 +10,25 @@ namespace General
         [SerializeField] private VideoPlayer vp;
         [SerializeField] private RawImage rawImg;
 
-        void Start()
+        void Update()
+        {
+
+        }
+
+        public void Play()
         {
             gfc = GameFlowController.Instance;
             Debug.Assert(vp != null);
             Debug.Assert(rawImg != null);
-            Debug.Assert(gfc.VMode == ViewMode.GameEntry);
 
             vp.prepareCompleted += (VideoPlayer videoPlayer) =>
             {
-                rawImg.transform.width = vp.texture.width;
-                rawImg.transform.height = vp.texture.height;
-
-                vp.started += (VideoPlayer videoPlayer) =>
+                Debug.Log($"Prepare Completed: {rawImg}");
+                vp.started += (VideoPlayer videoPlayer2) =>
                 {
                     rawImg.enabled = true;
                 };
-                vp.loopPointReached += (VideoPlayer videoPlayer) =>
+                vp.loopPointReached += (VideoPlayer videoPlayer2) =>
                 {
                     vp.Stop();
                     rawImg.enabled = false;
@@ -34,11 +36,6 @@ namespace General
                 vp.Play();
             };
             vp.Prepare();
-        }
-
-        void Update()
-        {
-
         }
 
     }

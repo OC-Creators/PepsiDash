@@ -154,6 +154,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
+                            GameManager.Instance.PlayMovie(Movie.Opening);
                             SwitchView(ViewMode.InGame);
                             break;
                         default:
