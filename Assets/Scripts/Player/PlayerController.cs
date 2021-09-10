@@ -4,14 +4,18 @@ using UnityStandardAssets.CrossPlatformInput;
 
 namespace Player
 {
-    [RequireComponent(typeof(RinCharacter))]
-    public class RinController7 : MonoBehaviour
+    [RequireComponent(typeof(PlayerCharacter))]
+    public class PlayerController : MonoBehaviour
     {
-        private RinCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
+        private PlayerCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
+
+        private float speedRate;
+
+        [SerializeField] [Range(0f, 1f)] private float walkSpeedRate = 0.5f;
 
 
         private void Start()
@@ -29,7 +33,7 @@ namespace Player
             }
 
             // get the third person character ( this should never be null due to require component )
-            m_Character = GetComponent<RinCharacter>();
+            m_Character = GetComponent<PlayerCharacter>();
         }
 
 
@@ -50,6 +54,7 @@ namespace Player
             float v = CrossPlatformInputManager.GetAxis("Vertical");
             bool crouch = CrossPlatformInputManager.GetButton("Crouch");
             bool modeVoid = CrossPlatformInputManager.GetButton("Void");
+            bool dash = CrossPlatformInputManager.GetButton("Dash");
 
             // calculate move direction to pass to character
             if (m_Cam != null)
@@ -67,9 +72,39 @@ namespace Player
                 m_Move = v * Vector3.forward + h * Vector3.right;
             }
 
+            m_Move.Normalize();
+
+            // PC版
+            if (m_Move.magnitude < 0.1f)
+            {
+                speedRate -= Time.deltaTime;
+                if (speedRate < 0f) speedRate = 0f;
+            }
+            else
+            {
+                if (dash)
+                {
+                    speedRate += Time.deltaTime * 2f;
+                    if (speedRate > 1f) speedRate = 1f;
+                } else
+                {
+                    if (speedRate < walkSpeedRate)
+                    {
+                        speedRate += Time.deltaTime;
+                        if (speedRate > walkSpeedRate) speedRate = walkSpeedRate;
+                    } else if (speedRate > walkSpeedRate)
+                    {
+                        speedRate -= Time.deltaTime;
+                        if (speedRate < walkSpeedRate) speedRate = walkSpeedRate;
+                    }
+                }
+            }
+
+            // スマホ版
+            // speedRate = Input.magnitude;
 
             // pass all parameters to the character control script
-            m_Character.Move(m_Move, m_CamForward, new Vector3(h, 0, v), crouch, modeVoid, m_Jump);
+            m_Character.Move(m_Move, m_CamForward, new Vector3(h, 0, v), crouch, modeVoid, m_Jump, dash, speedRate);
             m_Jump = false;
         }
     }

@@ -5,7 +5,7 @@ namespace Player
 	[RequireComponent(typeof(Rigidbody))]
 	[RequireComponent(typeof(CapsuleCollider))]
 	[RequireComponent(typeof(Animator))]
-	public class RinCharacter : MonoBehaviour
+	public class PlayerCharacter : MonoBehaviour
 	{
 		[SerializeField] float m_MovingTurnSpeed = 360;
 		[SerializeField] float m_StationaryTurnSpeed = 180;
@@ -84,9 +84,9 @@ namespace Player
 		}
 
 
-		public void Move(Vector3 move, Vector3 camForward, Vector3 input, bool crouch, bool modeVoid, bool jump)
+		public void Move(Vector3 move, Vector3 camForward, Vector3 input, bool crouch, bool modeVoid, bool jump, bool dash, float speedRate)
 		{
-			
+
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
@@ -96,14 +96,16 @@ namespace Player
 
 			//if (input.z > 0) m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);
 			//m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);　仕様変更
-			m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed);
-			if(move.magnitude > 0.1f) transform.forward = Vector3.Slerp(transform.forward, move, Time.deltaTime * speed);
+			m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed);// 移動
+			if (move.magnitude > 0.1f) transform.forward = Vector3.Slerp(transform.forward, move, Time.deltaTime * speed * speedRate);// 方向転換
 
+			/* ジャンプ廃止
 			if (m_IsGrounded && jump)
-            {
+			{
 				m_Rigidbody.AddForce(Vector3.up * jumpForce);
 				m_IsGrounded = false;
 			}
+			*/
 
 			// 仕様変更につき
 			//move = Vector3.ProjectOnPlane(move, m_GroundNormal);
@@ -115,10 +117,11 @@ namespace Player
 			//虚空システム
 			IntoVoid(modeVoid);
 
+			//ScaleCapsuleForJumping(jump);ジャンプ廃止
+			ScaleCapsuleForCrouching(crouch);
 
-			ScaleCapsuleForJumping(jump);
 
-			UpdateAnimator(move, crouch, jump);
+			UpdateAnimator(move, crouch, jump, speedRate);
 
 		}
 
@@ -142,28 +145,50 @@ namespace Player
 		}
 
 
-		void UpdateAnimator(Vector3 move, bool crouch, bool jump)
+		void ScaleCapsuleForCrouching(bool crouch)
+		{
+			if (m_IsGrounded && crouch)
+			{
+				if (m_Crouching) return;
+				m_Capsule.height = m_Capsule.height / 2f;
+				m_Capsule.center = m_Capsule.center / 2f;
+				m_Crouching = true;
+			}
+			else
+			{
+				Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
+				float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
+				if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+				{
+					m_Crouching = true;
+					return;
+				}
+				m_Capsule.height = m_CapsuleHeight;
+				m_Capsule.center = m_CapsuleCenter;
+				m_Crouching = false;
+			}
+		}
+
+
+		void UpdateAnimator(Vector3 move, bool crouch, bool jump, float speedRate)
 		{
 			if (m_IsGrounded)
-            {
-                if (jump)
-                {
-					m_Animator.SetBool("Jump", true);
-					m_Animator.SetBool("Run", false);
-				} else if (move.magnitude > 0f)
-                {
-					m_Animator.SetBool("Jump", false);
-					m_Animator.SetBool("Run", true);
-				} else
-                {
-					m_Animator.SetBool("Jump", false);
-					m_Animator.SetBool("Run", false);
+			{
+				if (crouch)
+				{
+					m_Animator.SetBool("Ground", false);
+					m_Animator.SetBool("Crouching", true);
 				}
-			} else
-            {
-				m_Animator.SetBool("Jump", true);
-				m_Animator.SetBool("Run", false);
-            }
+				else
+				{
+					m_Animator.SetBool("Ground", true);
+					m_Animator.SetBool("Crouching", false);
+				}
+			}
+
+			m_Animator.SetFloat("Speed", speedRate);
+
+
 		}
 
 
@@ -201,15 +226,15 @@ namespace Player
 		}
 
 		void IntoVoid(bool isButton)
-        {
+		{
 			// 入力受付
 			if (!isVoid && isButton && countIntoVoid > 0 && !isCoolTime && !isChange)
-            {
+			{
 				isChange = true;
 				surface.material = m_Surface[1];
 				joints.material = m_Joints[1];
 				// エフェクトをオンにするかも
-            }
+			}
 
 			// 虚空中の動作 それ以外も(クールタイム)
 			if (isVoid)
@@ -282,11 +307,11 @@ namespace Player
 					joints.material.color = jointsColor;
 				}
 			}
-        }
+		}
 
 		public bool getIsVoid()
-        {
+		{
 			return isVoid;
-        }
+		}
 	}
 }
