@@ -35,7 +35,6 @@ namespace General {
             if (CheckInstance())
             {
                 initSource();
-                source.Play();
             }
         }
 
@@ -90,9 +89,16 @@ namespace General {
 
             Debug.Log("AudioManager: Initialized");
         }
-
-        public void PlayBGM(string clipName)
+        public void Play()
         {
+            Debug.Assert(source != null);
+            source.Play();
+        }
+
+        public void Play(string clipName)
+        {
+            Stop();
+
             var newClip = bGMClip.Find(clip => clip.name == clipName);
             if (newClip != null)
             {
@@ -105,10 +111,18 @@ namespace General {
             }
         }
 
-        public void ReplayBGM()
+        public void Replay()
         {
-            source.Stop();
+            Stop();
             source.Play();
+        }
+
+        public void Stop()
+        {
+            if (source.isPlaying)
+            {
+                source.Stop();
+            }
         }
 
         public void PlaySE(AudioClip clip)

@@ -49,7 +49,7 @@ namespace General
             am = AudioManager.Instance;
         }
 
-        protected virtual void SwitchView(ViewMode next, bool nextActive = true, bool currActive = false)
+        public virtual void SwitchView(ViewMode next, bool nextActive = true, bool currActive = false)
         {
             if (!currActive)
             {
@@ -64,9 +64,16 @@ namespace General
             // Debug.Log($"switched {curr.ToStringQuickly()} to {next.ToStringQuickly()}");
         }
 
-        protected virtual void SwitchScreen(ScreenMode next)
+        public virtual void SwitchScreenFade(ScreenMode next)
         {
             FadeManager.Instance.LoadScene(next.ToStringQuickly(), 1.0f);
+            actionSignal = Signal.Stay;
+            smode = next;
+            // Debug.Log($"changed to {sm}");
+        }
+        public virtual void SwitchScreen(ScreenMode next)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(next.ToStringQuickly());
             actionSignal = Signal.Stay;
             smode = next;
             // Debug.Log($"changed to {sm}");
@@ -83,7 +90,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            SwitchScreen(ScreenMode.StageSelect);
+                            SwitchScreenFade(ScreenMode.StageSelect);
                             break;
                         case Signal.ToOption:
                             SwitchView(ViewMode.StartOption);
@@ -154,8 +161,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            GameManager.Instance.PlayMovie(Movie.Opening);
-                            SwitchView(ViewMode.InGame);
+                            GameManager.Instance.PlayOpeningMovie();
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
@@ -167,8 +173,8 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            SwitchView(ViewMode.Result, currActive: true);
                             pb.IsOver = true;
+                            GameManager.Instance.PlayResultMovie(Result.Wonderful);
                             break;
                         case Signal.Pause:
                             SwitchView(ViewMode.Pause, currActive: true);
@@ -187,10 +193,9 @@ namespace General
                             SwitchView(ViewMode.GameEntry, nextActive: false);
                             pb.IsOver = false;
                             pb.Elapsed = 0f;
-                            AudioManager.Instance.ReplayBGM();
                             break;
                         case Signal.ToTitle:
-                            SwitchScreen(ScreenMode.Start);
+                            SwitchScreenFade(ScreenMode.Start);
                             pb.IsOver = false;
                             break;
                         case Signal.Share:
@@ -220,7 +225,7 @@ namespace General
                             pb.Elapsed = 0f;
                             break;
                         case Signal.ToTitle:
-                            SwitchScreen(ScreenMode.Start);
+                            SwitchScreenFade(ScreenMode.Start);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
