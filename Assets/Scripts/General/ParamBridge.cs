@@ -13,7 +13,14 @@ namespace General
         public bool StopTheWorld
         {
             get { return stopTheWorld; }
-            set { stopTheWorld = value; }
+            set
+            {
+                stopTheWorld = value;
+                if (value)
+                {
+                    Time.timeScale = 1f;
+                }
+            }
         }
         // 経過時間
         private float elapsed = 0f;

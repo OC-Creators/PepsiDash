@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine;
+using System.Collections;
 
 namespace General {
     
@@ -13,7 +14,10 @@ namespace General {
 
         private VideoPlayer vp;
         private RawImage rawImg;
-        
+
+        //private IEnumerator op;
+        //private IEnumerator res;
+
         private const string BGM_NAME = "penguin";
         private const string FANFARE_NAME = "wonderland";
 
@@ -49,39 +53,37 @@ namespace General {
             }
         }
 
-        public void PlayOpeningMovie()
+        public IEnumerator PlayOpeningMovie()
         {
             vp = openingRawImage.GetComponent<VideoPlayer>();
             rawImg = openingRawImage;
                     
-            // 再生準備完了
-            vp.prepareCompleted += (VideoPlayer videoPlayer) =>
-            {
-                Debug.Log($"Prepare Completed: Opening");
-                pb.StopTheWorld = true;
-                am.Stop();
-                // 動画再生
-                videoPlayer.Play();
-            };
-            // 再生開始
-            vp.started += (VideoPlayer videoPlayer) =>
-            {
-                rawImg.enabled = true;
-            };
-            // 再生終了
-            vp.loopPointReached += (VideoPlayer videoPlayer) =>
-            {
-                rawImg.enabled = false;
-                gfc.SwitchView(ViewMode.InGame);
-                am.Play(BGM_NAME);
-                pb.StopTheWorld = false;
-                Time.timeScale = 1f;
-            };
             // 再生準備
             vp.Prepare();
+            
+            while (!vp.isPrepared)
+            {
+                Debug.Log("Loading Opening Movie...");
+                yield return null;
+            }
+            // 再生準備完了
+            Debug.Log("Loading Opening Movie... Completed!");
+            am.Stop();
+            vp.started += _ => rawImg.enabled = true;
+            vp.loopPointReached += _ => rawImg.enabled = false;
+            vp.Play();
+
+            while (vp.isPlaying)
+            {
+                yield return null;
+            }
+            // 再生終了
+            Debug.Log("Opening Movie ended");
+            am.Play(BGM_NAME);
+            gfc.dispatch(Signal.Forward);
         }
 
-        public void PlayResultMovie(Result res)
+        public IEnumerator PlayResultMovie(Result result)
         {
             //vp = null;
             //rawImg = null;
@@ -104,34 +106,29 @@ namespace General {
             vp = openingRawImage.GetComponent<VideoPlayer>();
             rawImg = openingRawImage;
 
-            // 再生準備完了
-            vp.prepareCompleted += (VideoPlayer videoPlayer) =>
-            {
-                Debug.Log($"Prepare Completed: {res}");
-                pb.StopTheWorld = true;
-                am.Play(FANFARE_NAME);
-                // 動画再生
-                videoPlayer.Play();
-            };
-            // 再生開始
-            vp.started += (VideoPlayer videoPlayer) =>
-            {
-                rawImg.enabled = true;
-            };
-            // 再生終了
-            vp.loopPointReached += (VideoPlayer videoPlayer) =>
-            {
-                gfc.SwitchView(ViewMode.Result, currActive: true);
-            };
             // 再生準備
             vp.Prepare();
+
+            while (!vp.isPrepared)
+            {
+                Debug.Log($"Loading Result Movie: {result}...");
+                yield return null;
+            }
+            // 再生準備完了
+            Debug.Log($"Loading Result Movie: {result}... Completed!");
+            am.Play(FANFARE_NAME);
+            vp.started += _ => rawImg.enabled = true;
+            vp.loopPointReached += _ => rawImg.enabled = false;
+            vp.Play();
+
+            while (vp.isPlaying)
+            {
+                yield return null;
+            }
+            // 再生終了
+            Debug.Log("Result Movie ended");
+            gfc.dispatch(Signal.Forward);
         }
     }
 
-    public enum Result
-    {
-        Wonderful,
-        Nice,
-        Bad
-    }
 }

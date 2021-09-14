@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace General
@@ -8,6 +9,7 @@ namespace General
         protected override bool dontDestroyOnLoad { get { return true;} }
         protected ParamBridge pb;
         protected AudioManager am;
+
         private GameObject[] views;
         public GameObject[] Views
         {
@@ -51,13 +53,15 @@ namespace General
 
         public virtual void SwitchView(ViewMode next, bool nextActive = true, bool currActive = false)
         {
-            if (!currActive)
-            {
-                Array.Find(views, v => v.name == vmode.ToStringQuickly())?.SetActive(false);
-            }
+            // nextActiveがtrue（デフォルト）ならSetActiveする
             if (nextActive)
             {
                 Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
+            }
+            // currActiveがfalse（デフォルト）ならSetActiveする
+            if (!currActive)
+            {
+                Array.Find(views, v => v.name == vmode.ToStringQuickly())?.SetActive(false);
             }
             actionSignal = Signal.Stay;
             vmode = next;
@@ -68,6 +72,7 @@ namespace General
         {
             FadeManager.Instance.LoadScene(next.ToStringQuickly(), 1.0f);
             actionSignal = Signal.Stay;
+            vmode = next.GetEntryViewMode();
             smode = next;
             // Debug.Log($"changed to {sm}");
         }
@@ -75,6 +80,7 @@ namespace General
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(next.ToStringQuickly());
             actionSignal = Signal.Stay;
+            vmode = next.GetEntryViewMode();
             smode = next;
             // Debug.Log($"changed to {sm}");
         }
@@ -161,7 +167,25 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            GameManager.Instance.PlayOpeningMovie();
+                            SwitchView(ViewMode.OpeningMovie, nextActive: false, currActive: true);
+                            StartCoroutine(GameManager.Instance.PlayOpeningMovie());
+                            break;
+                        default:
+                            Debug.LogError($"Signal {actionSignal} is not allowed.");
+                            break;
+                    }
+                    break;
+                // オープニングムービー
+                case ViewMode.OpeningMovie:
+                    switch (actionSignal)
+                    {
+                        case Signal.Forward:
+                            SwitchView(ViewMode.InGame, nextActive: false, currActive: true);
+                            break;
+                        // スキップ
+                        case Signal.Skip:
+                            //StopCoroutine(op);
+                            //SwitchView(ViewMode.InGame);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
@@ -174,11 +198,24 @@ namespace General
                     {
                         case Signal.Forward:
                             pb.IsOver = true;
-                            GameManager.Instance.PlayResultMovie(Result.Wonderful);
+                            SwitchView(ViewMode.ResultMovie, nextActive: false, currActive: true);
+                            StartCoroutine(GameManager.Instance.PlayResultMovie(Result.Excellent));
                             break;
                         case Signal.Pause:
                             SwitchView(ViewMode.Pause, currActive: true);
                             pb.StopTheWorld = true;
+                            break;
+                        default:
+                            Debug.LogError($"Signal {actionSignal} is not allowed.");
+                            break;
+                    }
+                    break;
+                // リザルトムービー
+                case ViewMode.ResultMovie:
+                    switch (actionSignal)
+                    {
+                        case Signal.Forward:
+                            SwitchView(ViewMode.Result, currActive: true);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
@@ -244,51 +281,16 @@ namespace General
                             break;
                     }
                     break;
+                // その他
                 default:
-                    Debug.LogError($"ViewMode {vmode} is now not supported.");
+                    Debug.LogError($"ViewMode {vmode} is now not supported, so add it to 'GameFlowController.Update()'.");
                     break;
             }
         }
 
-        public Signal Parse(string str)
-        {
-            switch (str)
-            {
-                case "Forward":
-                    return Signal.Forward;
-                case "Backward":
-                    return Signal.Backward;
-                case "ToOption":
-                    return Signal.ToOption;
-                case "ToCredit":
-                    return Signal.ToCredit;
-                case "Restart":
-                    return Signal.Restart;
-                case "Pause":
-                    return Signal.Pause;
-                case "ToTitle":
-                    return Signal.ToTitle;
-                case "Share":
-                    return Signal.Share;
-                default:
-                    return Signal.Stay;
-            }
-        }
 
     }
     
-    // アクションシグナル
-    public enum Signal
-    {
-        Stay,
-        Forward,
-        Backward,
-        ToOption,
-        ToCredit,
-        Restart,
-        Pause,
-        ToTitle,
-        Share
-    }
+
 
 }
