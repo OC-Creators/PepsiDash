@@ -15,7 +15,7 @@ namespace Player
 
         private float speedRate;
 
-        [SerializeField] [Range(0f, 1f)] private float walkSpeedRate = 0.5f;
+        [SerializeField] [Range(0f, 1f)] private float walkSpeedRate = 1f;
 
 
         private void Start()
@@ -75,6 +75,7 @@ namespace Player
             m_Move.Normalize();
 
             // PC版
+            /* 初版
             if (m_Move.magnitude < 0.1f)
             {
                 speedRate -= Time.deltaTime;
@@ -98,6 +99,16 @@ namespace Player
                         if (speedRate < walkSpeedRate) speedRate = walkSpeedRate;
                     }
                 }
+            }
+            */
+            if (m_Move.magnitude < 0.1f)
+            {
+                speedRate -= Time.deltaTime * 6f;
+                if (speedRate < 0f) speedRate = 0f;
+            } else
+            {
+                speedRate += Time.deltaTime * 4f;
+                if (speedRate > walkSpeedRate) speedRate = walkSpeedRate;
             }
 
             // スマホ版

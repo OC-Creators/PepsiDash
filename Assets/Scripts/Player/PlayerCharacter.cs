@@ -34,6 +34,8 @@ namespace Player
 
 		public Transform center;
 
+		[SerializeField] private Transform head;
+
 		private bool isVoid = false;
 
 		private bool isChange = false;
@@ -42,7 +44,7 @@ namespace Player
 
 		[SerializeField] [Range(0, 5)] private int countIntoVoid = 2;
 
-		[SerializeField] [Range(0f, 15f)] private float voidTime = 5f;
+		[SerializeField] [Range(0f, 60f)] private float voidTime = 5f;
 
 		private float elapsedVoidTime = 0f;
 
@@ -65,6 +67,11 @@ namespace Player
 		[SerializeField] private Material[] m_Surface;
 
 		[SerializeField] private Material[] m_Joints;
+
+		[SerializeField] [Range(0f, 1f)] private float decelerateSpeedRate = 0.2f;
+
+		[SerializeField] [Range(0f, 5f)] private float voidRunSpeedRate = 2f;
+
 
 
 		void Start()
@@ -96,7 +103,21 @@ namespace Player
 
 			//if (input.z > 0) m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);
 			//m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);　仕様変更
-			m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed);// 移動
+			// 移動
+			if (isVoid)
+            {
+				m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed * voidRunSpeedRate * speedRate);
+			}
+			else if (crouch)
+            {
+				m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed * decelerateSpeedRate * speedRate);
+
+			}
+			else
+            {
+				m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed);
+			}
+
 			if (move.magnitude > 0.1f) transform.forward = Vector3.Slerp(transform.forward, move, Time.deltaTime * speed * speedRate);// 方向転換
 
 			/* ジャンプ廃止
@@ -174,15 +195,23 @@ namespace Player
 		{
 			if (m_IsGrounded)
 			{
-				if (crouch)
+				if (isVoid)
+                {
+					m_Animator.SetBool("Ground", false);
+					m_Animator.SetBool("Crouching", false);
+					m_Animator.SetBool("Void", true);
+				}
+				else if (crouch)
 				{
 					m_Animator.SetBool("Ground", false);
 					m_Animator.SetBool("Crouching", true);
+					m_Animator.SetBool("Void", false);
 				}
 				else
 				{
 					m_Animator.SetBool("Ground", true);
 					m_Animator.SetBool("Crouching", false);
+					m_Animator.SetBool("Void", false);
 				}
 			}
 
@@ -240,7 +269,7 @@ namespace Player
 			if (isVoid)
 			{
 				elapsedVoidTime += Time.deltaTime;
-				Debug.Log("Player in the void.");
+				//Debug.Log("Player in the void.");
 
 				if (elapsedVoidTime > voidTime)
 				{
@@ -249,7 +278,7 @@ namespace Player
 					countIntoVoid--;
 					elapsedVoidTime = 0f;
 					elapsedCoolTime = 0f;
-					Debug.Log("Leave from void.");
+					//Debug.Log("Leave from void.");
 					// プレイヤーのテクスチャーを戻す
 					// エフェクトをオフにする
 				}
@@ -313,5 +342,10 @@ namespace Player
 		{
 			return isVoid;
 		}
+
+		public Transform getHead()
+        {
+			return head;
+        }
 	}
 }
