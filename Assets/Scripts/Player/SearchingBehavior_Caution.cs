@@ -256,7 +256,7 @@ namespace Player
                     {
                         moveEnemy.changeState("patrol");
                     }
-                    else if (moveEnemy.getElapsedTime() > 20)
+                    else if (moveEnemy.getElapsedTime() > moveEnemy.getCautionWaitTime())
                     {
                         moveEnemy.changeState("chase");
                     }
