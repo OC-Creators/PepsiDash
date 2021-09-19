@@ -33,9 +33,10 @@ namespace General {
 
 	public enum Result
 	{
-		Excellent,
+		None = -1,
+		Bad,
 		Nice,
-		Bad
+		Excellent
 	}
 
 	// アクションシグナル

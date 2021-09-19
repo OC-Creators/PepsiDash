@@ -53,7 +53,7 @@ namespace General
 
         public virtual void SwitchView(ViewMode next, bool nextActive = false, bool currActive = true)
         {
-            Debug.Log($"switching {VMode.ToStringQuickly()} to {next.ToStringQuickly()}");
+            Debug.Log($"switching {VMode} to {next}");
             // nextActiveがtrueならSetActiveする
             if (nextActive)
             {
@@ -227,13 +227,12 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Restart:
-                            SwitchView(ViewMode.GameEntry, currActive: false);
-                            pb.IsOver = false;
-                            pb.Elapsed = 0f;
+                            SwitchView(ViewMode.InGame, currActive: false);
+                            GameManager.Instance.InitGame();
                             break;
                         case Signal.ToTitle:
                             SwitchScreenFade(ScreenMode.Start);
-                            pb.IsOver = false;
+                            GameManager.Instance.InitGame();
                             break;
                         case Signal.Share:
                             var url = $"https://twitter.com/intent/tweet?text=今回の記録は『{pb.HighScore}』点";
@@ -258,11 +257,12 @@ namespace General
                             SwitchView(ViewMode.GameOption, nextActive: true, currActive: false);
                             break;
                         case Signal.Restart:
-                            SwitchView(ViewMode.GameEntry, currActive: false);
+                            SwitchView(ViewMode.InGame, currActive: false);
                             GameManager.Instance.InitGame();
                             break;
                         case Signal.ToTitle:
                             SwitchScreenFade(ScreenMode.Start);
+                            GameManager.Instance.InitGame();
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");

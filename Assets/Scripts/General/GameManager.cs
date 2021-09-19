@@ -48,15 +48,22 @@ namespace General {
                 Time.timeScale = 0f;
             }
 
+            // TODO: 要修正，コルーチンで書き直す
             if (!pb.IsOver)
             {
                 pb.Elapsed += Time.deltaTime;
+                // pb.FrameCount ++;
             }
         }
 
         public void InitGame()
         {
-            pb.Elapsed = 0f;
+            pb.IsOver = false;
+            pb.Catched = false;
+            pb.Reached = false;
+            pb.Elapsed = ParamBridge.INIT_ELAPSED;
+            am.Play(BGM_NAME);
+            // pb.FrameCount = 0;
         }
 
         public IEnumerator PlayOpeningMovie()
@@ -86,6 +93,7 @@ namespace General {
             // 再生終了
             Debug.Log("Opening Movie ended");
             am.Play(BGM_NAME);
+            InitGame();
             gfc.dispatch(Signal.Forward);
         }
 
