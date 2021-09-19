@@ -167,7 +167,7 @@ namespace Player
                     }
                     break;
                 case "caution":
-                    //transform.LookAt(new Vector3(playerPos.x, transform.position.y, playerPos.z));
+                    transform.LookAt(new Vector3(playerPos.x, transform.position.y, playerPos.z));
                     // このあと分岐させたい、時間とかの調整によってchangeState("patrol")もしくはchangeState("chase")に変化させるなど
                     break;
                 case "chase":

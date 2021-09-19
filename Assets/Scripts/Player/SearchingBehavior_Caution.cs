@@ -28,13 +28,18 @@ namespace Player
 
         private GameObject player;
 
+        [SerializeField] private PlayerCharacter playerCharacter;
+
         [Range(0f, 100f)]
         public float escapeDistance = 10f;
 
+        [SerializeField] private Transform head;
+
         void Start()
         {
-            if (finder == null) transform.GetComponentInParent<Finder_Caution>();
-            if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
+            if (finder == null) finder = transform.GetComponentInParent<Finder_Caution>();
+            if (moveEnemy == null) moveEnemy = transform.GetComponentInParent<MoveEnemy>();
+            if (playerCharacter == null) playerCharacter = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
         }
 
         public float SearchAngle
@@ -80,8 +85,14 @@ namespace Player
 
         private void Update()
         {
+            UpdateForward();
             UpdateFoundObject();
             Searching();
+        }
+
+        private void UpdateForward()
+        {
+            this.transform.forward = new Vector3(head.forward.x, transform.forward.y, head.forward.z);
         }
 
         private void UpdateFoundObject()
@@ -95,7 +106,7 @@ namespace Player
                     //str += "null,  ";
                     continue;
                 }
-                str += (targetObject.name + ",  ");
+                //str += (targetObject.name + ",  ");
 
                 bool isFound = CheckFoundObject(targetObject);
                 foundData.Update(isFound);
@@ -114,8 +125,8 @@ namespace Player
 
         private bool CheckFoundObject(GameObject i_target)
         {
-            Vector3 targetPosition = i_target.transform.position;
-            Vector3 myPosition = transform.position;
+            Vector3 targetPosition = playerCharacter.getHead().position;
+            Vector3 myPosition = head.position;
 
             Vector3 myPositionXZ = Vector3.Scale(myPosition, new Vector3(1.0f, 0.0f, 1.0f));
             Vector3 targetPositionXZ = Vector3.Scale(targetPosition, new Vector3(1.0f, 0.0f, 1.0f));
@@ -231,7 +242,7 @@ namespace Player
             {
                 case "patrol":
                     player = SearchInList();
-                    if (player != null)
+                    if (player != null && !playerCharacter.getIsVoid())
                     {
                         moveEnemy.changeState("caution");
                         moveEnemy.setPlayerPos(player);
@@ -239,7 +250,7 @@ namespace Player
                     break;
                 case "caution":
                     player = SearchInList();
-                    moveEnemy.changeElapsedTime(player != null);
+                    moveEnemy.changeElapsedTime(player != null && !playerCharacter.getIsVoid());
                     moveEnemy.setPlayerPos(player);
                     if (moveEnemy.getElapsedTime() < 0)
                     {
@@ -263,21 +274,24 @@ namespace Player
                         //if (player == null) moveEnemy.changeState("warning");
                     }
                     */
-                    Vector3 toPlayerDir = (player.transform.position - transform.parent.position).normalized;
-                    if (!IsHitRayEscapeEnemy(transform.parent.position, toPlayerDir, player)) moveEnemy.changeState("warning");
+                    Vector3 toPlayerDir = (playerCharacter.getHead().position - head.position).normalized;
+                    if (!IsHitRayEscapeEnemy(head.position, toPlayerDir, player) || playerCharacter.getIsVoid()) moveEnemy.changeState("warning");
                     break;
                 case "warning":
                     player = SearchInList();
-                    if (player != null) moveEnemy.changeState("chase");
+                    if (player != null && !playerCharacter.getIsVoid())
+                    {
+                        moveEnemy.changeState("chase");
+                    } 
                     break;
             }
         }
 
         private GameObject SearchInList()
         {
-            foreach (GameObject player in finder.getM_targets())
+            foreach (GameObject target in finder.getM_targets())
             {
-                if (player.CompareTag("Player")) return player;
+                if (target.CompareTag("Player") && !playerCharacter.getIsVoid()) return target;
             }
             return null;
         }

@@ -48,13 +48,17 @@ namespace Player
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
-            bool crouch = Input.GetKey(KeyCode.C);
+            bool crouch = CrossPlatformInputManager.GetButton("Crouch");
+            bool modeVoid = CrossPlatformInputManager.GetButton("Void");
 
             // calculate move direction to pass to character
             if (m_Cam != null)
             {
                 // calculate camera relative direction to move:
-                m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
+                //m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
+                //m_Move = v * m_CamForward + h * m_Cam.right;
+
+                m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1));
                 m_Move = v * m_CamForward + h * m_Cam.right;
             }
             else
@@ -65,7 +69,7 @@ namespace Player
 
 
             // pass all parameters to the character control script
-            m_Character.Move(m_Move, m_CamForward, new Vector3(h, 0, v), crouch, m_Jump);
+            m_Character.Move(m_Move, m_CamForward, new Vector3(h, 0, v), crouch, modeVoid, m_Jump);
             m_Jump = false;
         }
     }

@@ -34,6 +34,39 @@ namespace Player
 
 		public Transform center;
 
+		private bool isVoid = false;
+
+		private bool isChange = false;
+
+		[SerializeField] private bool isCoolTime = false;
+
+		[SerializeField] [Range(0, 5)] private int countIntoVoid = 2;
+
+		[SerializeField] [Range(0f, 15f)] private float voidTime = 5f;
+
+		private float elapsedVoidTime = 0f;
+
+		[SerializeField] [Range(0f, 50f)] private float coolTime = 15f;
+
+		private float elapsedCoolTime = 0f;
+
+		[SerializeField] [Range(0f, 1f)] private float transparentAlfa = 0.2f;
+
+		[SerializeField] [Range(0f, 10f)] private float alfaSpeed = 2f;
+
+		[SerializeField] private SkinnedMeshRenderer surface;
+
+		[SerializeField] private SkinnedMeshRenderer joints;
+
+		private Color surfaceColor;
+
+		private Color jointsColor;
+
+		[SerializeField] private Material[] m_Surface;
+
+		[SerializeField] private Material[] m_Joints;
+
+
 		void Start()
 		{
 			m_Animator = GetComponent<Animator>();
@@ -51,19 +84,20 @@ namespace Player
 		}
 
 
-		public void Move(Vector3 move, Vector3 camForward, Vector3 input, bool crouch, bool jump)
+		public void Move(Vector3 move, Vector3 camForward, Vector3 input, bool crouch, bool modeVoid, bool jump)
 		{
 			
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
 			// direction.
-			if (move.magnitude > 1f) move.Normalize(); 
-			move = transform.InverseTransformDirection(move);
+			//if (move.magnitude > 1f) move.Normalize(); 仕様変更
+			//move = transform.InverseTransformDirection(move);
 			CheckGroundStatus();
 
 			//if (input.z > 0) m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);
-			m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);
-
+			//m_Rigidbody.MovePosition(transform.position + camForward.normalized * Time.deltaTime * input.z * speed);　仕様変更
+			m_Rigidbody.MovePosition(transform.position + move.normalized * Time.deltaTime * speed);
+			if(move.magnitude > 0.1f) transform.forward = Vector3.Slerp(transform.forward, move, Time.deltaTime * speed);
 
 			if (m_IsGrounded && jump)
             {
@@ -71,15 +105,20 @@ namespace Player
 				m_IsGrounded = false;
 			}
 
-			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-			m_TurnAmount = Mathf.Atan2(move.x, move.z);
-			m_ForwardAmount = move.z;
+			// 仕様変更につき
+			//move = Vector3.ProjectOnPlane(move, m_GroundNormal);
+			//m_TurnAmount = Mathf.Atan2(move.x, move.z);
+			//m_ForwardAmount = move.z;
 
-			ApplyExtraTurnRotation(input);
+			//ApplyExtraTurnRotation(input);
+
+			//虚空システム
+			IntoVoid(modeVoid);
+
 
 			ScaleCapsuleForJumping(jump);
 
-			UpdateAnimator(input, crouch, jump);
+			UpdateAnimator(move, crouch, jump);
 
 		}
 
@@ -103,7 +142,7 @@ namespace Player
 		}
 
 
-		void UpdateAnimator(Vector3 input, bool crouch, bool jump)
+		void UpdateAnimator(Vector3 move, bool crouch, bool jump)
 		{
 			if (m_IsGrounded)
             {
@@ -111,7 +150,7 @@ namespace Player
                 {
 					m_Animator.SetBool("Jump", true);
 					m_Animator.SetBool("Run", false);
-				} else if (Mathf.Abs(input.z) > 0)
+				} else if (move.magnitude > 0f)
                 {
 					m_Animator.SetBool("Jump", false);
 					m_Animator.SetBool("Run", true);
@@ -160,5 +199,94 @@ namespace Player
 				//m_Animator.applyRootMotion = false;
 			}
 		}
+
+		void IntoVoid(bool isButton)
+        {
+			// 入力受付
+			if (!isVoid && isButton && countIntoVoid > 0 && !isCoolTime && !isChange)
+            {
+				isChange = true;
+				surface.material = m_Surface[1];
+				joints.material = m_Joints[1];
+				// エフェクトをオンにするかも
+            }
+
+			// 虚空中の動作 それ以外も(クールタイム)
+			if (isVoid)
+			{
+				elapsedVoidTime += Time.deltaTime;
+				Debug.Log("Player in the void.");
+
+				if (elapsedVoidTime > voidTime)
+				{
+					isCoolTime = true;
+					isChange = true;
+					countIntoVoid--;
+					elapsedVoidTime = 0f;
+					elapsedCoolTime = 0f;
+					Debug.Log("Leave from void.");
+					// プレイヤーのテクスチャーを戻す
+					// エフェクトをオフにする
+				}
+			}
+			else
+			{
+				if (isCoolTime)
+				{
+					elapsedCoolTime += Time.deltaTime;
+					if (elapsedCoolTime > coolTime) isCoolTime = false;
+				}
+			}
+
+			// 変化中の動作
+			if (isChange)
+			{
+				if (isVoid)
+				{
+					//透明度を上げる(元に戻る)
+					surfaceColor = surface.material.color;
+					jointsColor = joints.material.color;
+					surfaceColor.a += Time.deltaTime * alfaSpeed;
+					jointsColor.a += Time.deltaTime * alfaSpeed;
+
+					if (surfaceColor.a >= 1f) // 透明度が一定値より上になったら
+					{
+						surfaceColor.a = 1f;
+						jointsColor.a = 1f;
+						surface.material.color = surfaceColor;
+						joints.material.color = jointsColor;
+						surface.material = m_Surface[0];
+						joints.material = m_Joints[0];
+						isVoid = false;
+						isChange = false;
+					}
+					surface.material.color = surfaceColor;
+					joints.material.color = jointsColor;
+				}
+				else
+				{
+					//透明度を下げる(虚空に入る)
+					surfaceColor = surface.material.color;
+					jointsColor = joints.material.color;
+					surfaceColor.a -= Time.deltaTime * alfaSpeed;
+					jointsColor.a -= Time.deltaTime * alfaSpeed;
+
+					if (surfaceColor.a < transparentAlfa) // 透明度が一定値より下になったら
+					{
+						surfaceColor.a = transparentAlfa;
+						jointsColor.a = transparentAlfa;
+						isVoid = true;
+						isChange = false;
+					}
+					surface.material.color = surfaceColor;
+					joints.material.color = jointsColor;
+				}
+			}
+        }
+
+		public bool getIsVoid()
+        {
+			return isVoid;
+        }
 	}
 }
