@@ -8,14 +8,21 @@ namespace General
         protected override void Start()
         {
             base.Start();
-            if (pb.SMode == ScreenMode.Dummy)
-            {
-                pb.SMode = ScreenMode.StageSelect;
-            }
-            
-            pb.UpdateSignal = ParamBridge.Signal.Stay;
 
-            AudioManager.Instance.PlayBGM("penguin");
+            if (gfc.VMode != ViewMode.StageList)
+            {
+                gfc.VMode = ViewMode.StageList;
+            }
+            if (gfc.SMode != ScreenMode.StageSelect)
+            {
+                gfc.SMode = ScreenMode.StageSelect;
+            }
+
+            gfc.Views = views;
+
+            am?.PlayBGM("penguin");
         }
+
+
     }
 }

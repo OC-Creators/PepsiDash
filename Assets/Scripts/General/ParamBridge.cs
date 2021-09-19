@@ -8,48 +8,40 @@ namespace General
         public JsonManager<Param> jm;
 
         protected override bool dontDestroyOnLoad { get { return true; } }
-
-        // 画面モード
-        [SerializeField] private ViewMode prevVMode = ViewMode.Dummy;
-        [SerializeField] private ViewMode vmode = ViewMode.Dummy;
-        public ViewMode VMode
+        // 時を止めたかどうか
+        private bool stopTheWorld = false;
+        public bool StopTheWorld
         {
-            get { return vmode; }
-            set
-            {
-                prevVMode = vmode;
-                vmode = value;
-                updateSignal = Signal.UpdateView;
-                // Debug.Log($"prev: {prevVMode.ToStringQuickly()}, curr: {vmode.ToStringQuickly()}, signal: {updateSignal}");
-            }
+            get { return stopTheWorld; }
+            set { stopTheWorld = value; }
         }
-
-        public ViewMode PrevVMode
+        // 経過時間
+        private float elapsed = 0f;
+        public float Elapsed
         {
-            get { return prevVMode; }
+            get { return elapsed; }
+            set { elapsed = value; }
         }
-
-        // シーンモード
-        [SerializeField] private ScreenMode smode = ScreenMode.Dummy;
-        public ScreenMode SMode
+        // ゲーム終了したかどうか
+        private bool isOver = false;
+        public bool IsOver
         {
-            get { return smode; }
-            set
-            {
-                smode = value;
-                prevVMode = vmode;
-                vmode = smode.GetEntryViewMode();
-                updateSignal = Signal.UpdateScreen;
-                // Debug.Log($"smode: {smode.ToStringQuickly()}, vmode: {vmode.ToStringQuickly()}, signal: {updateSignal}");
-            }
+            get { return isOver; }
+            set { isOver = value; }
         }
-
-        // 遷移シグナル
-        public enum Signal
+        // 警備員に捕まったかどうか
+        private bool catched = false;
+        public bool Catched
         {
-            Stay,
-            UpdateView,
-            UpdateScreen
+            get { return catched; }
+            set { catched = value; }
+        }
+        // ゴールに到達したかどうか
+        private bool reached = false;
+        public bool Reached
+        {
+            get { return reached; }
+            set { reached = value; }
         }
 
         // スコア
@@ -82,38 +74,25 @@ namespace General
             set { seVolume = value; }
         }
 
-        [SerializeField] private Signal updateSignal = Signal.Stay;
-        public Signal UpdateSignal
-        {
-            get { return updateSignal; }
-            set { updateSignal = value; }
-        }
-
-        public void UpdateView(ViewMode vmode)
-        {
-            VMode = vmode;
-        }
-
-        public void UpdateScreen(ScreenMode smode)
-        {
-            SMode = smode;
-        }
-
         protected override void Awake()
         {
-            base.Awake();
-            var param_json = $"{Application.dataPath}/Resources/Data/param.json";
-            jm = new JsonManager<Param>(param_json);
-            Debug.Log($"Import {param_json}");
-            param = new Param();
-            jm.Load(ref param);
-            highScore = param.high_score;
-            bgmVolume = param.bgm_volume;
-            seVolume = param.se_volume;
+            if (CheckInstance())
+            {
+                var param_json = $"{Application.dataPath}/Resources/Data/param.json";
+                jm = new JsonManager<Param>(param_json);
+                Debug.Log($"Import {param_json}");
+                param = new Param();
+                jm.Load(ref param);
+                highScore = param.high_score;
+                bgmVolume = param.bgm_volume;
+                seVolume = param.se_volume;
+            }
         }
 
         void OnDestroy()
         {
+            if (param is null) return;
+
             param.high_score = highScore;
             param.bgm_volume = bgmVolume;
             param.se_volume = seVolume;

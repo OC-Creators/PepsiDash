@@ -26,16 +26,16 @@ namespace UserInterface{
 				return;
 			}
 
-			if (GameManager.Instance.Elapsed < 30f)
+			if (ParamBridge.Instance.Elapsed < 30f)
 			{
-				image.fillAmount = 1f - GameManager.Instance.Elapsed / 30f;
+				image.fillAmount = 1f - ParamBridge.Instance.Elapsed / 30f;
 			}
 			else
 			{
 				image.fillAmount = 0f;
 				isOver = true;
 				// GameEndを経由する場合はResult -> GameEnd
-				pb.UpdateView(ViewMode.Result);
+				GameFlowController.Instance.dispatch(Signal.Forward);
 				Debug.Log("Game is over");
 			}
 		}
