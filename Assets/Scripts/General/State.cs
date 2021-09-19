@@ -6,14 +6,14 @@ namespace General {
 		// ダミー
 		Dummy = -1,
 		// Start画面
-		Title,
+		Title = 0,
 		Credit,
 		StartOption,
 		// ステージ選択画面
-		StageList,
+		StageList = 10,
 		LevelList,
 		// ゲーム画面
-		GameEntry,
+		GameEntry = 20,
 		InGame,
 		Result,
 		Share,

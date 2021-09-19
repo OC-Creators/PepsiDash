@@ -1902,6 +1902,7 @@ MonoBehaviour:
   sESlider: {fileID: 0}
   bGMClip:
   - {fileID: 8300000, guid: ec50743c0a2de5d4b96a77e2b169a441, type: 3}
+  - {fileID: 8300000, guid: 92e748f591bd8e74ca76578de2cc0c96, type: 3}
 --- !u!1 &1649455357
 GameObject:
   m_ObjectHideFlags: 0

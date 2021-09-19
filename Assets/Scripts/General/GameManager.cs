@@ -36,8 +36,9 @@ namespace General {
             }
 
             gfc.Views = views;
-            pb.Elapsed = 0f;
             gfc.dispatch(Signal.Forward);
+
+            InitGame();
         }
 
         protected override void Update()
@@ -51,6 +52,11 @@ namespace General {
             {
                 pb.Elapsed += Time.deltaTime;
             }
+        }
+
+        public void InitGame()
+        {
+            pb.Elapsed = 0f;
         }
 
         public IEnumerator PlayOpeningMovie()

@@ -45,44 +45,44 @@ namespace General
         }
 
 
-        protected override void init()
+        protected override void Init()
         {
             pb = ParamBridge.Instance;
             am = AudioManager.Instance;
         }
 
-        public virtual void SwitchView(ViewMode next, bool nextActive = true, bool currActive = false)
+        public virtual void SwitchView(ViewMode next, bool nextActive = false, bool currActive = true)
         {
-            // nextActiveがtrue（デフォルト）ならSetActiveする
+            Debug.Log($"switching {VMode.ToStringQuickly()} to {next.ToStringQuickly()}");
+            // nextActiveがtrueならSetActiveする
             if (nextActive)
             {
                 Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
             }
-            // currActiveがfalse（デフォルト）ならSetActiveする
+            // currActiveがfalseならSetActiveする
             if (!currActive)
             {
                 Array.Find(views, v => v.name == vmode.ToStringQuickly())?.SetActive(false);
             }
             actionSignal = Signal.Stay;
             vmode = next;
-            // Debug.Log($"switched {curr.ToStringQuickly()} to {next.ToStringQuickly()}");
         }
 
         public virtual void SwitchScreenFade(ScreenMode next)
         {
-            FadeManager.Instance.LoadScene(next.ToStringQuickly(), 1.0f);
+            Debug.Log($"changing to {next.GetEntryViewMode()}");
             actionSignal = Signal.Stay;
             vmode = next.GetEntryViewMode();
             smode = next;
-            // Debug.Log($"changed to {sm}");
+            FadeManager.Instance.LoadScene(next.ToStringQuickly(), 1.0f);
         }
         public virtual void SwitchScreen(ScreenMode next)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(next.ToStringQuickly());
+            Debug.Log($"changing to {next.GetEntryViewMode()}");
             actionSignal = Signal.Stay;
             vmode = next.GetEntryViewMode();
             smode = next;
-            // Debug.Log($"changed to {sm}");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(next.ToStringQuickly());
         }
 
         protected override void Update()
@@ -99,10 +99,10 @@ namespace General
                             SwitchScreenFade(ScreenMode.StageSelect);
                             break;
                         case Signal.ToOption:
-                            SwitchView(ViewMode.StartOption);
+                            SwitchView(ViewMode.StartOption, nextActive: true, currActive: false);
                             break;
                         case Signal.ToCredit:
-                            SwitchView(ViewMode.Credit);
+                            SwitchView(ViewMode.Credit, nextActive: true, currActive: false);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
@@ -114,7 +114,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Backward:
-                            SwitchView(ViewMode.Title);
+                            SwitchView(ViewMode.Title, nextActive: true, currActive: false);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
@@ -126,7 +126,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Backward:
-                            SwitchView(ViewMode.Title);
+                            SwitchView(ViewMode.Title, nextActive: true, currActive: false);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
@@ -167,7 +167,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            SwitchView(ViewMode.OpeningMovie, nextActive: false, currActive: true);
+                            SwitchView(ViewMode.OpeningMovie);
                             StartCoroutine(GameManager.Instance.PlayOpeningMovie());
                             break;
                         default:
@@ -180,7 +180,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            SwitchView(ViewMode.InGame, nextActive: false, currActive: true);
+                            SwitchView(ViewMode.InGame);
                             break;
                         // スキップ
                         case Signal.Skip:
@@ -198,11 +198,11 @@ namespace General
                     {
                         case Signal.Forward:
                             pb.IsOver = true;
-                            SwitchView(ViewMode.ResultMovie, nextActive: false, currActive: true);
+                            SwitchView(ViewMode.ResultMovie);
                             StartCoroutine(GameManager.Instance.PlayResultMovie(Result.Excellent));
                             break;
                         case Signal.Pause:
-                            SwitchView(ViewMode.Pause, currActive: true);
+                            SwitchView(ViewMode.Pause, nextActive: true);
                             pb.StopTheWorld = true;
                             break;
                         default:
@@ -215,7 +215,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Forward:
-                            SwitchView(ViewMode.Result, currActive: true);
+                            SwitchView(ViewMode.Result, nextActive: true);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");
@@ -227,7 +227,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Restart:
-                            SwitchView(ViewMode.GameEntry, nextActive: false);
+                            SwitchView(ViewMode.GameEntry, currActive: false);
                             pb.IsOver = false;
                             pb.Elapsed = 0f;
                             break;
@@ -250,16 +250,16 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Backward:
-                            SwitchView(ViewMode.InGame, nextActive: false);
+                            SwitchView(ViewMode.InGame, currActive: false);
                             pb.StopTheWorld = false;
                             Time.timeScale = 1f;
                             break;
                         case Signal.ToOption:
-                            SwitchView(ViewMode.GameOption);
+                            SwitchView(ViewMode.GameOption, nextActive: true, currActive: false);
                             break;
                         case Signal.Restart:
-                            SwitchView(ViewMode.GameEntry, nextActive: false);
-                            pb.Elapsed = 0f;
+                            SwitchView(ViewMode.GameEntry, currActive: false);
+                            GameManager.Instance.InitGame();
                             break;
                         case Signal.ToTitle:
                             SwitchScreenFade(ScreenMode.Start);
@@ -274,7 +274,7 @@ namespace General
                     switch (actionSignal)
                     {
                         case Signal.Backward:
-                            SwitchView(ViewMode.Pause);
+                            SwitchView(ViewMode.Pause, nextActive: true, currActive: false);
                             break;
                         default:
                             Debug.LogError($"Signal {actionSignal} is not allowed.");

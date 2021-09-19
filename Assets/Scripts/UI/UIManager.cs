@@ -13,16 +13,21 @@ namespace UserInterface {
 		public Image image;
 		private GameFlowController gfc;
 		private ParamBridge pb;
-		// 初期化
-		void Start ()
+        // 初期化
+        protected override void Start()
 		{
 			gfc = GameFlowController.Instance;
 			pb = ParamBridge.Instance;
 		}
 
-		// 更新
-		protected override void Update ()
+        // 更新
+        protected override void Update()
 		{
+			if (gfc.VMode < ViewMode.GameEntry)
+            {
+				return;
+            }
+
 			if (pb.IsOver)
 			{
 				return;

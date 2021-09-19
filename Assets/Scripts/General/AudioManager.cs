@@ -34,7 +34,7 @@ namespace General {
         {
             if (CheckInstance())
             {
-                initSource();
+                InitSource();
             }
         }
 
@@ -65,7 +65,7 @@ namespace General {
             return false;
         }
 
-        public void initSource()
+        public void InitSource()
         {
             pb = ParamBridge.Instance;
             // オーディオ管理
