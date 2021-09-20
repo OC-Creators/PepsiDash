@@ -8,15 +8,44 @@ namespace General
         public JsonManager<Param> jm;
 
         protected override bool dontDestroyOnLoad { get { return true; } }
+
+        // ==================================
+        // 固定値
+        // ==================================
+
+        // 経過時間初期値上限値
+        public const float INIT_ELAPSED = 0f;
+        public const float LIMIT_ELAPSED = 30f;
+        // 炭酸MinMax値
+        public const int GAS_MIN = 0;
+        public const int GAS_MAX = 100;
+        // 温度MinMax値
+        public const int TEMP_MIN = 0;
+        public const int TEMP_MAX = 100;
+        // フレーム数初期値上限値
+        public const int INIT_FRAME = 0;
+        public const int LIMIT_FRAME = 1000000;
+
+        // ==================================
+        // パラメータ変数
+        // ==================================
+
         // 時を止めたかどうか
         private bool stopTheWorld = false;
         public bool StopTheWorld
         {
             get { return stopTheWorld; }
-            set { stopTheWorld = value; }
+            set
+            {
+                stopTheWorld = value;
+                if (value)
+                {
+                    Time.timeScale = 1f;
+                }
+            }
         }
         // 経過時間
-        private float elapsed = 0f;
+        private float elapsed = INIT_ELAPSED;
         public float Elapsed
         {
             get { return elapsed; }
@@ -43,10 +72,35 @@ namespace General
             get { return reached; }
             set { reached = value; }
         }
+        // 炭酸値
+        private int gas = GAS_MAX;
+        public int Gas
+        {
+            get { return gas; }
+            set { gas = value; }
+        }
+        // 温度値
+        private int temp = TEMP_MAX;
+        public int Temp
+        {
+            get { return temp; }
+            set { temp = value; }
+        }
+        // フレーム数
+        private int frameCount = INIT_FRAME;
+        public int FrameCount
+        {
+            get { return frameCount; }
+            set { frameCount = value; }
+        }
 
-        // スコア
-        [SerializeField] private int highScore = 0;
-        public int HighScore
+        // ==========================================
+        // Jsonに保存するパラメータ
+        // ==========================================
+
+        // ハイスコア
+        [SerializeField] private Result highScore = Result.None;
+        public Result HighScore
         {
             get { return highScore; }
             set 

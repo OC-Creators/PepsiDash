@@ -638,13 +638,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cfbd508c21ddce41a432accea3d594d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prevVMode: -1
-  vmode: -1
-  smode: -1
   highScore: 0
   bgmVolume: 1
   seVolume: 1
-  updateSignal: 0
 --- !u!1 &421237565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1081,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Home
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0, guid: 8f586378b4e144a9851e7b34d9b748ee}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1334,6 +1330,7 @@ MonoBehaviour:
   bGMSlider: {fileID: 1055779515}
   sESlider: {fileID: 205572187}
   bGMClip:
+  - {fileID: 8300000, guid: ec50743c0a2de5d4b96a77e2b169a441, type: 3}
   - {fileID: 8300000, guid: 92e748f591bd8e74ca76578de2cc0c96, type: 3}
 --- !u!1 &963194225
 GameObject:

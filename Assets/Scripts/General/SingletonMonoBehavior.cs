@@ -32,7 +32,7 @@ namespace General
         {
             if (CheckInstance())
             {
-                init();
+                Init();
             }
         }
 
@@ -46,7 +46,7 @@ namespace General
             
         }
 
-        protected virtual void init()
+        protected virtual void Init()
         {
 
         }

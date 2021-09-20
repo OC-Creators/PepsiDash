@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace General
 {
@@ -16,6 +15,7 @@ namespace General
             pb = ParamBridge.Instance;
             am = AudioManager.Instance;
             gfc = GameFlowController.Instance;
+            Debug.Assert(views != null);
         }
         protected override void Update()
         {

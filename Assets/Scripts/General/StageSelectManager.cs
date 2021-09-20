@@ -5,6 +5,7 @@ namespace General
 {
     public class StageSelectManager : ScreenManager<StageSelectManager>
     {
+        private const string BGM_NAME = "penguin";
         protected override void Start()
         {
             base.Start();
@@ -19,8 +20,7 @@ namespace General
             }
 
             gfc.Views = views;
-
-            am?.PlayBGM("penguin");
+            am.Play(BGM_NAME);
         }
 
 

@@ -10,7 +10,7 @@ namespace General {
         [SerializeField]
         public float se_volume = 1f;
         [SerializeField]
-        public int high_score = 0;
+        public Result high_score = Result.None;
         [SerializeField]
         public int unlock = 0;
     }

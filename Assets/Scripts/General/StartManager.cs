@@ -5,6 +5,7 @@ namespace General
 {
     public class StartManager : ScreenManager<StartManager>
     {
+        private const string BGM_NAME = "wonderland";
         protected override void Start()
         {
             base.Start();
@@ -19,6 +20,7 @@ namespace General
             }
 
             gfc.Views = views;
+            am.Play(BGM_NAME);
         }
 
     }
