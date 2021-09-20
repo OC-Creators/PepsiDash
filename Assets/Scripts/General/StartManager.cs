@@ -5,7 +5,7 @@ namespace General
 {
     public class StartManager : ScreenManager<StartManager>
     {
-        private const string BGM_NAME = "wonderland";
+        private const string BGM_NAME = "Sunrise";
         protected override void Start()
         {
             base.Start();

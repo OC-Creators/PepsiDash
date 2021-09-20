@@ -1331,7 +1331,9 @@ MonoBehaviour:
   sESlider: {fileID: 205572187}
   bGMClip:
   - {fileID: 8300000, guid: ec50743c0a2de5d4b96a77e2b169a441, type: 3}
-  - {fileID: 8300000, guid: 92e748f591bd8e74ca76578de2cc0c96, type: 3}
+  - {fileID: 8300000, guid: 569e4bc49552f5b4fa89aaf2cd20c8a3, type: 3}
+  - {fileID: 8300000, guid: 157782402fce1ac449dfaaec6d808a41, type: 3}
+  - {fileID: 8300000, guid: ef16386598fb4ce429351549084c47ad, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

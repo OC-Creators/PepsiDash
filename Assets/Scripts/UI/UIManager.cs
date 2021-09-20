@@ -10,9 +10,10 @@ namespace UserInterface {
 		public Text scoreText;
 		public Text resultText;
 		public Text resultScoreText;
-		public Image image;
+		public Image bottleImage;
 		private GameFlowController gfc;
 		private ParamBridge pb;
+		private Gradation gradation;
 
 		private int prevFrameCount = ParamBridge.INIT_FRAME;
 		private float prevElapsed = ParamBridge.INIT_ELAPSED;
@@ -26,10 +27,10 @@ namespace UserInterface {
 		// 消費炭酸値
 		private const int SPENDING_GAS_VALUE = 20;
 		// Excellentになるための境界値
-		private const int EXCELLENT_TEMP = 80;
+		private const int EXCELLENT_TEMP = 20;
 		private const int EXCELLENT_GAS = 80;
 		// Niceになるための境界値
-		private const int NICE_TEMP = 30;
+		private const int NICE_TEMP = 70;
 		private const int NICE_GAS = 30;
 		
 
@@ -38,6 +39,7 @@ namespace UserInterface {
 		{
 			gfc = GameFlowController.Instance;
 			pb = ParamBridge.Instance;
+			gradation = bottleImage.GetComponent<Gradation>();
 		}
 
 		// 更新
@@ -54,21 +56,19 @@ namespace UserInterface {
 			// 時間経過で温度値減少
 			if (elapsed >= SPENDING_TEMP_RATE)
 			{
-				pb.Temp -= SPENDING_TEMP_VALUE;
+				pb.Temp += SPENDING_TEMP_VALUE;
 				prevElapsed = pb.Elapsed;
 				elapsed = 0f;
 			}
-			// UI更新
-			scoreText.text = $"ELAPSED={(int)pb.Elapsed}, TEMP={pb.Temp}, GAS={pb.Gas}";
-			image.fillAmount =  Math.Max(ParamBridge.TEMP_MIN, (float)pb.Temp / ParamBridge.TEMP_MAX);
+            // UI更新
+            scoreText.text = $"ELAPSED={(int)pb.Elapsed}, TEMP={pb.Temp}℃, GAS={pb.Gas}％";
+            gradation.gradiate(Math.Min(1f, (float)pb.Temp / ParamBridge.TEMP_MAX));
 
 			// リザルト集計
 			if (pb.Catched || pb.Reached || pb.Elapsed > ParamBridge.LIMIT_ELAPSED)
 			{
-				image.fillAmount = ParamBridge.TEMP_MIN;
-
 				// スコア: Bad
-				if (pb.Catched || !pb.Reached || pb.Temp < NICE_TEMP || pb.Gas < NICE_GAS)
+				if (pb.Catched || !pb.Reached || pb.Temp > NICE_TEMP || pb.Gas < NICE_GAS)
                 {
 					// リザルト表示テキスト
 					resultText.text = "Bad";
@@ -76,7 +76,7 @@ namespace UserInterface {
 					pb.HighScore = Result.Bad;
 				}
 				// スコア: Nice
-				else if (pb.Temp < EXCELLENT_TEMP || pb.Gas < EXCELLENT_GAS)
+				else if (pb.Temp > EXCELLENT_TEMP || pb.Gas < EXCELLENT_GAS)
                 {
 					// リザルト表示テキスト
 					resultText.text = "Nice!";

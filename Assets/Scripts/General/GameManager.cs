@@ -19,7 +19,7 @@ namespace General {
         //private IEnumerator res;
 
         private const string BGM_NAME = "penguin";
-        private const string FANFARE_NAME = "wonderland";
+        private const string FANFARE_NAME = "Sunrise";
 
 
         protected override void Start()

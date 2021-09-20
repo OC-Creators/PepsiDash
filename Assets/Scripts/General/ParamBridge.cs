@@ -80,7 +80,7 @@ namespace General
             set { gas = value; }
         }
         // 温度値
-        private int temp = TEMP_MAX;
+        private int temp = TEMP_MIN;
         public int Temp
         {
             get { return temp; }

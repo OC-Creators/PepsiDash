@@ -5,7 +5,7 @@ namespace General
 {
     public class StageSelectManager : ScreenManager<StageSelectManager>
     {
-        private const string BGM_NAME = "penguin";
+        private const string BGM_NAME = "lobby";
         protected override void Start()
         {
             base.Start();
