@@ -44,6 +44,8 @@
 /[Aa]ssets/Import*
 /[Aa]ssets/Plugins*
 /[Aa]ssets/Tree_Texture*
+/[Aa]ssets/SapphiArt*
+/[Pp]ackages/com.unity.cinemachine*
 
 
 # Data Files
