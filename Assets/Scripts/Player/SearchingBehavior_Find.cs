@@ -30,10 +30,16 @@ namespace Player
 
         public SearchingBehavior_Caution search_caution;
 
+        [SerializeField] private PlayerCharacter playerCharacter;
+
+        [SerializeField] private Transform head;
+
+
         void Start()
         {
-            if (finder == null) transform.GetComponentInParent<Finder_Find>();
-            if (moveEnemy == null) transform.GetComponentInParent<MoveEnemy>();
+            if (finder == null) finder = transform.GetComponentInParent<Finder_Find>();
+            if (moveEnemy == null) moveEnemy = transform.GetComponentInParent<MoveEnemy>();
+            if (playerCharacter == null) playerCharacter = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
         }
 
         public float SearchAngle
@@ -79,8 +85,14 @@ namespace Player
 
         private void Update()
         {
+            UpdateForward();
             UpdateFoundObject();
             Searching();
+        }
+
+        private void UpdateForward()
+        {
+            this.transform.forward = new Vector3(head.forward.x, transform.forward.y, head.forward.z);
         }
 
         private void UpdateFoundObject()
@@ -113,8 +125,8 @@ namespace Player
 
         private bool CheckFoundObject(GameObject i_target)
         {
-            Vector3 targetPosition = i_target.transform.position;
-            Vector3 myPosition = transform.position;
+            Vector3 targetPosition = playerCharacter.getHead().position;
+            Vector3 myPosition = head.position;
 
             Vector3 myPositionXZ = Vector3.Scale(myPosition, new Vector3(1.0f, 0.0f, 1.0f));
             Vector3 targetPositionXZ = Vector3.Scale(targetPosition, new Vector3(1.0f, 0.0f, 1.0f));
@@ -207,14 +219,14 @@ namespace Player
             switch (moveEnemy.getState())
             {
                 case "patrol":
-                    if (player != null)
+                    if (player != null && !playerCharacter.getIsVoid())
                     {
                         moveEnemy.changeState("chase");
                         search_caution.setPlayer(player);
                     }
                     break;
                 case "caution":
-                    if (player != null)
+                    if (player != null && !playerCharacter.getIsVoid())
                     {
                         moveEnemy.changeState("chase");
                         search_caution.setPlayer(player);
@@ -233,7 +245,7 @@ namespace Player
         {
             foreach (GameObject player in finder.getM_targets())
             {
-                if (player.CompareTag("Player")) return player;
+                if (player.CompareTag("Player") && !playerCharacter.getIsVoid()) return player;
             }
             return null;
         }

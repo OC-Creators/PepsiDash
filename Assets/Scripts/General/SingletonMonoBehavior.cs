@@ -30,9 +30,25 @@ namespace General
 
         protected virtual void Awake()
         {
-            // 他のゲームオブジェクトにアタッチされているか調べる
-            // アタッチされている場合は破棄する。
-            CheckInstance();
+            if (CheckInstance())
+            {
+                Init();
+            }
+        }
+
+        protected virtual void Start()
+        {
+
+        }
+
+        protected virtual void Update()
+        {
+            
+        }
+
+        protected virtual void Init()
+        {
+
         }
 
         protected virtual bool CheckInstance()

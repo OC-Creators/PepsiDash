@@ -1,125 +1,148 @@
-﻿using System;
+﻿using UnityEngine.UI;
+using UnityEngine.Video;
 using UnityEngine;
+using System.Collections;
 
 namespace General {
     
     public class GameManager : ScreenManager<GameManager>
     {
-        private bool stopTheWorld = false;
-        private float elapsed = 0f;
-        public float Elapsed
-        {
-            get { return elapsed; }
-        }
-        private bool isOver = false;
-        public bool IsOver
-        {
-            get { return isOver; }
-            set { isOver = value; }
-        }
+        [SerializeField] private RawImage openingRawImage;
+        [SerializeField] private RawImage wonderfulResultRawImage;
+        [SerializeField] private RawImage niceResultRawImage;
+        [SerializeField] private RawImage badResultRawImage;
 
-        private bool catched = false;
-        public bool Catched
-        {
-            get { return catched; }
-            set { catched = value; }
-        }
+        private VideoPlayer vp;
+        private RawImage rawImg;
 
-        private bool reached = false;
-        public bool Reached
-        {
-            get { return reached; }
-            set { reached = value; }
-        }
+        //private IEnumerator op;
+        //private IEnumerator res;
+
+        private const string BGM_NAME = "penguin";
+        private const string FANFARE_NAME = "Sunrise";
+
 
         protected override void Start()
         {
-            if (ParamBridge.SMode == ScreenMode.Dummy)
+            base.Start();
+
+            if (gfc.VMode != ViewMode.GameEntry)
             {
-                ParamBridge.SMode = ScreenMode.Game;
+                gfc.VMode = ViewMode.GameEntry;
+            }
+            if (gfc.SMode != ScreenMode.Game)
+            {
+                gfc.SMode = ScreenMode.Game;
             }
 
-            ParamBridge.UpdateView(ViewMode.InGame);
+            gfc.Views = views;
+            gfc.dispatch(Signal.Forward);
+
+            InitGame();
         }
 
         protected override void Update()
         {
-            if (stopTheWorld)
+            if (pb.StopTheWorld)
             {
                 Time.timeScale = 0f;
             }
 
-            if (!isOver)
+            // TODO: 要修正，コルーチンで書き直す
+            if (!pb.IsOver)
             {
-                elapsed += Time.deltaTime;
+                pb.Elapsed += Time.deltaTime;
+                // pb.FrameCount ++;
             }
-
-            base.Update();
         }
 
-        protected override void SwitchView()
+        public void InitGame()
         {
-            var curr = ParamBridge.PrevVMode;
-            var next = ParamBridge.VMode;
+            pb.IsOver = false;
+            pb.Catched = false;
+            pb.Reached = false;
+            pb.Elapsed = ParamBridge.INIT_ELAPSED;
+            am.Play(BGM_NAME);
+            // pb.FrameCount = 0;
+        }
 
-            switch (next)
+        public IEnumerator PlayOpeningMovie()
+        {
+            vp = openingRawImage.GetComponent<VideoPlayer>();
+            rawImg = openingRawImage;
+                    
+            // 再生準備
+            vp.Prepare();
+            
+            while (!vp.isPrepared)
             {
-                case ViewMode.GameBegin:
-                    if (curr == ViewMode.Result)
-                    {
-                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
-                        AudioManager.Instance.Replay();
-                    }
-                    break;
-
-                case ViewMode.InGame:
-                    // Pauseビューを非表示
-                    if (curr == ViewMode.Pause)
-                    {
-                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
-                        stopTheWorld = false;
-                        Time.timeScale = 1f;
-                    }
-                    break;
-
-                case ViewMode.GameEnd:
-                    break;
-
-                case ViewMode.Pause:
-                    // Pauseビューを表示
-                    if (curr == ViewMode.GameOption)
-                    {
-                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
-                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
-                    }
-                    else if (curr == ViewMode.InGame)
-                    {
-                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
-                        stopTheWorld = true;
-                    }
-                    break;
-
-                case ViewMode.GameOption:
-                    // Pauseビューを非表示にし、GameOptionビューを表示
-                    if (curr == ViewMode.Pause)
-                    {
-                        Array.Find(views, v => v.name == curr.ToStringQuickly())?.SetActive(false);
-                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
-                    }
-                    break;
-
-                case ViewMode.Result:
-                    // Resultビューを表示
-                    // GameEndを経由する場合はInGame -> GameEnd
-                    if (curr == ViewMode.InGame)
-                    {
-                        isOver = true;
-                        Array.Find(views, v => v.name == next.ToStringQuickly())?.SetActive(true);
-                    }
-                    break;
+                Debug.Log("Loading Opening Movie...");
+                yield return null;
             }
+            // 再生準備完了
+            Debug.Log("Loading Opening Movie... Completed!");
+            am.Stop();
+            vp.started += _ => rawImg.enabled = true;
+            vp.loopPointReached += _ => rawImg.enabled = false;
+            vp.Play();
 
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+            while (vp.isPlaying)
+            {
+                yield return null;
+            }
+            // 再生終了
+            Debug.Log("Opening Movie ended");
+            am.Play(BGM_NAME);
+            InitGame();
+            gfc.dispatch(Signal.Forward);
+        }
+
+        public IEnumerator PlayResultMovie(Result result)
+        {
+            //vp = null;
+            //rawImg = null;
+            //switch (res)
+            //{
+            //    case Result.Wonderful:
+            //        vp = wonderfulResultRawImage.GetComponent<VideoPlayer>();
+            //        rawImg = wonderfulResultRawImage;
+            //        break;
+            //    case Result.Nice:
+            //        vp = niceResultRawImage.GetComponent<VideoPlayer>();
+            //        rawImg = niceResultRawImage;
+            //        break;
+            //    case Result.Bad:
+            //        vp = badResultRawImage.GetComponent<VideoPlayer>();
+            //        rawImg = badResultRawImage;
+            //        break;
+            //}
+
+            vp = openingRawImage.GetComponent<VideoPlayer>();
+            rawImg = openingRawImage;
+
+            // 再生準備
+            vp.Prepare();
+
+            while (!vp.isPrepared)
+            {
+                Debug.Log($"Loading Result Movie: {result}...");
+                yield return null;
+            }
+            // 再生準備完了
+            Debug.Log($"Loading Result Movie: {result}... Completed!");
+            am.Play(FANFARE_NAME);
+            vp.started += _ => rawImg.enabled = true;
+            vp.loopPointReached += _ => rawImg.enabled = false;
+            vp.Play();
+
+            while (vp.isPlaying)
+            {
+                yield return null;
+            }
+            // 再生終了
+            Debug.Log("Result Movie ended");
+            gfc.dispatch(Signal.Forward);
         }
     }
+
 }

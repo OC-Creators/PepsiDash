@@ -5,16 +5,24 @@ namespace General
 {
     public class StageSelectManager : ScreenManager<StageSelectManager>
     {
+        private const string BGM_NAME = "lobby";
         protected override void Start()
         {
-            if (ParamBridge.SMode == ScreenMode.Dummy)
-            {
-                ParamBridge.SMode = ScreenMode.StageSelect;
-            }
-            
-            ParamBridge.UpdateSignal = ParamBridge.Signal.Stay;
+            base.Start();
 
-            AudioManager.Instance.UpdateClip("penguin");
+            if (gfc.VMode != ViewMode.StageList)
+            {
+                gfc.VMode = ViewMode.StageList;
+            }
+            if (gfc.SMode != ScreenMode.StageSelect)
+            {
+                gfc.SMode = ScreenMode.StageSelect;
+            }
+
+            gfc.Views = views;
+            am.Play(BGM_NAME);
         }
+
+
     }
 }

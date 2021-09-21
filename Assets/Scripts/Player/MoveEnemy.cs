@@ -24,16 +24,17 @@ namespace Player
         private SetPosition setPosition;
         //　待ち時間
         [SerializeField]
+        [Range(0f, 10f)]
         private float patrolWaitTime = 5f;
 
-        [SerializeField]
-        private float cautionWaitTime = 60f;
+        [SerializeField][Range(0f, 60f)]
+        private float cautionWaitTime = 20f;
+
+        //[SerializeField] private float chaseWaitTime = 60f;
 
         [SerializeField]
-        private float chaseWaitTime = 60f;
-
-        [SerializeField]
-        private float warningWaitTime = 60f;
+        [Range(0f, 30f)]
+        private float warningWaitTime = 5f;
         //　経過時間
         private float elapsedTime;
         // 周回配列添字
@@ -95,12 +96,12 @@ namespace Player
                         if (enemyController.isGrounded)
                         {
                             velocity = Vector3.zero;
-                            //animator.SetFloat("Speed", 2.0f);
                             direction = (destination - transform.position).normalized;
                             transform.LookAt(new Vector3(destination.x, transform.position.y, destination.z));
                             velocity = direction * walkSpeed;
                             // Debug.Log(destination);
                             // Debug.Log(transform.position);
+                            animator.SetFloat("Speed", 1.0f);
                         }
                         velocity.y += Physics.gravity.y * Time.deltaTime;
                         enemyController.Move(velocity * Time.deltaTime);
@@ -109,14 +110,13 @@ namespace Player
                         if (Vector3.Distance(transform.position, destination) < 0.1f)
                         {
                             arrived = true;
-                            //animator.SetFloat("Speed", 0.0f);
+                            animator.SetFloat("Speed", 0.0f);
                         }
                     }
                     else
                     {
                         // 到着
                         elapsedTime += Time.deltaTime;
-
 
                         if (elapsedTime > patrolWaitTime)
                         {
@@ -167,7 +167,7 @@ namespace Player
                     }
                     break;
                 case "caution":
-                    //transform.LookAt(new Vector3(playerPos.x, transform.position.y, playerPos.z));
+                    transform.LookAt(new Vector3(playerPos.x, transform.position.y, playerPos.z));
                     // このあと分岐させたい、時間とかの調整によってchangeState("patrol")もしくはchangeState("chase")に変化させるなど
                     break;
                 case "chase":
@@ -175,11 +175,11 @@ namespace Player
                     if (enemyController.isGrounded)
                     {
                         velocity = Vector3.zero;
-                        //animator.SetFloat("Speed", 2.0f); 
                         destination = setPosition.GetDestination();
                         direction = (destination - transform.position).normalized;
                         transform.LookAt(new Vector3(setPosition.GetDestination().x, transform.position.y, setPosition.GetDestination().z));
                         velocity = direction * runSpeed;
+                        animator.SetFloat("Speed", 1.0f);
                     }
                     velocity.y += Physics.gravity.y * Time.deltaTime;
                     enemyController.Move(velocity * Time.deltaTime);
@@ -201,6 +201,7 @@ namespace Player
                         if (Vector3.Distance(transform.position, destination) < 0.2f)
                         {
                             arrived = true;
+                            animator.SetFloat("Speed", 0.0f);
                         }
                     }
                     else
@@ -208,10 +209,10 @@ namespace Player
                         // 到着
                         elapsedTime += Time.deltaTime;
 
-                        Quaternion rot = Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, Vector3.up);
-                        this.transform.rotation = rot * transform.rotation;
+                        //Quaternion rot = Quaternion.AngleAxis(rotateSpeed * Time.deltaTime, Vector3.up);
+                        //this.transform.rotation = rot * transform.rotation;
 
-                        if (elapsedTime > patrolWaitTime)
+                        if (elapsedTime > warningWaitTime)
                         {
                             resetEnemyPosition();
                             changeState("patrol");
@@ -272,7 +273,7 @@ namespace Player
                     break;
                 case "caution":
                     state = newState;
-                    elapsedTime = 10f;
+                    elapsedTime = cautionWaitTime / 2f;
                     break;
                 case "chase":
                     state = newState;
@@ -317,8 +318,11 @@ namespace Player
                 playerPos = player.transform.position;
                 //Debug.Log("SetPlayerPos!!");
             }
+        }
 
-
+        public float getCautionWaitTime()
+        {
+            return cautionWaitTime;
         }
 
         void resetEnemyPosition()

@@ -10,7 +10,7 @@ namespace Player
         {
             if(collider.gameObject.CompareTag("Player"))
             {
-                General.GameManager.Instance.Catched = true;
+                General.ParamBridge.Instance.Catched = true;
                 Debug.Log("catched!");
             } 
                 
