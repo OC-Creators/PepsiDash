@@ -48,7 +48,7 @@ namespace Player
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
-            bool crouch = Input.GetKey(KeyCode.C);
+            bool crouch = CrossPlatformInputManager.GetButton("Crouch");
             bool modeVoid = CrossPlatformInputManager.GetButton("Void");
 
             // calculate move direction to pass to character

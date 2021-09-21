@@ -36,11 +36,35 @@ namespace Player
 
 		private bool isVoid = false;
 
+		private bool isChange = false;
+
+		[SerializeField] private bool isCoolTime = false;
+
 		[SerializeField] [Range(0, 5)] private int countIntoVoid = 2;
 
 		[SerializeField] [Range(0f, 15f)] private float voidTime = 5f;
 
 		private float elapsedVoidTime = 0f;
+
+		[SerializeField] [Range(0f, 50f)] private float coolTime = 15f;
+
+		private float elapsedCoolTime = 0f;
+
+		[SerializeField] [Range(0f, 1f)] private float transparentAlfa = 0.2f;
+
+		[SerializeField] [Range(0f, 10f)] private float alfaSpeed = 2f;
+
+		[SerializeField] private SkinnedMeshRenderer surface;
+
+		[SerializeField] private SkinnedMeshRenderer joints;
+
+		private Color surfaceColor;
+
+		private Color jointsColor;
+
+		[SerializeField] private Material[] m_Surface;
+
+		[SerializeField] private Material[] m_Joints;
 
 
 		void Start()
@@ -179,29 +203,85 @@ namespace Player
 		void IntoVoid(bool isButton)
         {
 			// 入力受付
-			if (!isVoid && isButton && countIntoVoid > 0)
+			if (!isVoid && isButton && countIntoVoid > 0 && !isCoolTime && !isChange)
             {
-				isVoid = true;
-				// プレイヤーのテクスチャーを半透明にする
+				isChange = true;
+				surface.material = m_Surface[1];
+				joints.material = m_Joints[1];
 				// エフェクトをオンにするかも
             }
 
-			// 虚空中の動作
+			// 虚空中の動作 それ以外も(クールタイム)
 			if (isVoid)
-            {
+			{
 				elapsedVoidTime += Time.deltaTime;
 				Debug.Log("Player in the void.");
 
 				if (elapsedVoidTime > voidTime)
-                {
-					isVoid = false;
+				{
+					isCoolTime = true;
+					isChange = true;
 					countIntoVoid--;
 					elapsedVoidTime = 0f;
+					elapsedCoolTime = 0f;
 					Debug.Log("Leave from void.");
 					// プレイヤーのテクスチャーを戻す
 					// エフェクトをオフにする
-                }
-            }
+				}
+			}
+			else
+			{
+				if (isCoolTime)
+				{
+					elapsedCoolTime += Time.deltaTime;
+					if (elapsedCoolTime > coolTime) isCoolTime = false;
+				}
+			}
+
+			// 変化中の動作
+			if (isChange)
+			{
+				if (isVoid)
+				{
+					//透明度を上げる(元に戻る)
+					surfaceColor = surface.material.color;
+					jointsColor = joints.material.color;
+					surfaceColor.a += Time.deltaTime * alfaSpeed;
+					jointsColor.a += Time.deltaTime * alfaSpeed;
+
+					if (surfaceColor.a >= 1f) // 透明度が一定値より上になったら
+					{
+						surfaceColor.a = 1f;
+						jointsColor.a = 1f;
+						surface.material.color = surfaceColor;
+						joints.material.color = jointsColor;
+						surface.material = m_Surface[0];
+						joints.material = m_Joints[0];
+						isVoid = false;
+						isChange = false;
+					}
+					surface.material.color = surfaceColor;
+					joints.material.color = jointsColor;
+				}
+				else
+				{
+					//透明度を下げる(虚空に入る)
+					surfaceColor = surface.material.color;
+					jointsColor = joints.material.color;
+					surfaceColor.a -= Time.deltaTime * alfaSpeed;
+					jointsColor.a -= Time.deltaTime * alfaSpeed;
+
+					if (surfaceColor.a < transparentAlfa) // 透明度が一定値より下になったら
+					{
+						surfaceColor.a = transparentAlfa;
+						jointsColor.a = transparentAlfa;
+						isVoid = true;
+						isChange = false;
+					}
+					surface.material.color = surfaceColor;
+					joints.material.color = jointsColor;
+				}
+			}
         }
 
 		public bool getIsVoid()
