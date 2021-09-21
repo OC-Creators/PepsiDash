@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace General {
 
@@ -33,8 +34,7 @@ namespace General {
         {
             if (CheckInstance())
             {
-                initSource();
-                source.Play();
+                InitSource();
             }
         }
 
@@ -65,7 +65,7 @@ namespace General {
             return false;
         }
 
-        public void initSource()
+        public void InitSource()
         {
             pb = ParamBridge.Instance;
             // オーディオ管理
@@ -83,15 +83,22 @@ namespace General {
             }
             if (sESlider != null) 
             {
-                sESlider.value = source.volume;
+                sESlider.value = seVolume;
                 sESlider.onValueChanged.AddListener(value => seVolume = value);
             }
 
             Debug.Log("AudioManager: Initialized");
         }
-
-        public void PlayBGM(string clipName)
+        public void Play()
         {
+            Debug.Assert(source != null);
+            source.Play();
+        }
+
+        public void Play(string clipName)
+        {
+            Stop();
+
             var newClip = bGMClip.Find(clip => clip.name == clipName);
             if (newClip != null)
             {
@@ -104,10 +111,18 @@ namespace General {
             }
         }
 
-        public void ReplayBGM()
+        public void Replay()
         {
-            source.Stop();
+            Stop();
             source.Play();
+        }
+
+        public void Stop()
+        {
+            if (source.isPlaying)
+            {
+                source.Stop();
+            }
         }
 
         public void PlaySE(AudioClip clip)

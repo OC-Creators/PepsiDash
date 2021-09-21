@@ -1901,7 +1901,10 @@ MonoBehaviour:
   bGMSlider: {fileID: 0}
   sESlider: {fileID: 0}
   bGMClip:
+  - {fileID: 8300000, guid: 569e4bc49552f5b4fa89aaf2cd20c8a3, type: 3}
   - {fileID: 8300000, guid: ec50743c0a2de5d4b96a77e2b169a441, type: 3}
+  - {fileID: 8300000, guid: ef16386598fb4ce429351549084c47ad, type: 3}
+  - {fileID: 8300000, guid: 157782402fce1ac449dfaaec6d808a41, type: 3}
 --- !u!1 &1649455357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,7 +2221,7 @@ Animator:
   m_GameObject: {fileID: 2041416926}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: da6144b1f9b813f48b3208fee629b12b, type: 2}
+  m_Controller: {fileID: 9100000, guid: fedb2adf4b64494468ed5a1fc8588ca1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -4,46 +4,94 @@ using UnityEngine.UI;
 using General;
 
 namespace UserInterface {
-	
+
 	public class UIManager : SingletonMonoBehaviour<UIManager> {
 		protected override bool dontDestroyOnLoad { get { return false; } }
 		public Text scoreText;
 		public Text resultText;
 		public Text resultScoreText;
-		public Image image;
+		public Image bottleImage;
 		private GameFlowController gfc;
 		private ParamBridge pb;
+		private Gradation gradation;
+
+		private int prevFrameCount = ParamBridge.INIT_FRAME;
+		private float prevElapsed = ParamBridge.INIT_ELAPSED;
+		private float elapsed = 0f;
+		private int fps = 0;
+
+		// 何秒ごとに温度値を消費するか
+		private const float SPENDING_TEMP_RATE = 2f;
+		// 消費温度値
+		private const int SPENDING_TEMP_VALUE = 1;
+		// 消費炭酸値
+		private const int SPENDING_GAS_VALUE = 20;
+		// Excellentになるための境界値
+		private const int EXCELLENT_TEMP = 20;
+		private const int EXCELLENT_GAS = 80;
+		// Niceになるための境界値
+		private const int NICE_TEMP = 70;
+		private const int NICE_GAS = 30;
+		
+
 		// 初期化
-		void Start ()
+		protected override void Start()
 		{
 			gfc = GameFlowController.Instance;
 			pb = ParamBridge.Instance;
+			gradation = bottleImage.GetComponent<Gradation>();
 		}
 
 		// 更新
-		protected override void Update ()
+		protected override void Update()
 		{
-			if (pb.IsOver)
-			{
+			if (gfc.VMode < ViewMode.GameEntry || pb.IsOver)
+            {
 				return;
-			}
+            }
 
-			var rest = 30 - (int)Math.Floor(pb.Elapsed);
-			var bonus = 0;
-			var score = rest + bonus;
-			// (@miki) 将来的にアイテムボーナス（コインとか）を導入して加算する予定
-			scoreText.text = "Score: -";
-			image.fillAmount =  Math.Max(0f, 1f - pb.Elapsed / 30f);
-			
-			if (pb.Catched || pb.Reached || pb.Elapsed > 30f)
+			// TODO: 虚空使ったら gas -= 20, 使用中に減るように
+
+			elapsed = pb.Elapsed - prevElapsed;
+			// 時間経過で温度値減少
+			if (elapsed >= SPENDING_TEMP_RATE)
 			{
-				image.fillAmount = 0f;
-				resultText.text = pb.Reached ? "Stage1 Clear!!" : "Stage1 Failed";
-				// (@miki) ペプシの残り残量(最大30点) + ゲームクリアでボーナス20点
-				resultScoreText.text = pb.Reached ? $"Score: {score += 20}" : $"Score: {score}";
-				// ハイスコア更新
-				pb.HighScore = score;
-				// GameEndを経由する場合はResult -> GameEnd
+				pb.Temp += SPENDING_TEMP_VALUE;
+				prevElapsed = pb.Elapsed;
+				elapsed = 0f;
+			}
+            // UI更新
+            scoreText.text = $"ELAPSED={(int)pb.Elapsed}, TEMP={pb.Temp}℃, GAS={pb.Gas}％";
+            gradation.gradiate(Math.Min(1f, (float)pb.Temp / ParamBridge.TEMP_MAX));
+
+			// リザルト集計
+			if (pb.Catched || pb.Reached || pb.Elapsed > ParamBridge.LIMIT_ELAPSED)
+			{
+				// スコア: Bad
+				if (pb.Catched || !pb.Reached || pb.Temp > NICE_TEMP || pb.Gas < NICE_GAS)
+                {
+					// リザルト表示テキスト
+					resultText.text = "Bad";
+					// ハイスコア更新
+					pb.HighScore = Result.Bad;
+				}
+				// スコア: Nice
+				else if (pb.Temp > EXCELLENT_TEMP || pb.Gas < EXCELLENT_GAS)
+                {
+					// リザルト表示テキスト
+					resultText.text = "Nice!";
+					// ハイスコア更新
+					pb.HighScore = Result.Nice;
+				}
+				// スコア: Excellent
+				else
+                {
+					// リザルト表示テキスト
+					resultText.text = "Excellent!!";
+					// ハイスコア更新
+					pb.HighScore = Result.Excellent;
+				}
+				
 				gfc.dispatch(Signal.Forward);
 				Debug.Log("Game is over");
 			}

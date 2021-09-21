@@ -1,0 +1,11 @@
+Model Information:
+* title:	Peapsi Can (Veggie Tales)
+* source:	https://sketchfab.com/3d-models/peapsi-can-veggie-tales-2ecc060e9a3c4615971a07aa4ead359a
+* author:	liamandnico (https://sketchfab.com/liamandnico)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Peapsi Can (Veggie Tales)" (https://sketchfab.com/3d-models/peapsi-can-veggie-tales-2ecc060e9a3c4615971a07aa4ead359a) by liamandnico (https://sketchfab.com/liamandnico) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -204,13 +204,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -860,6 +860,8 @@ GameObject:
   - component: {fileID: 657540216}
   - component: {fileID: 657540215}
   - component: {fileID: 657540214}
+  - component: {fileID: 657540219}
+  - component: {fileID: 657540218}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -990,6 +992,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657540212}
   m_CullTransparentMesh: 0
+--- !u!114 &657540218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657540212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b8754d7e63e434d94ec39a88d39a26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &657540219
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657540212}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fedb2adf4b64494468ed5a1fc8588ca1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &664606119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,7 +1330,10 @@ MonoBehaviour:
   bGMSlider: {fileID: 1055779515}
   sESlider: {fileID: 205572187}
   bGMClip:
-  - {fileID: 8300000, guid: 92e748f591bd8e74ca76578de2cc0c96, type: 3}
+  - {fileID: 8300000, guid: ec50743c0a2de5d4b96a77e2b169a441, type: 3}
+  - {fileID: 8300000, guid: 569e4bc49552f5b4fa89aaf2cd20c8a3, type: 3}
+  - {fileID: 8300000, guid: 157782402fce1ac449dfaaec6d808a41, type: 3}
+  - {fileID: 8300000, guid: ef16386598fb4ce429351549084c47ad, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2471,13 +2507,13 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
+  m_TextStyleHashCode: 97690656
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2901,6 +2937,7 @@ GameObject:
   - component: {fileID: 1681553977}
   - component: {fileID: 1681553976}
   - component: {fileID: 1681553975}
+  - component: {fileID: 1681553979}
   m_Layer: 5
   m_Name: CreditButton
   m_TagString: Untagged
@@ -3031,6 +3068,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681553973}
   m_CullTransparentMesh: 0
+--- !u!95 &1681553979
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681553973}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fedb2adf4b64494468ed5a1fc8588ca1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1757800851
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,8 +3512,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
